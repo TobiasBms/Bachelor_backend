@@ -1,13 +1,20 @@
 const express = require("express");
 const db = require("../lib/config/database");
 require("dotenv").config();
-const app = express();
+const Restaurant = require('../lib/config/models/Restaurant');
 
+
+const app = express();
 
 app.use(function(req,res,next){
     db();
     next();
 });
+
+app.get("/", (req,res) => {
+    res.end("Hello world");
+})
+
 const port = process.env.PORT;
 
 
