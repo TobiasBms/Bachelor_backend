@@ -15,8 +15,8 @@ DROP TABLE IF EXISTS
 	Extra,
 	Manager,
 	Product,
-	Restaurant,
 	Seat,
+	Restaurant,
 	GroupOrder,
 	OrderStatus,
 	Privilege,
@@ -58,12 +58,6 @@ CREATE TABLE IF NOT EXISTS GroupOrder (
     group_uuid BINARY(16)
 );
 
-CREATE TABLE IF NOT EXISTS Seat (
-    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    restaurant_id INT UNSIGNED NOT NULL,
-    seat_name VARCHAR(25)
-);
-
 CREATE TABLE IF NOT EXISTS Restaurant (
     id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
     restaurant_name VARCHAR(100),
@@ -80,6 +74,15 @@ CREATE TABLE IF NOT EXISTS Restaurant (
     smiley_id INT,
     FOREIGN KEY (zip_code)
         REFERENCES City (zip_code)
+        ON UPDATE RESTRICT ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS Seat (
+    id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    restaurant_id INT UNSIGNED NOT NULL,
+    seat_name VARCHAR(25),
+    FOREIGN KEY (restaurant_id)
+        REFERENCES Restaurant (id)
         ON UPDATE RESTRICT ON DELETE CASCADE
 );
 
