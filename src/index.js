@@ -1,23 +1,19 @@
 const express = require("express");
-const db = require("../lib/config/database");
-require("dotenv").config();
-const Restaurant = require('../lib/config/models/Restaurant');
-
-
 const app = express();
+require("dotenv").config();
+const {db} = require('../lib/config/database');
+const restaurantRouteGroup = require('./routes/restaurant');
 
 app.use(function(req,res,next){
     db();
     next();
 });
 
-app.get("/", (req,res) => {
-    res.end("Hello world");
-})
+app.use(express.json());
+
+app.use("/api", restaurantRouteGroup); 
 
 const port = process.env.PORT;
-
-
 
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
