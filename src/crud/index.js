@@ -1,8 +1,7 @@
 
 const getOne = (model) => async (req, res) =>  {
     try{
-        let restaurant = await model.findOne();
-        
+        let restaurant = await model.findByPk(req.params.id);
         if(!restaurant){
             return res.status(400).json("error");
         }
