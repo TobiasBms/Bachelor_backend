@@ -1,24 +1,25 @@
-const express = require("express");
-const app = express();
+const app = require('./http');
+const db = require('./db');
 require("dotenv").config();
-const {db} = require('../lib/config/database');
-const restaurantRouteGroup = require('./routes/restaurant');
 
-app.use(function(req,res,next){
+async function initDb() {
+  console.log(`Checking database connection...`);
+  try {
+    await db.authenticate();
+    console.log('Database connection OK!');
+  } catch (error) {
+    console.log('Unable to connect to the database:');
+    console.log(error.message);
+    process.exit(1);
+  }
+}
 
-    //Establish the connection for the database
-    db();
-    next();
-});
+async function init() {
+  await initDb();
+  console.log(`Starting server...`);
+  app.listen(process.env.PORT, () => {
+    console.log(`Server listening on port ${process.env.PORT}.`);
+  });
+}
 
-app.use(express.json());
-
-app.use("/api", restaurantRouteGroup); 
-
-const port = process.env.PORT;
-const baseurl = process.env.BASEURL;
-
-app.listen(port, () => { 
-    console.log(`Example app listening at ${baseurl}:${port}`)
-})
-
+init();
