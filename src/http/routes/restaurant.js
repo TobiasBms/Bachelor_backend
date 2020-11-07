@@ -2,36 +2,47 @@ const { models } = require('../../db');
 const { getIdParam } = require('../utils');
 
 async function getAll(_req, res) {
-    const restaurants = await models.Restaurant.findAll();
-    res.send(200, restaurants);
+        const restaurants = await models.Restaurant.findAll();
+        res.send(200, restaurants);
 };
 
 async function getById(req, res) {
-    const id = getIdParam(req);
-    const restaurant = await models.Restaurant.findByPk(id, {
-        include: [
-            { model: models.City, as: 'city' },
-            { model: models.RestaurantCategory, as: 'categories', through: { attributes: [] } },
-        ],
-        attributes: { exclude: ['zip_code'] }
-    });
-    if (restaurant) {
-        res.send(200, restaurant);
-    } else {
-        res.send(404, {
-            message: 'This restaurant does not exist in our database.'
+    try{
+        const id = getIdParam(req);
+        const restaurant = await models.Restaurant.findByPk(id, {
+            include: [
+                { model: models.City, as: 'city' },
+                { model: models.RestaurantCategory, as: 'categories', through: { attributes: [] } },
+                { model: models.RestaurantHours}
+            ],
+            attributes: { exclude: ['zip_code'] }
         });
+        if (restaurant) {
+            res.send(200, restaurant); 
+        } else {
+            res.send(404, {
+                message: 'This restaurant does not exist in our database.'
+            });
+        }
+    }catch(error){
+        res.send(400, {message: error.message});
     }
 };
 
 async function create(req, res) {
-    if (req.body.id) {
+    try{
+        if (req.body.id) {
+            res.send(400, {
+                message: 'ID should not be provided, since it is determined automatically by the database.'
+            })
+        } else {
+            const restaurant = await models.Restaurant.create(req.body);
+            res.send(201, restaurant);
+        }
+    }catch(error){
         res.send(400, {
-            message: 'ID should not be provided, since it is determined automatically by the database.'
+            message: error.message
         })
-    } else {
-        const restaurant = await models.Restaurant.create(req.body);
-        res.send(201, restaurant);
     }
 };
 

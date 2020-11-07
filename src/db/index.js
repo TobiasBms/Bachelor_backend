@@ -3,7 +3,7 @@ const { modelDefinitions } = require('./models');
 const { applyAssociations } = require('./assoc');
 require("dotenv").config();
 
-const sequelize = new Sequelize(process.env.DB, process.env.USER, process.env.PASS, {
+const sequelize = new Sequelize(process.env.DB, process.env.USR, process.env.PASS, {
   host: process.env.HOST,
   dialect: 'mysql',
   pool: {
@@ -25,5 +25,4 @@ for (const defineModel of modelDefinitions) {
 }
 
 applyAssociations(sequelize);
-
 module.exports = sequelize;
