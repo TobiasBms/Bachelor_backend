@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.Restaurant,
-        key: 'id'
+        key: 'restaurant_id'
       }
     },
     category_id: {

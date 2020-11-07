@@ -1,10 +1,12 @@
 function applyAssociations(sequelize) {
   const {
     Restaurant,
+    RestaurantHours,
     RestaurantCategory,
     RestaurantHasCategory,
     City
   } = sequelize.models;
+
 
   Restaurant.belongsToMany(RestaurantCategory, {
     through: RestaurantHasCategory,
@@ -26,6 +28,17 @@ function applyAssociations(sequelize) {
     foreignKey: 'zip_code',
     as: 'city'
   })
+
+  Restaurant.hasMany(RestaurantHours,  {
+    foreignKey: 'restaurant_id',
+  })
+
+  RestaurantHours.belongsTo(Restaurant, {
+    foreignKey: 'restaurant_id',
+  })
+
 }
+
+
 
 module.exports = { applyAssociations };
