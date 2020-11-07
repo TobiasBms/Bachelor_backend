@@ -181,7 +181,6 @@ CREATE TABLE IF NOT EXISTS `Order` (
     `restaurant_id` INT UNSIGNED NOT NULL,
     `seat_id` INT UNSIGNED NOT NULL,
     `name` VARCHAR(255),
-    `number` INT,
     `created_at` DATETIME,
     `comment` VARCHAR(255),
     `ready` BOOL,
