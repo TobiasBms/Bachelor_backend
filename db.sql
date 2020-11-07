@@ -256,13 +256,18 @@ CREATE TABLE IF NOT EXISTS `OrderHasProductHasExtra` (
 );
 
 CREATE TABLE IF NOT EXISTS `OrderRating` (
-    `order_id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `order_id` INT UNSIGNED,
+    `restaurant_id` INT UNSIGNED,
     `name` VARCHAR(255),
     `rating` TINYINT,
     `review` TEXT,
     `rated_at` DATETIME,
+    PRIMARY KEY (`order_id` , `restaurant_id`),
     FOREIGN KEY (`order_id`)
         REFERENCES `Order` (`id`)
+        ON DELETE CASCADE,
+    FOREIGN KEY (`restaurant_id`)
+        REFERENCES `Restaurant` (`id`)
         ON DELETE CASCADE
 );
 
