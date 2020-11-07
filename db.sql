@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `ProductHasExtra` (
 );
 
 CREATE TABLE IF NOT EXISTS `Order` (
-    `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `restaurant_id` INT UNSIGNED NOT NULL,
     `seat_id` INT UNSIGNED NOT NULL,
     `name` VARCHAR(255),
@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `GroupOrder` (
 );
 
 CREATE TABLE IF NOT EXISTS `GroupOrderHasOrder` (
-    `order_id` BIGINT UNSIGNED,
+    `order_id` INT UNSIGNED,
     `grouporder_id` INT UNSIGNED,
     PRIMARY KEY (`order_id` , `grouporder_id`),
     FOREIGN KEY (`order_id`)
@@ -218,7 +218,7 @@ CREATE TABLE IF NOT EXISTS `OrderStatus` (
 );
 
 CREATE TABLE IF NOT EXISTS `OrderHasStatus` (
-    `order_id` BIGINT UNSIGNED,
+    `order_id` INT UNSIGNED,
     `status_id` INT UNSIGNED,
     `time_changed` DATETIME,
     PRIMARY KEY (`order_id` , `status_id`),
@@ -231,8 +231,8 @@ CREATE TABLE IF NOT EXISTS `OrderHasStatus` (
 );
 
 CREATE TABLE IF NOT EXISTS `OrderHasProduct` (
-    `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `order_id` BIGINT UNSIGNED NOT NULL,
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `order_id` INT UNSIGNED NOT NULL,
     `product_id` INT UNSIGNED NOT NULL,
     `amount` TINYINT,
     FOREIGN KEY (`order_id`)
@@ -244,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `OrderHasProduct` (
 );
 
 CREATE TABLE IF NOT EXISTS `OrderHasProductHasExtra` (
-    `orderproduct_id` BIGINT UNSIGNED,
+    `orderproduct_id` INT UNSIGNED,
     `extra_id` INT UNSIGNED,
     `amount` TINYINT,
     PRIMARY KEY (`orderproduct_id` , `extra_id`),
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `OrderHasProductHasExtra` (
 );
 
 CREATE TABLE IF NOT EXISTS `OrderRating` (
-    `order_id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `order_id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(255),
     `rating` TINYINT,
     `review` TEXT,
