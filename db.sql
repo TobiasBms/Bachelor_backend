@@ -180,10 +180,8 @@ CREATE TABLE IF NOT EXISTS `Order` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `restaurant_id` INT UNSIGNED NOT NULL,
     `seat_id` INT UNSIGNED NOT NULL,
-    `name` VARCHAR(255),
     `created_at` DATETIME,
     `comment` VARCHAR(255),
-    `ready` BOOL,
     FOREIGN KEY (`restaurant_id`)
         REFERENCES `Restaurant` (`id`)
         ON DELETE CASCADE,
@@ -200,6 +198,8 @@ CREATE TABLE IF NOT EXISTS `GroupOrder` (
 CREATE TABLE IF NOT EXISTS `GroupOrderHasOrder` (
     `order_id` INT UNSIGNED,
     `grouporder_id` INT UNSIGNED,
+    `name` VARCHAR(255),
+    `ready` BOOL,
     PRIMARY KEY (`order_id` , `grouporder_id`),
     FOREIGN KEY (`order_id`)
         REFERENCES `Order` (`id`)
