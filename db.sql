@@ -946,5 +946,37 @@ INSERT INTO `RestaurantHours` VALUES
 (2, 'friday', '14:00', '21:30'),
 (2, 'saturday', '14:00', '21:30'),
 (3, 'default', '11:30', '22:00'),
-(4, 'default', '10:00', '23:00')
-;
+(4, 'default', '10:00', '23:00');
+
+INSERT INTO `RestaurantCategory` (`name`, `description`) VALUES
+('Amerikansk', NULL),
+('Barbeque', NULL),
+('Brunch', NULL),
+('Burger', NULL),
+('Cocktails', NULL),
+('Dansk', NULL),
+('Grill', NULL),
+('Halal', NULL),
+('Indisk', NULL),
+('Italiensk', NULL),
+('Japansk', NULL),
+('Kaffebar', NULL),
+('Kebab', NULL),
+('Kinesisk', NULL),
+('Pizza', NULL),
+('Salat', NULL),
+('Sandwich', NULL),
+('Sushi', NULL),
+('Thaimad', NULL),
+('Tyrkisk', NULL),
+('Vegansk', NULL),
+('Vegetarisk', NULL),
+('Vietnamesisk', NULL);
+
+INSERT INTO `RestaurantHasCategory` VALUES
+(1, 10),
+(1, 15),
+(2, 10),
+(3, 14),
+(3, 18),
+(4, 6);
