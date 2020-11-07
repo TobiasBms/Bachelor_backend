@@ -341,6 +341,9 @@ INSERT INTO `Privilege` (`name`) VALUES
 ('Svar på anmeldelse');
 
 INSERT INTO `City` VALUES
+(1000, 'København K'),
+(1500, 'København V'),
+(1800, 'Frederiksberg C'),
 (2000, 'Frederiksberg'),
 (2100, 'København Ø'),
 (2200, 'København N'),
