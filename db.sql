@@ -50,27 +50,6 @@ CREATE TABLE IF NOT EXISTS `Restaurant` (
         ON DELETE RESTRICT
 );
 
-CREATE VIEW `RestaurantView` AS
-    SELECT 
-        `id`,
-        `Restaurant`.`name`,
-        `registered_at`,
-        `City`.`zip_code`,
-        `City`.`name` AS `city`,
-        `address`,
-        `location`,
-        `phone`,
-        `email`,
-        `website`,
-        `image_logo`,
-        `image_banner`,
-        `description`,
-        `smiley_id`
-    FROM
-        `Restaurant`
-            JOIN
-        `City` ON `Restaurant`.`zip_code` = `City`.`zip_code`;
-
 CREATE TABLE IF NOT EXISTS `RestaurantHours` (
     `restaurant_id` INT UNSIGNED,
     `day_of_week` ENUM('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'default'),
