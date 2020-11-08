@@ -1,4 +1,3 @@
-DROP VIEW IF EXISTS	`RestaurantView`;
 DROP TABLE IF EXISTS
 	`ManagerHasPrivilege`,
 	`RoleHasPrivilege`,
@@ -31,6 +30,12 @@ CREATE TABLE IF NOT EXISTS `City` (
     `name` VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS `File` (
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `filename` VARCHAR(255) NOT NULL,
+    `hash` VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS `Restaurant` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(255),
@@ -41,13 +46,19 @@ CREATE TABLE IF NOT EXISTS `Restaurant` (
     `phone` CHAR(8),
     `email` VARCHAR(255),
     `website` VARCHAR(255),
-    `image_logo` VARCHAR(255),
-    `image_banner` VARCHAR(255),
+    `logo_id` INT UNSIGNED,
+    `banner_id` INT UNSIGNED,
     `description` TEXT,
     `smiley_id` INT,
     FOREIGN KEY (`zip_code`)
         REFERENCES `City` (`zip_code`)
-        ON DELETE RESTRICT
+        ON DELETE RESTRICT,
+    FOREIGN KEY (`logo_id`)
+        REFERENCES `File` (`id`)
+        ON DELETE SET NULL,
+    FOREIGN KEY (`banner_id`)
+        REFERENCES `File` (`id`)
+        ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS `RestaurantHours` (
@@ -919,11 +930,11 @@ INSERT INTO `City` VALUES
 (9982, 'Ålbæk'),
 (9990, 'Skagen');
 
-INSERT INTO `Restaurant` (`name`, `registered_at`, `zip_code`, `address`, `location`, `phone`, `email`, `website`, `image_logo`, `image_banner`, `description`, `smiley_id`) VALUES
-('Kayas Pizzaria', CURRENT_DATE, '5270', 'Næsbyvej 79', Point(55.416744, 10.3689532), '66181490', NULL, 'https://kayasrestaurant-odense.dk/', 'logo.jpg', 'banner.jpg', 'Kayas Pizzaria tilbyder et stort udvalg af retter og her kan du bla. få Super og Børnepizza', 793344),
-('Stenovnen', CURRENT_DATE, '5270', 'Ågade 1A', Point(55.4192068, 10.3558769), '35355000', 'pejman136@yahoo.dk', 'http://stenovnen.com/', 'logo.jpg', 'banner.jpg', 'Få en unik madoplevelse fra smagen af den første brændefyret stenovn i Odense.', 934229),
-('Asia Restaurant Odense', CURRENT_DATE, '5230', 'Tagtækkervej 8', Point(55.3849164, 10.4233489), '55985555', 'odense@asia-restaurant.dk', 'https://www.asia-restaurant.dk/', 'logo.jpg', 'banner.jpg', 'Pin Sing Si har gennem sit tidligere arbejde som kok udviklet konceptet bag Asia Restaurant, som i sin enkelthed bygger på gode råvarer, en fusion af nye og gamle kinesiske opskrifter, samt autentiske krydderier.', 512655),
-('Giraffen', CURRENT_DATE, '5000', 'Østre Stationsvej 27', Point(55.4016488, 10.3872447), '66140514', NULL, 'https://www.giraffen-odense.dk/', 'logo.jpg', 'banner.jpg', 'Restaurant Giraffen - hyggelig bar og restaurant på Odense Banegårdscenter', 654737);
+INSERT INTO `Restaurant` (`name`, `registered_at`, `zip_code`, `address`, `location`, `phone`, `email`, `website`, `logo_id`, `banner_id`, `description`, `smiley_id`) VALUES
+('Kayas Pizzaria', CURRENT_DATE, '5270', 'Næsbyvej 79', Point(55.416744, 10.3689532), '66181490', NULL, 'https://kayasrestaurant-odense.dk/', NULL, NULL, 'Kayas Pizzaria tilbyder et stort udvalg af retter og her kan du bla. få Super og Børnepizza', 793344),
+('Stenovnen', CURRENT_DATE, '5270', 'Ågade 1A', Point(55.4192068, 10.3558769), '35355000', 'pejman136@yahoo.dk', 'http://stenovnen.com/', NULL, NULL, 'Få en unik madoplevelse fra smagen af den første brændefyret stenovn i Odense.', 934229),
+('Asia Restaurant Odense', CURRENT_DATE, '5230', 'Tagtækkervej 8', Point(55.3849164, 10.4233489), '55985555', 'odense@asia-restaurant.dk', 'https://www.asia-restaurant.dk/', NULL, NULL, 'Pin Sing Si har gennem sit tidligere arbejde som kok udviklet konceptet bag Asia Restaurant, som i sin enkelthed bygger på gode råvarer, en fusion af nye og gamle kinesiske opskrifter, samt autentiske krydderier.', 512655),
+('Giraffen', CURRENT_DATE, '5000', 'Østre Stationsvej 27', Point(55.4016488, 10.3872447), '66140514', NULL, 'https://www.giraffen-odense.dk/', NULL, NULL, 'Restaurant Giraffen - hyggelig bar og restaurant på Odense Banegårdscenter', 654737);
 
 INSERT INTO `RestaurantHours` VALUES
 (1, 'default', '15:00', '22:00'),
