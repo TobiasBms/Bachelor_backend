@@ -3,7 +3,6 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   sequelize.define('Restaurant', {
     name: DataTypes.STRING,
-    // zip_code: DataTypes.CHAR,
     zip_code: {
       type: DataTypes.CHAR,
       references: {
