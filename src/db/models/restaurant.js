@@ -17,8 +17,8 @@ module.exports = (sequelize) => {
     phone: DataTypes.CHAR,
     email: DataTypes.STRING,
     website: DataTypes.STRING,
-    image_logo: DataTypes.STRING,
-    image_banner: DataTypes.STRING,
+    logo_id: DataTypes.NUMBER,
+    banner_id: DataTypes.NUMBER,
     description: DataTypes.TEXT,
     smiley_id: DataTypes.NUMBER
   });
