@@ -13,7 +13,7 @@ async function getById(req, res) {
             include: [
                 { model: models.City, as: 'city' },
                 { model: models.RestaurantCategory, as: 'categories', through: { attributes: [] } },
-                { model: models.RestaurantHours}
+                { model: models.RestaurantHours, as: 'hours', attributes: { exclude: ['restaurant_id'] } }
             ],
             attributes: { exclude: ['zip_code'] }
         });

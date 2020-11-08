@@ -31,6 +31,7 @@ function applyAssociations(sequelize) {
 
   Restaurant.hasMany(RestaurantHours,  {
     foreignKey: 'restaurant_id',
+    as: 'hours'
   })
 
   RestaurantHours.belongsTo(Restaurant, {
