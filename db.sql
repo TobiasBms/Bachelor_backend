@@ -1,4 +1,3 @@
-DROP VIEW IF EXISTS	`RestaurantView`;
 DROP TABLE IF EXISTS
 	`ManagerHasPrivilege`,
 	`RoleHasPrivilege`,
@@ -31,6 +30,12 @@ CREATE TABLE IF NOT EXISTS `City` (
     `name` VARCHAR(255)
 );
 
+CREATE TABLE IF NOT EXISTS `File` (
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `filename` VARCHAR(255) NOT NULL,
+    `hash` VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS `Restaurant` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(255),
@@ -41,35 +46,20 @@ CREATE TABLE IF NOT EXISTS `Restaurant` (
     `phone` CHAR(8),
     `email` VARCHAR(255),
     `website` VARCHAR(255),
-    `image_logo` VARCHAR(255),
-    `image_banner` VARCHAR(255),
+    `logo_id` INT UNSIGNED,
+    `banner_id` INT UNSIGNED,
     `description` TEXT,
     `smiley_id` INT,
     FOREIGN KEY (`zip_code`)
         REFERENCES `City` (`zip_code`)
-        ON DELETE RESTRICT
+        ON DELETE RESTRICT,
+    FOREIGN KEY (`logo_id`)
+        REFERENCES `File` (`id`)
+        ON DELETE SET NULL,
+    FOREIGN KEY (`banner_id`)
+        REFERENCES `File` (`id`)
+        ON DELETE SET NULL
 );
-
-CREATE VIEW `RestaurantView` AS
-    SELECT 
-        `id`,
-        `Restaurant`.`name`,
-        `registered_at`,
-        `City`.`zip_code`,
-        `City`.`name` AS `city`,
-        `address`,
-        `location`,
-        `phone`,
-        `email`,
-        `website`,
-        `image_logo`,
-        `image_banner`,
-        `description`,
-        `smiley_id`
-    FROM
-        `Restaurant`
-            JOIN
-        `City` ON `Restaurant`.`zip_code` = `City`.`zip_code`;
 
 CREATE TABLE IF NOT EXISTS `RestaurantHours` (
     `restaurant_id` INT UNSIGNED,
@@ -177,14 +167,11 @@ CREATE TABLE IF NOT EXISTS `ProductHasExtra` (
 );
 
 CREATE TABLE IF NOT EXISTS `Order` (
-    `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `restaurant_id` INT UNSIGNED NOT NULL,
     `seat_id` INT UNSIGNED NOT NULL,
-    `name` VARCHAR(255),
-    `number` INT,
     `created_at` DATETIME,
     `comment` VARCHAR(255),
-    `ready` BOOL,
     FOREIGN KEY (`restaurant_id`)
         REFERENCES `Restaurant` (`id`)
         ON DELETE CASCADE,
@@ -199,8 +186,10 @@ CREATE TABLE IF NOT EXISTS `GroupOrder` (
 );
 
 CREATE TABLE IF NOT EXISTS `GroupOrderHasOrder` (
-    `order_id` BIGINT UNSIGNED,
+    `order_id` INT UNSIGNED,
     `grouporder_id` INT UNSIGNED,
+    `name` VARCHAR(255),
+    `ready` BOOL,
     PRIMARY KEY (`order_id` , `grouporder_id`),
     FOREIGN KEY (`order_id`)
         REFERENCES `Order` (`id`)
@@ -218,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `OrderStatus` (
 );
 
 CREATE TABLE IF NOT EXISTS `OrderHasStatus` (
-    `order_id` BIGINT UNSIGNED,
+    `order_id` INT UNSIGNED,
     `status_id` INT UNSIGNED,
     `time_changed` DATETIME,
     PRIMARY KEY (`order_id` , `status_id`),
@@ -231,8 +220,8 @@ CREATE TABLE IF NOT EXISTS `OrderHasStatus` (
 );
 
 CREATE TABLE IF NOT EXISTS `OrderHasProduct` (
-    `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `order_id` BIGINT UNSIGNED NOT NULL,
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `order_id` INT UNSIGNED NOT NULL,
     `product_id` INT UNSIGNED NOT NULL,
     `amount` TINYINT,
     FOREIGN KEY (`order_id`)
@@ -244,7 +233,7 @@ CREATE TABLE IF NOT EXISTS `OrderHasProduct` (
 );
 
 CREATE TABLE IF NOT EXISTS `OrderHasProductHasExtra` (
-    `orderproduct_id` BIGINT UNSIGNED,
+    `orderproduct_id` INT UNSIGNED,
     `extra_id` INT UNSIGNED,
     `amount` TINYINT,
     PRIMARY KEY (`orderproduct_id` , `extra_id`),
@@ -257,13 +246,18 @@ CREATE TABLE IF NOT EXISTS `OrderHasProductHasExtra` (
 );
 
 CREATE TABLE IF NOT EXISTS `OrderRating` (
-    `order_id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `order_id` INT UNSIGNED,
+    `restaurant_id` INT UNSIGNED,
     `name` VARCHAR(255),
     `rating` TINYINT,
     `review` TEXT,
     `rated_at` DATETIME,
+    PRIMARY KEY (`order_id` , `restaurant_id`),
     FOREIGN KEY (`order_id`)
         REFERENCES `Order` (`id`)
+        ON DELETE CASCADE,
+    FOREIGN KEY (`restaurant_id`)
+        REFERENCES `Restaurant` (`id`)
         ON DELETE CASCADE
 );
 
@@ -341,6 +335,9 @@ INSERT INTO `Privilege` (`name`) VALUES
 ('Svar på anmeldelse');
 
 INSERT INTO `City` VALUES
+(1000, 'København K'),
+(1500, 'København V'),
+(1800, 'Frederiksberg C'),
 (2000, 'Frederiksberg'),
 (2100, 'København Ø'),
 (2200, 'København N'),
@@ -933,11 +930,11 @@ INSERT INTO `City` VALUES
 (9982, 'Ålbæk'),
 (9990, 'Skagen');
 
-INSERT INTO `Restaurant` (`name`, `registered_at`, `zip_code`, `address`, `location`, `phone`, `email`, `website`, `image_logo`, `image_banner`, `description`, `smiley_id`) VALUES
-('Kayas Pizzaria', CURRENT_DATE, '5270', 'Næsbyvej 79', Point(55.416744, 10.3689532), '66181490', NULL, 'https://kayasrestaurant-odense.dk/', 'logo.jpg', 'banner.jpg', 'Kayas Pizzaria tilbyder et stort udvalg af retter og her kan du bla. få Super og Børnepizza', 793344),
-('Stenovnen', CURRENT_DATE, '5270', 'Ågade 1A', Point(55.4192068, 10.3558769), '35355000', 'pejman136@yahoo.dk', 'http://stenovnen.com/', 'logo.jpg', 'banner.jpg', 'Få en unik madoplevelse fra smagen af den første brændefyret stenovn i Odense.', 934229),
-('Asia Restaurant Odense', CURRENT_DATE, '5230', 'Tagtækkervej 8', Point(55.3849164, 10.4233489), '55985555', 'odense@asia-restaurant.dk', 'https://www.asia-restaurant.dk/', 'logo.jpg', 'banner.jpg', 'Pin Sing Si har gennem sit tidligere arbejde som kok udviklet konceptet bag Asia Restaurant, som i sin enkelthed bygger på gode råvarer, en fusion af nye og gamle kinesiske opskrifter, samt autentiske krydderier.', 512655),
-('Giraffen', CURRENT_DATE, '5000', 'Østre Stationsvej 27', Point(55.4016488, 10.3872447), '66140514', NULL, 'https://www.giraffen-odense.dk/', 'logo.jpg', 'banner.jpg', 'Restaurant Giraffen - hyggelig bar og restaurant på Odense Banegårdscenter', 654737);
+INSERT INTO `Restaurant` (`name`, `registered_at`, `zip_code`, `address`, `location`, `phone`, `email`, `website`, `logo_id`, `banner_id`, `description`, `smiley_id`) VALUES
+('Kayas Pizzaria', CURRENT_DATE, '5270', 'Næsbyvej 79', Point(55.416744, 10.3689532), '66181490', NULL, 'https://kayasrestaurant-odense.dk/', NULL, NULL, 'Kayas Pizzaria tilbyder et stort udvalg af retter og her kan du bla. få Super og Børnepizza', 793344),
+('Stenovnen', CURRENT_DATE, '5270', 'Ågade 1A', Point(55.4192068, 10.3558769), '35355000', 'pejman136@yahoo.dk', 'http://stenovnen.com/', NULL, NULL, 'Få en unik madoplevelse fra smagen af den første brændefyret stenovn i Odense.', 934229),
+('Asia Restaurant Odense', CURRENT_DATE, '5230', 'Tagtækkervej 8', Point(55.3849164, 10.4233489), '55985555', 'odense@asia-restaurant.dk', 'https://www.asia-restaurant.dk/', NULL, NULL, 'Pin Sing Si har gennem sit tidligere arbejde som kok udviklet konceptet bag Asia Restaurant, som i sin enkelthed bygger på gode råvarer, en fusion af nye og gamle kinesiske opskrifter, samt autentiske krydderier.', 512655),
+('Giraffen', CURRENT_DATE, '5000', 'Østre Stationsvej 27', Point(55.4016488, 10.3872447), '66140514', NULL, 'https://www.giraffen-odense.dk/', NULL, NULL, 'Restaurant Giraffen - hyggelig bar og restaurant på Odense Banegårdscenter', 654737);
 
 INSERT INTO `RestaurantHours` VALUES
 (1, 'default', '15:00', '22:00'),
@@ -946,5 +943,37 @@ INSERT INTO `RestaurantHours` VALUES
 (2, 'friday', '14:00', '21:30'),
 (2, 'saturday', '14:00', '21:30'),
 (3, 'default', '11:30', '22:00'),
-(4, 'default', '10:00', '23:00')
-;
+(4, 'default', '10:00', '23:00');
+
+INSERT INTO `RestaurantCategory` (`name`, `description`) VALUES
+('Amerikansk', NULL),
+('Barbeque', NULL),
+('Brunch', NULL),
+('Burger', NULL),
+('Cocktails', NULL),
+('Dansk', NULL),
+('Grill', NULL),
+('Halal', NULL),
+('Indisk', NULL),
+('Italiensk', NULL),
+('Japansk', NULL),
+('Kaffebar', NULL),
+('Kebab', NULL),
+('Kinesisk', NULL),
+('Pizza', NULL),
+('Salat', NULL),
+('Sandwich', NULL),
+('Sushi', NULL),
+('Thaimad', NULL),
+('Tyrkisk', NULL),
+('Vegansk', NULL),
+('Vegetarisk', NULL),
+('Vietnamesisk', NULL);
+
+INSERT INTO `RestaurantHasCategory` VALUES
+(1, 10),
+(1, 15),
+(2, 10),
+(3, 14),
+(3, 18),
+(4, 6);
