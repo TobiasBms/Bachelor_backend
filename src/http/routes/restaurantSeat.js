@@ -41,7 +41,7 @@ async function create(req, res) {
 
 async function update(req, res) {
     const id = getIdParam(req);
-    if (req.body.id === id) {
+    if (req.body.id === id) { 
         await models.RestaurantSeat.update(req.body, {
             where: {
                 id: id

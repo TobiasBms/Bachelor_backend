@@ -5,7 +5,10 @@ function applyAssociations(sequelize) {
     RestaurantCategory,
     RestaurantHasCategory,
     RestaurantSeat,
-    City
+    City,
+    Privilege,
+    Manager,
+    ManagerHasPrivilege
   } = sequelize.models;
 
 
@@ -46,6 +49,21 @@ function applyAssociations(sequelize) {
   RestaurantSeat.belongsTo(Restaurant, {
     foreignKey: 'restaurant_id'
   })
+
+  Privilege.belongsToMany(Manager, {
+    through: ManagerHasPrivilege,
+    foreignKey: 'privilege_id',
+    otherKey: 'manager_id',
+    as: 'managerprivilege'
+  })
+
+  Manager.belongsToMany(Privilege, {
+    through: ManagerHasPrivilege,
+    foreignKey: 'manager_id',
+    otherKey: 'privilege_id',
+    as: 'managerprivilege'
+  })
+
 }
 
 
