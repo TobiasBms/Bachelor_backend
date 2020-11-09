@@ -4,6 +4,7 @@ const modelDefinitions = [
 	require('./restaurantHours'),
 	require('./restaurantCategory'),
 	require('./restaurantHasCategory'),
+	require('./restaurantSeat'),
 ]
 
 module.exports = { modelDefinitions } 

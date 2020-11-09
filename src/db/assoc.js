@@ -4,6 +4,7 @@ function applyAssociations(sequelize) {
     RestaurantHours,
     RestaurantCategory,
     RestaurantHasCategory,
+    RestaurantSeat,
     City
   } = sequelize.models;
 
@@ -38,6 +39,13 @@ function applyAssociations(sequelize) {
     foreignKey: 'restaurant_id',
   })
 
+  Restaurant.hasMany(RestaurantSeat, {
+    foreignKey: 'restaurant_id'
+  })
+
+  RestaurantSeat.belongsTo(Restaurant, {
+    foreignKey: 'restaurant_id'
+  })
 }
 
 
