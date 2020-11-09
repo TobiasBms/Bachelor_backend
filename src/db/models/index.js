@@ -7,6 +7,8 @@ const modelDefinitions = [
 	require('./managerHasPrivilege'),
 	require('./restaurantHasCategory'),
 	require('./restaurantSeat'),
+	require('./manager'),
+	require('./managerRole'),
 ]
 
 module.exports = { modelDefinitions } 
