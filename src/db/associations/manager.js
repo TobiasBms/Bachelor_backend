@@ -2,7 +2,9 @@ module.exports = function applyAssociations(sequelize) {
   const {
     Restaurant,
     Manager,
-    ManagerRole
+    ManagerRole,
+    Privilege,
+    ManagerHasPrivilege
   } = sequelize.models;
 
   Restaurant.hasMany(Manager, {
@@ -28,5 +30,19 @@ module.exports = function applyAssociations(sequelize) {
   Manager.belongsTo(ManagerRole, {
     foreignKey: 'role_id',
     as: 'role'
+  })
+
+  Privilege.belongsToMany(Manager, {
+    through: ManagerHasPrivilege,
+    foreignKey: 'privilege_id',
+    otherKey: 'manager_id',
+    as: 'manager'
+  })
+
+  Manager.belongsToMany(Privilege, {
+    through: ManagerHasPrivilege,
+    foreignKey: 'manager_id',
+    otherKey: 'privilege_id',
+    as: 'manager'
   })
 }
