@@ -16,6 +16,7 @@ async function getById(req, res) {
         const id = getIdParam(req);
         const manager = await models.Manager.findByPk(id, {
             include: [
+                {model: models.Privilege},
                 { model: models.ManagerRole, as: 'role', attributes: { exclude: ['restaurant_id'] } },
             ],
             attributes: { exclude: ['role_id'] }
