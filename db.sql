@@ -21,7 +21,9 @@ DROP TABLE IF EXISTS
 	`RestaurantHasCategory`,
 	`RestaurantCategory`,
 	`RestaurantHours`,
+	`RestaurantHasFile`,
 	`Restaurant`,
+	`File`,
 	`City`
 ;
 
