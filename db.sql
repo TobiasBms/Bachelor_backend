@@ -61,6 +61,17 @@ CREATE TABLE IF NOT EXISTS `Restaurant` (
         ON DELETE SET NULL
 );
 
+CREATE TABLE IF NOT EXISTS `RestaurantHasFile` (
+    `restaurant_id` INT UNSIGNED,
+    `file_id` INT UNSIGNED,
+    FOREIGN KEY (`restaurant_id`)
+        REFERENCES `Restaurant` (`id`)
+        ON DELETE CASCADE,
+    FOREIGN KEY (`file_id`)
+        REFERENCES `File` (`id`)
+        ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS `RestaurantHours` (
     `restaurant_id` INT UNSIGNED,
     `day_of_week` ENUM('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'default'),
