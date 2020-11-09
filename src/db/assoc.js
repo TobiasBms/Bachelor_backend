@@ -70,7 +70,8 @@ function applyAssociations(sequelize) {
   })
 
   Manager.belongsTo(ManagerRole, {
-    foreignKey: 'role_id'
+    foreignKey: 'role_id',
+    as: 'role'
   })
 }
 

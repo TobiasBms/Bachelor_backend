@@ -9,7 +9,12 @@ async function getAll(_req, res) {
 async function getById(req, res) {
     try{
         const id = getIdParam(req);
-        const manager = await models.Manager.findByPk(id);
+        const manager = await models.Manager.findByPk(id, {
+            include: [
+                { model: models.ManagerRole, as: 'role', attributes: { exclude: ['restaurant_id'] } },
+            ],
+            attributes: { exclude: ['role_id'] }
+        });
         if (manager) {
             res.send(200, manager); 
         } else {
