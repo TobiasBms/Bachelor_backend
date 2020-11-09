@@ -2,7 +2,12 @@ const { models } = require('../../db');
 const { getIdParam } = require('../utils');
 
 async function getAll(_req, res) {
-        const managers = await models.Manager.findAll();
+        const managers = await models.Manager.findAll({
+            include: [
+                { model: models.ManagerRole, as: 'role', attributes: { exclude: ['restaurant_id'] } },
+            ],
+            attributes: { exclude: ['role_id'] }
+        });
         res.send(200, managers);
 };
 
