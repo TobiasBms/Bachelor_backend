@@ -12,9 +12,9 @@ module.exports = (sequelize) => {
           }, 
         day_of_week: {
             type: DataTypes.ENUM({
-                values: ['Default', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday','Sunday']
+                values: ['Default','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
             }),
-            primaryKey: true,
+            primaryKey: true
         },
         open_hour: {
             type: DataTypes.TIME,

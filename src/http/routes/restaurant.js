@@ -47,6 +47,7 @@ async function create(req, res) {
 };
 
 async function update(req, res) {
+    
     const id = getIdParam(req);
 
     // We only accept an UPDATE request if the `:id` param matches the body `id`
