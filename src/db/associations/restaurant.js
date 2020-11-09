@@ -1,4 +1,4 @@
-function applyAssociations(sequelize) {
+module.exports = function applyAssociations(sequelize) {
   const {
     Restaurant,
     RestaurantHours,
@@ -48,5 +48,3 @@ function applyAssociations(sequelize) {
     foreignKey: 'restaurant_id'
   })
 }
-
-module.exports = applyAssociations;

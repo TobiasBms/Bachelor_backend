@@ -1,4 +1,4 @@
-function applyAssociations(sequelize) {
+module.exports = function applyAssociations(sequelize) {
   const {
     Restaurant,
     Manager,
@@ -30,5 +30,3 @@ function applyAssociations(sequelize) {
     as: 'role'
   })
 }
-
-module.exports = applyAssociations;
