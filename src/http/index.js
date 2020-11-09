@@ -5,6 +5,7 @@ const routes = {
   restaurant: require('./routes/restaurant'),
   restauranthours: require('./routes/restaurantHours'),
   restaurantseat: require('./routes/restaurantSeat'),
+  privilege: require('./routes/privilege'),
   manager: require('./routes/manager'),
   role: require('./routes/managerRole'),
 };
