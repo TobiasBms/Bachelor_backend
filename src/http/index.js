@@ -6,6 +6,7 @@ const routes = {
   restauranthours: require('./routes/restaurantHours'),
   restaurantseat: require('./routes/restaurantSeat'),
   manager: require('./routes/manager'),
+  role: require('./routes/managerRole'),
 };
 
 const server = restify.createServer();
