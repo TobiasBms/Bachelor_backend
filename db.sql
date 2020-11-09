@@ -74,8 +74,12 @@ CREATE TABLE IF NOT EXISTS `RestaurantHours` (
 
 CREATE TABLE IF NOT EXISTS `RestaurantCategory` (
     `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    `image_id` INT UNSIGNED,
     `name` VARCHAR(255),
-    `description` TEXT
+    `description` TEXT,
+    FOREIGN KEY (`image_id`)
+        REFERENCES `File` (`id`)
+        ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS `RestaurantHasCategory` (
@@ -104,13 +108,16 @@ CREATE TABLE IF NOT EXISTS `Product` (
     `restaurant_id` INT UNSIGNED NOT NULL,
     `name` VARCHAR(255),
     `description` VARCHAR(255),
-    `image_icon` VARCHAR(255),
+    `image_id` INT UNSIGNED,
     `price` DECIMAL(10 , 2),
     `hidden` BOOL,
     `sold_out` BOOL,
     FOREIGN KEY (`restaurant_id`)
         REFERENCES `Restaurant` (`id`)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (`image_id`)
+        REFERENCES `File` (`id`)
+        ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS `ProductCategory` (
@@ -118,14 +125,16 @@ CREATE TABLE IF NOT EXISTS `ProductCategory` (
     `restaurant_id` INT UNSIGNED NOT NULL,
     `name` VARCHAR(255),
     `description` VARCHAR(255),
-    `image_icon` VARCHAR(255),
-    `image_wide` VARCHAR(255),
+    `image_id` INT UNSIGNED,
     `hidden` BOOL,
     `available_start` TIME,
     `available_end` TIME,
     FOREIGN KEY (`restaurant_id`)
         REFERENCES `Restaurant` (`id`)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
+    FOREIGN KEY (`image_id`)
+        REFERENCES `File` (`id`)
+        ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS `ProductHasCategory` (
