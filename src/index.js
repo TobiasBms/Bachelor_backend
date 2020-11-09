@@ -14,13 +14,14 @@ async function initDb() {
   }
 }
 
-async function init() {
+async function init(port) {
   await initDb();
   console.log(`Starting server...`);
-  app.listen(process.env.PORT, () => {
-    console.log(`Server listening on port ${process.env.PORT}.`);
+  app.listen(port, () => {
+    console.log(`Server listening on port ${port}.`);
   });
 }
-init();
+
+init(process.env.HTTP_PORT);
 
 
