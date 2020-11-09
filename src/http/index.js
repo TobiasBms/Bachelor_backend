@@ -3,7 +3,8 @@ const restify = require('restify');
 
 const routes = {
   restaurant: require('./routes/restaurant'),
-  restaurantHours: require('./routes/restaurantHours')
+  restaurantHours: require('./routes/restaurantHours'),
+  restaurantseat: require('./routes/restaurantSeat'),
 };
 
 const server = restify.createServer();
