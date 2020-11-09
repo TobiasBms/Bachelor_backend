@@ -11,10 +11,10 @@ module.exports = (sequelize) => {
     },
     role_id: {
       type: DataTypes.NUMBER,
-      // references: {
-      //   model: sequelize.models.ManagerRole,
-      //   key: 'id'
-      // }
+      references: {
+        model: sequelize.models.ManagerRole,
+        key: 'id'
+      }
     },
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
