@@ -4,7 +4,7 @@ const { getIdParam } = require('../utils');
 async function getAll(_req, res) {
         const role = await models.ManagerRole.findAll({
             include: [
-                { model: models.Privilege },
+                { model: models.Privilege, as: 'privileges', through: { attributes: [] } },
             ],
         });
         res.send(200, role);

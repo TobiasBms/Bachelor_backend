@@ -51,11 +51,13 @@ module.exports = function applyAssociations(sequelize) {
     through: RoleHasPrivilege,
     foreignKey: 'role_id',
     otherKey: 'privilege_id',
+    as: 'privileges',
   })
 
   Privilege.belongsToMany(ManagerRole, {
     through: RoleHasPrivilege,
     foreignKey: 'privilege_id',
     otherKey: 'role_id',
+    as: 'privileges',
   })
 }
