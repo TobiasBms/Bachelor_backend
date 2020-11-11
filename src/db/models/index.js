@@ -1,14 +1,17 @@
-const modelDefinitions = [
-	require('./city'),
-	require('./restaurant'),
-	require('./restaurantHours'),
-	require('./restaurantCategory'),
-	require('./privilege'),
-	require('./managerHasPrivilege'),
-	require('./restaurantHasCategory'),
-	require('./restaurantSeat'),
-	require('./manager'),
-	require('./managerRole'),
-]
+const fs = require('fs');
 
-module.exports = { modelDefinitions } 
+function print(){
+	try{
+		return fs.readdirSync('./src/db/models')
+					.filter(file => file !== "index.js")
+					.map(file => require(`./${file}`));
+
+	}catch(error){
+		console.error(error.messsage);
+	}
+	
+}
+
+
+
+module.exports = print();
