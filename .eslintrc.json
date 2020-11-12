@@ -1,0 +1,20 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "arrowFunctions": true,
+            "classes": false,
+            "restParams": true,
+            "spread": true,
+            "templateStrings": true
+        }
+    },
+    "rules": {
+        "semi": "error",
+        "quotes": [
+            "error",
+            "single"
+        ]
+    }
+}

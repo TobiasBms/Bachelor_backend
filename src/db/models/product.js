@@ -16,4 +16,4 @@ module.exports = (sequelize) => {
         sold_out: DataTypes.BOOLEAN,
         hidden: DataTypes.BOOLEAN
     });
-}
+};

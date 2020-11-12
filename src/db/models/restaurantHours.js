@@ -22,5 +22,5 @@ module.exports = (sequelize) => {
         close_hour: {
             type: DataTypes.TIME
         }
-    })
-}
+    });
+};
