@@ -4,13 +4,12 @@ module.exports = function applyAssociations(sequelize){
         Product
       } = sequelize.models;
 
-      Product.belongsTo('Restaurant', {
+
+      Restaurant.hasMany(Product, {
         foreignKey: 'restaurant_id'
       });
 
-      Restaurant.hasMany('Product', {
+      Product.belongsTo(Restaurant, {
         foreignKey: 'restaurant_id'
       });
-
-
 };

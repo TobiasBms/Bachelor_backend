@@ -2,12 +2,18 @@ const { models } = require('../../db');
 const { getIdParam } = require('../utils');
 
 async function getAll(_req, res) {
+
     try{
-        const products = await models.Product.findAll();
+        const products = await models.Product.findAll({
+            include: [
+                {model: models.Restaurant}
+            ]
+        });
         res.send(200, products);
     }catch(error){
-        res.end(400, {message: error.message})
+        res.end(400, {message: error.message});
     }
+
 };
 
 async function getById(req, res) {
@@ -31,7 +37,7 @@ async function create(req, res) {
         if (req.body.id) {
             res.send(400, {
                 message: 'ID should not be provided, since it is determined automatically by the database.'
-            })
+            });
         } else {
             const product = await models.Product.create(req.body);
             res.send(201, product);
@@ -39,7 +45,7 @@ async function create(req, res) {
     }catch(error){
         res.send(400, {
             message: error.message
-        })
+        });
     }
 };
 
