@@ -1,12 +1,16 @@
-function applyAssociations(sequelize) {
-  const associations = [
-    require('./restaurant'),
-    require('./manager'),
-  ]
+const fs = require('fs');
 
-  for (const apply of associations) {
-    apply(sequelize)
-  }
+function applyAssociations(sequelize) {
+  
+  /*
+    Dynamic import and apply the functions from associations
+  */
+ 
+   fs.readdirSync('./src/db/associations')
+  .filter(file => file !== 'index.js')
+  .map(file => require(`./${file}`))
+  .forEach(applyFile => applyFile(sequelize));
+
 }
 
-module.exports = { applyAssociations }
+module.exports = { applyAssociations };

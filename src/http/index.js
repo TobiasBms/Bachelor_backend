@@ -8,6 +8,7 @@ const routes = {
   privilege: require('./routes/privilege'),
   manager: require('./routes/manager'),
   role: require('./routes/managerRole'),
+  product: require('./routes/product'),
 };
 
 const server = restify.createServer();

@@ -24,27 +24,27 @@ module.exports = function applyAssociations(sequelize) {
 
   City.hasMany(Restaurant, {
     foreignKey: 'zip_code',
-  })
+  });
 
   Restaurant.belongsTo(City, {
     foreignKey: 'zip_code',
     as: 'city'
-  })
+  });
 
   Restaurant.hasMany(RestaurantHours, {
     foreignKey: 'restaurant_id',
     as: 'hours'
-  })
+  });
 
   RestaurantHours.belongsTo(Restaurant, {
     foreignKey: 'restaurant_id',
-  })
+  });
 
   Restaurant.hasMany(RestaurantSeat, {
     foreignKey: 'restaurant_id'
-  })
+  });
 
   RestaurantSeat.belongsTo(Restaurant, {
     foreignKey: 'restaurant_id'
-  })
-}
+  });
+};
