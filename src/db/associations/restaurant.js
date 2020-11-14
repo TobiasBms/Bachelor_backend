@@ -6,45 +6,45 @@ module.exports = function applyAssociations(sequelize) {
     RestaurantHasCategory,
     RestaurantSeat,
     City,
-  } = sequelize.models;
+  } = sequelize.models
 
   Restaurant.belongsToMany(RestaurantCategory, {
     through: RestaurantHasCategory,
     foreignKey: 'restaurant_id',
     otherKey: 'category_id',
-    as: 'categories'
-  });
+    as: 'categories',
+  })
 
   RestaurantCategory.belongsToMany(Restaurant, {
     through: RestaurantHasCategory,
     foreignKey: 'category_id',
     otherKey: 'restaurant_id',
-    as: 'categories'
-  });
+    as: 'categories',
+  })
 
   City.hasMany(Restaurant, {
     foreignKey: 'zip_code',
-  });
+  })
 
   Restaurant.belongsTo(City, {
     foreignKey: 'zip_code',
-    as: 'city'
-  });
+    as: 'city',
+  })
 
   Restaurant.hasMany(RestaurantHours, {
     foreignKey: 'restaurant_id',
-    as: 'hours'
-  });
+    as: 'hours',
+  })
 
   RestaurantHours.belongsTo(Restaurant, {
     foreignKey: 'restaurant_id',
-  });
+  })
 
   Restaurant.hasMany(RestaurantSeat, {
-    foreignKey: 'restaurant_id'
-  });
+    foreignKey: 'restaurant_id',
+  })
 
   RestaurantSeat.belongsTo(Restaurant, {
-    foreignKey: 'restaurant_id'
-  });
-};
+    foreignKey: 'restaurant_id',
+  })
+}
