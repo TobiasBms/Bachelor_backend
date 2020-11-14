@@ -11,4 +11,4 @@ module.exports = (sequelize) => {
     },
     name: DataTypes.STRING,
   });
-}
+};

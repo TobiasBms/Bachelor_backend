@@ -24,4 +24,4 @@ module.exports = (sequelize) => {
     registered_at: DataTypes.DATEONLY,
     last_login: DataTypes.DATE,
   });
-}
+};

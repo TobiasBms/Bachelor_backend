@@ -34,7 +34,7 @@ async function create(req, res) {
         if (req.body.id) {
             res.send(400, {
                 message: 'ID should not be provided, since it is determined automatically by the database.'
-            })
+            });
         } else {
             const restaurant = await models.Restaurant.create(req.body);
             res.send(201, restaurant);
@@ -42,7 +42,7 @@ async function create(req, res) {
     }catch(error){
         res.send(400, {
             message: error.message
-        })
+        });
     }
 };
 

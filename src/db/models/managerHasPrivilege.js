@@ -16,5 +16,5 @@ module.exports = (sequelize) => {
                 key: 'id'
             }
         }
-    })
-}
+    });
+};

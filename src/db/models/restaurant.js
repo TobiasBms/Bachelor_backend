@@ -21,4 +21,4 @@ module.exports = (sequelize) => {
     description: DataTypes.TEXT,
     smiley_id: DataTypes.NUMBER
   });
-}
+};

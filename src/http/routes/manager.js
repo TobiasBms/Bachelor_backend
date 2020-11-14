@@ -9,7 +9,7 @@ async function getAll(_req, res) {
             attributes: { exclude: ['role_id'] }
         });
         res.send(200, managers);
-};
+}
 
 async function getById(req, res) {
     try{
@@ -31,24 +31,29 @@ async function getById(req, res) {
     }catch(error){
         res.send(400, {message: error.message});
     }
-};
+}
 
 async function create(req, res) {
     try{
+
         if (req.body.id) {
+            
             res.send(400, {
                 message: 'ID should not be provided, since it is determined automatically by the database.'
-            })
+            });
+
         } else {
             const manager = await models.Manager.create(req.body);
             res.send(201, manager);
         }
     }catch(error){
+
         res.send(400, {
             message: error.message
-        })
+        });
+        
     }
-};
+}
 
 async function update(req, res) {
     const id = getIdParam(req);
@@ -64,7 +69,7 @@ async function update(req, res) {
             message: `Bad request: param ID (${id}) does not match body ID (${req.body.id}).`
         });
     }
-};
+}
 
 async function remove(req, res) {
     const id = getIdParam(req);
@@ -74,7 +79,7 @@ async function remove(req, res) {
         }
     });
     res.send(200);
-};
+}
 
 module.exports = {
     getAll,
