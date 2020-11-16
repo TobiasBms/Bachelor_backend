@@ -4,7 +4,9 @@ const { getIdParam } = require('../utils')
 async function getAll(_req, res) {
   try {
     const products = await models.Product.findAll({
-      include: [{ model: models.Restaurant }],
+      include: [
+        { model: models.Restaurant},
+      ],
     })
     res.send(200, products)
   } catch (error) {
@@ -15,7 +17,14 @@ async function getAll(_req, res) {
 async function getById(req, res) {
   try {
     const id = getIdParam(req)
-    const product = await models.Product.findByPk(id)
+    const product = await models.Product.findByPk(id, {
+      include: [
+        {
+          model: models.Extra,
+          as: "extra",
+        },
+      ]
+    })
     if (product) {
       res.send(200, product)
     } else {

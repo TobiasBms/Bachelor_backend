@@ -6,7 +6,7 @@ module.exports = (sequelize) => {
             type: DataTypes.NUMBER,
             primaryKey: true,
             references: {
-                model :sequelize.models.Restaurant,
+                model: sequelize.models.Restaurant,
                 foreignKey: 'restaurant_id'
             }
         },
