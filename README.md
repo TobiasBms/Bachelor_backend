@@ -51,10 +51,10 @@ bachelor_backend
     |   |   index.js - Exports Sequelize db instance and creates models and associations
     |   |
     |   +---associations - Relationships between models
-    |   |   index.js - Exports function to dynamically apply all associations
+    |   |       index.js - Exports function to dynamically apply all associations
     |   |
     |   \---models - Sequelize model definitions
-    |       index.js - Exports all model definitions
+    |           index.js - Exports all model definitions
     |               
     \---http - REST API
         |   index.js - Exports Restify server, registers middleware and routes
