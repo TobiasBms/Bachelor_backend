@@ -15,7 +15,7 @@ const getAll = async (_req, res, next) => {
 
 const getById = async (req, res, next) => {
   try {
-    const { id } = getIdParam(req)
+    const id = getIdParam(req)
     let prouductCategory = await models.ProductCategory.findByPK(id)
     if (prouductCategory) {
       res.send(200, prouductCategory)
@@ -35,6 +35,7 @@ const create = async (req, res, next) => {
           'ID should not be provided, since it is determined automatically by the database.',
       })
     }
+    return next()
   } catch (error) {
     res.send(400)
     return next(new BadRequestError(error.message))
@@ -57,9 +58,21 @@ const update = async (req, res, next) => {
   }
 }
 
+async function remove(req, res, next) {
+  const id = getIdParam(req)
+  await models.ProductCategory.destroy({
+    where: {
+      id: id,
+    },
+  })
+  res.send(200)
+  return next()
+}
+
 module.exports = {
   getAll,
   getById,
   create,
   update,
+  remove,
 }
