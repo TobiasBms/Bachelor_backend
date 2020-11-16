@@ -1,9 +1,12 @@
 const { models } = require('../../db')
+const restaurantService = require('../../services/restaurant.service')
 const { getIdParam } = require('../utils')
 
-async function getAll(_req, res) {
-  const restaurants = await models.Restaurant.findAll()
-  res.send(200, restaurants)
+function getAll(_req, res, next) {
+  restaurantService
+    .getAll()
+    .then(restaurants => res.send(200, restaurants))
+    .catch(next)
 }
 
 async function getById(req, res) {
