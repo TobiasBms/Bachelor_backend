@@ -1,7 +1,6 @@
 const restaurantService = require('../../services/restaurant'),
-  { models } = require('../../db'),
-  { NotFoundError, BadRequestError } = require('restify-errors'),
   { getIdParam, getScopesQuery } = require('../middleware'),
+  { NotFoundError, BadRequestError } = require('restify-errors'),
   { Router } = require('restify-router'),
   router = new Router()
 
@@ -59,9 +58,7 @@ async function update(req, res, next) {
     if (req.body.id !== req.id) {
       next(new BadRequestError('ID parameter does not match body.'))
     } else {
-      await models.Restaurant.update(req.body, {
-        where: { id: req.id },
-      })
+      await restaurantService.update(req.id, req.body)
       res.send(204)
       next()
     }
@@ -72,9 +69,7 @@ async function update(req, res, next) {
 
 async function remove(req, res, next) {
   try {
-    await models.Restaurant.destroy({
-      where: { id: req.id },
-    })
+    await restaurantService.destroy(req.id)
     res.send(204)
     next()
   } catch (error) {
