@@ -11,14 +11,14 @@ router.put('/:id', getIdParam, update)
 router.del('/:id', getIdParam, remove)
 module.exports = router
 
-function getAll(_req, res, next) {
-  restaurantService
-    .getAll()
-    .then(restaurants => {
-      res.send(200, restaurants)
-      next()
-    })
-    .catch(next)
+async function getAll(_req, res, next) {
+  try {
+    const restaurants = await restaurantService.getAll()
+    res.send(200, restaurants)
+    next()
+  } catch (error) {
+    next(error)
+  }
 }
 
 async function getById(req, res) {
