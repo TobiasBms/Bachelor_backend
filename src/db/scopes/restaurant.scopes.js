@@ -1,4 +1,4 @@
-function applyScopes(sequelize) {
+module.exports = function applyScopes(sequelize) {
   const {
     Restaurant,
     City,
@@ -31,5 +31,3 @@ function applyScopes(sequelize) {
     ],
   })
 }
-
-module.exports = { applyScopes }
