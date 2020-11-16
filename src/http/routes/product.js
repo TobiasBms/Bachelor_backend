@@ -1,18 +1,21 @@
 const { models } = require('../../db')
 const { getIdParam } = require('../utils')
+const { BadRequestError } = require('restify-errors')
 
-async function getAll(_req, res) {
+async function getAll(_req, res, next) {
   try {
     const products = await models.Product.findAll({
       include: [{ model: models.Restaurant }],
     })
     res.send(200, products)
+    return next()
   } catch (error) {
-    res.end(400, { message: error.message })
+    res.end(400)
+    return next(error.message)
   }
 }
 
-async function getById(req, res) {
+async function getById(req, res, next) {
   try {
     const id = getIdParam(req)
     const product = await models.Product.findByPk(id, {
@@ -27,34 +30,33 @@ async function getById(req, res) {
     if (product) {
       res.send(200, product)
     } else {
-      res.send(404, {
-        message: 'This product does not exist in our database.',
-      })
+      res.send(404)
+      return next('This product does not exist in our database.')
     }
   } catch (error) {
-    res.send(400, { message: error.message })
+    res.send(400)
+    return next(new BadRequestError(error.message))
   }
 }
 
-async function create(req, res) {
+async function create(req, res, next) {
   try {
     if (req.body.id) {
-      res.send(400, {
-        message:
-          'ID should not be provided, since it is determined automatically by the database.',
-      })
-    } else {
-      const product = await models.Product.create(req.body)
-      res.send(201, product)
+      return next(
+        new BadRequestError(
+          'ID should not be provided, since it is determined automatically by the database.'
+        )
+      )
     }
+    const product = await models.Product.create(req.body)
+    res.send(201, product)
+    return next()
   } catch (error) {
-    res.send(400, {
-      message: error.message,
-    })
+    return next(new BadRequestError(error.message))
   }
 }
 
-async function update(req, res) {
+async function update(req, res, next) {
   const id = getIdParam(req)
   if (req.body.id === id) {
     await models.Product.update(req.body, {
@@ -63,14 +65,17 @@ async function update(req, res) {
       },
     })
     res.send(200)
+    return next()
   } else {
-    res.send(400, {
-      message: `Bad request: param ID (${id}) does not match body ID (${req.body.id}).`,
-    })
+    return next(
+      new BadRequestError(
+        `Bad request: param ID (${id}) does not match body ID (${req.body.id}).`
+      )
+    )
   }
 }
 
-async function remove(req, res) {
+async function remove(req, res, next) {
   const id = getIdParam(req)
   await models.Product.destroy({
     where: {
@@ -78,6 +83,7 @@ async function remove(req, res) {
     },
   })
   res.send(200)
+  return next()
 }
 
 module.exports = {

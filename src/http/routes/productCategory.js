@@ -1,0 +1,65 @@
+const { models } = require('sequelize')
+const { getIdParam } = require('../utils')
+const { BadRequestError } = require('restify-errors')
+
+const getAll = async (_req, res, next) => {
+  try {
+    let productCategories = await models.ProductCategory.findAll()
+    res.send(200, productCategories)
+    return next()
+  } catch (error) {
+    res.send(400, error.message)
+    return next(new BadRequestError(error.message))
+  }
+}
+
+const getById = async (req, res, next) => {
+  try {
+    const { id } = getIdParam(req)
+    let prouductCategory = await models.ProductCategory.findByPK(id)
+    if (prouductCategory) {
+      res.send(200, prouductCategory)
+      return next()
+    }
+  } catch (error) {
+    res.send(400)
+    return next(new BadRequestError(error.message))
+  }
+}
+
+const create = async (req, res, next) => {
+  try {
+    if (req.body.id) {
+      res.send(400, {
+        message:
+          'ID should not be provided, since it is determined automatically by the database.',
+      })
+    }
+  } catch (error) {
+    res.send(400)
+    return next(new BadRequestError(error.message))
+  }
+}
+
+const update = async (req, res, next) => {
+  try {
+    const id = getIdParam(req)
+    await models.ProductCategory.update(req.body, {
+      where: {
+        id: id,
+      },
+    })
+    res.send(200)
+    return next()
+  } catch (error) {
+    res.send(400)
+    return next(new BadRequestError(error.message))
+  }
+}
+
+module.exports = {
+  getAll,
+  getById,
+  create,
+  update,
+}
