@@ -1,20 +1,20 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize')
 
-module.exports = (sequelize) => {
+module.exports = sequelize => {
   sequelize.define('Manager', {
     restaurant_id: {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.Restaurant,
-        key: 'id'
-      }
+        key: 'id',
+      },
     },
     role_id: {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.ManagerRole,
-        key: 'id'
-      }
+        key: 'id',
+      },
     },
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
@@ -23,5 +23,5 @@ module.exports = (sequelize) => {
     password: DataTypes.STRING,
     registered_at: DataTypes.DATEONLY,
     last_login: DataTypes.DATE,
-  });
-};
+  })
+}
