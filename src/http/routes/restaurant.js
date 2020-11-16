@@ -14,7 +14,10 @@ module.exports = router
 function getAll(_req, res, next) {
   restaurantService
     .getAll()
-    .then(restaurants => res.send(200, restaurants))
+    .then(restaurants => {
+      res.send(200, restaurants)
+      next()
+    })
     .catch(next)
 }
 
