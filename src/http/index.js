@@ -12,8 +12,9 @@ const routes = {
 }
 
 const server = restify.createServer()
-
 server.use(restify.plugins.bodyParser())
+server.use(restify.plugins.queryParser())
+
 function makeHandlerAwareOfAsyncErrors(handler) {
   return async function (req, res, next) {
     try {
