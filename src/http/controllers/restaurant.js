@@ -1,4 +1,4 @@
-const restaurantService = require('../../services/restaurant.service'),
+const restaurantService = require('../../services/restaurant'),
   { models } = require('../../db'),
   { NotFoundError, BadRequestError } = require('restify-errors'),
   { getIdParam, getScopesQuery } = require('../middleware'),

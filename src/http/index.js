@@ -1,5 +1,5 @@
 const restify = require('restify'),
-  restaurantController = require('./routes/restaurant')
+  restaurantController = require('./controllers/restaurant')
 
 const routes = {
   restauranthours: require('./routes/restaurantHours'),
