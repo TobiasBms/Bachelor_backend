@@ -2,13 +2,13 @@ const { models } = require('../../db')
 const restaurantService = require('../../services/restaurant.service')
 var Router = require('restify-router').Router
 var router = new Router()
-const { getIdParam } = require('../utils')
+const { getIdParam } = require('../middleware/id')
 
 router.get('', getAll)
-router.get('/:id', getById)
+router.get('/:id', getIdParam, getById)
 router.post('', create)
-router.put('/:id', update)
-router.del('/:id', remove)
+router.put('/:id', getIdParam, update)
+router.del('/:id', getIdParam, remove)
 module.exports = router
 
 function getAll(_req, res, next) {
@@ -20,8 +20,7 @@ function getAll(_req, res, next) {
 
 async function getById(req, res) {
   try {
-    const id = getIdParam(req)
-    const restaurant = await models.Restaurant.findByPk(id, {
+    const restaurant = await models.Restaurant.findByPk(req.id, {
       include: [
         { model: models.City, as: 'city' },
         {
@@ -68,13 +67,11 @@ async function create(req, res) {
 }
 
 async function update(req, res) {
-  const id = getIdParam(req)
-
   // We only accept an UPDATE request if the `:id` param matches the body `id`
-  if (req.body.id === id) {
+  if (req.body.id === req.id) {
     await models.Restaurant.update(req.body, {
       where: {
-        id: id,
+        id: req.id,
       },
     })
     res.status(200).end()
@@ -82,16 +79,15 @@ async function update(req, res) {
     res
       .status(400)
       .send(
-        `Bad request: param ID (${id}) does not match body ID (${req.body.id}).`
+        `Bad request: param ID (${req.id}) does not match body ID (${req.body.id}).`
       )
   }
 }
 
 async function remove(req, res) {
-  const id = getIdParam(req)
   await models.Restaurant.destroy({
     where: {
-      id: id,
+      id: req.id,
     },
   })
   res.status(200).end()
