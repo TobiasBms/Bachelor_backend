@@ -1,10 +1,9 @@
-const { models } = require('../../db')
-const restaurantService = require('../../services/restaurant.service')
-const { NotFoundError, BadRequestError } = require('restify-errors')
-var Router = require('restify-router').Router
-var router = new Router()
-const { getIdParam } = require('../middleware/id')
-const { getScopesQuery } = require('../middleware/scopes')
+const restaurantService = require('../../services/restaurant.service'),
+  { models } = require('../../db'),
+  { NotFoundError, BadRequestError } = require('restify-errors'),
+  { getIdParam, getScopesQuery } = require('../middleware'),
+  { Router } = require('restify-router'),
+  router = new Router()
 
 router.get('', getScopesQuery, getAll)
 router.get('/:id', getIdParam, getScopesQuery, getById)
