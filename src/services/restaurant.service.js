@@ -8,12 +8,12 @@ module.exports = {
   remove,
 }
 
-async function getAll() {
-  return await models.Restaurant.findAll()
+async function getAll(scopes = []) {
+  return await models.Restaurant.scope(scopes).findAll()
 }
 
-async function getById(id) {
-  return await models.Restaurant.findByPk(id)
+async function getById(id, scopes = []) {
+  return await models.Restaurant.scope(scopes).findByPk(id)
 }
 
 async function create(body) {
