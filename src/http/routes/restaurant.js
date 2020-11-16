@@ -1,6 +1,15 @@
 const { models } = require('../../db')
 const restaurantService = require('../../services/restaurant.service')
+var Router = require('restify-router').Router
+var router = new Router()
 const { getIdParam } = require('../utils')
+
+router.get('', getAll)
+router.get('/:id', getById)
+router.post('', create)
+router.put('/:id', update)
+router.del('/:id', remove)
+module.exports = router
 
 function getAll(_req, res, next) {
   restaurantService
@@ -86,12 +95,4 @@ async function remove(req, res) {
     },
   })
   res.status(200).end()
-}
-
-module.exports = {
-  getAll,
-  getById,
-  create,
-  update,
-  remove,
 }

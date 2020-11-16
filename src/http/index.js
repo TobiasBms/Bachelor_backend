@@ -1,8 +1,7 @@
-const restify = require('restify')
-// const bodyParser = require('body-parser');
+const restify = require('restify'),
+  restaurantController = require('./routes/restaurant')
 
 const routes = {
-  restaurant: require('./routes/restaurant'),
   restauranthours: require('./routes/restaurantHours'),
   restaurantseat: require('./routes/restaurantSeat'),
   privilege: require('./routes/privilege'),
@@ -14,6 +13,8 @@ const routes = {
 const server = restify.createServer()
 server.use(restify.plugins.bodyParser())
 server.use(restify.plugins.queryParser())
+
+restaurantController.applyRoutes(server, '/api/restaurant')
 
 function makeHandlerAwareOfAsyncErrors(handler) {
   return async function (req, res, next) {
