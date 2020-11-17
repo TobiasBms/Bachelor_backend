@@ -42,7 +42,11 @@ module.exports = function applyAssociations(sequelize) {
     through: ProductHasCategory,
     foreignKey: "category_id",
     otherKey: "product_id",
+<<<<<<< HEAD
     as: "categories",
+=======
+    as: "productCategory",
+>>>>>>> master
   })
 
   ProductCategory.belongsToMany(Product, {

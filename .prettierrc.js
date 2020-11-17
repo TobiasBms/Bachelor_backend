@@ -3,9 +3,9 @@ module.exports = {
   useTabs: false,
   semi: false,
   singleQuote: false,
-  quoteProps: 'consistent',
-  trailingComma: 'es5',
+  quoteProps: "consistent",
+  trailingComma: "es5",
   bracketSpacing: true,
-  arrowParens: 'avoid',
-  endOfLine: 'auto',
+  arrowParens: "avoid",
+  endOfLine: "auto",
 }
