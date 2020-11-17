@@ -79,7 +79,7 @@ async function update(req, res, next) {
 
 async function remove(req, res, next) {
   try {
-    await managerService.destroy(req.id)
+    await managerService.remove(req.id)
     res.send(204)
     next()
   } catch (error) {
