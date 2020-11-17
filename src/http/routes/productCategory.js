@@ -2,7 +2,7 @@ const { models } = require("sequelize")
 const { getIdParam } = require("../utils")
 const { BadRequestError } = require("restify-errors")
 
-const getAll = async (_req, res, next) => {
+async function getAll(_req, res, next) {
   try {
     let productCategories = await models.ProductCategory.findAll()
     res.send(200, productCategories)
@@ -13,7 +13,7 @@ const getAll = async (_req, res, next) => {
   }
 }
 
-const getById = async (req, res, next) => {
+async function getById(req, res, next) {
   try {
     const id = getIdParam(req)
     let prouductCategory = await models.ProductCategory.findByPK(id)
@@ -26,7 +26,7 @@ const getById = async (req, res, next) => {
   }
 }
 
-const create = async (req, res, next) => {
+async function create(req, res, next) {
   try {
     if (req.body.id) {
       res.send(400, {
@@ -42,7 +42,7 @@ const create = async (req, res, next) => {
   }
 }
 
-const update = async (req, res, next) => {
+async function update(req, res, next) {
   try {
     const id = getIdParam(req)
     await models.ProductCategory.update(req.body, {
