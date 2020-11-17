@@ -35,9 +35,10 @@ const create = async (req, res, next) => {
           'ID should not be provided, since it is determined automatically by the database.',
       })
     }
-    return next()
+
+    let productCategory = await models.ProductCategory.create(req.body)
+    return next(201, productCategory)
   } catch (error) {
-    res.send(400)
     return next(new BadRequestError(error.message))
   }
 }
@@ -53,7 +54,6 @@ const update = async (req, res, next) => {
     res.send(200)
     return next()
   } catch (error) {
-    res.send(400)
     return next(new BadRequestError(error.message))
   }
 }

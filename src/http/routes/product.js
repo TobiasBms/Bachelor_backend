@@ -31,7 +31,7 @@ async function getById(req, res, next) {
       res.send(200, product)
     } else {
       res.send(404)
-      return next('This product does not exist in our database.')
+      return next(new BadRequestError('Not found'))
     }
   } catch (error) {
     res.send(400)
@@ -82,7 +82,7 @@ async function remove(req, res, next) {
       id: id,
     },
   })
-  res.send(200)
+  res.send(204)
   return next()
 }
 

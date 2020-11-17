@@ -8,7 +8,6 @@ const getAll = async (req, res, next) => {
     res.send(200, extras)
     return next()
   } catch (error) {
-    res.send(400)
     return next(new BadRequestError(error.message))
   }
 }
@@ -20,7 +19,6 @@ const getById = async (req, res, next) => {
     res.send(200, extra)
     return next()
   } catch (error) {
-    res.send(400)
     return next(new BadRequestError(error.message))
   }
 }
@@ -28,15 +26,17 @@ const getById = async (req, res, next) => {
 const update = async (req, res, next) => {
   try {
     const id = getIdParam(req)
-    if (req.body.id === id) {
-      await models.Extra.update(req.body, {
-        id: id,
-      })
-      res.send(200)
-      return next()
+
+    if (req.body.id !== id) {
+      return next(new BadRequestError("id doens't match request body"))
     }
+
+    await models.Extra.update(req.body, {
+      id: id,
+    })
+    res.send(200)
+    return next()
   } catch (error) {
-    res.send(400)
     return next(new BadRequestError(error.message))
   }
 }
@@ -66,9 +66,9 @@ const remove = async (req, res, next) => {
         id: id,
       },
     })
+    res.send(200)
     return next()
   } catch (error) {
-    res.send(400)
     return next(new BadRequestError(error.message))
   }
 }
