@@ -1,29 +1,23 @@
-const { models } = require('../db')
+const { Restaurant } = require('../db').models
 
-module.exports = {
-  getAll,
-  getById,
-  create,
-  update,
-  remove,
-}
+module.exports = { getAll, getById, create, update, remove }
 
 async function getAll(scopes = []) {
-  return await models.Restaurant.scope(scopes).findAll()
+  return await Restaurant.scope(scopes).findAll()
 }
 
 async function getById(id, scopes = []) {
-  return await models.Restaurant.scope(scopes).findByPk(id)
+  return await Restaurant.scope(scopes).findByPk(id)
 }
 
 async function create(body) {
-  return await models.Restaurant.create(body)
+  return await Restaurant.create(body)
 }
 
 async function update(id, body) {
-  await models.Restaurant.update(body, { where: { id } })
+  await Restaurant.update(body, { where: { id } })
 }
 
 async function remove(id) {
-  await models.Restaurant.destroy({ where: { id } })
+  await Restaurant.destroy({ where: { id } })
 }
