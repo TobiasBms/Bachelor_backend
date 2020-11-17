@@ -9,6 +9,7 @@ const routes = {
   manager: require('./routes/manager'),
   role: require('./routes/managerRole'),
   product: require('./routes/product'),
+  order: require('./routes/order'),
 }
 
 const server = restify.createServer()
