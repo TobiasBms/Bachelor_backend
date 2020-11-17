@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize')
 const modelDefinitions = require('./models')
 const { applyAssociations } = require('./associations')
+const { applyScopes } = require('./scopes')
 require('dotenv').config()
 
 const sequelize = new Sequelize(
@@ -30,4 +31,6 @@ for (const defineModel of modelDefinitions) {
 }
 
 applyAssociations(sequelize)
+applyScopes(sequelize)
+
 module.exports = sequelize

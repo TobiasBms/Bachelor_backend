@@ -1,5 +1,8 @@
-// A helper function to assert the request ID param is valid
-// and convert it to a number (since it comes as a string by default)
+/**
+ * A helper function to assert the request ID param is valid
+ * and convert it to a number (since it comes as a string by default)
+ * @deprecated Use middleware instead
+ */
 function getIdParam(req) {
   const id = req.params.id
   if (/^\d+$/.test(id)) {

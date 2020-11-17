@@ -19,7 +19,7 @@ module.exports = function applyAssociations(sequelize) {
     through: RestaurantHasCategory,
     foreignKey: 'category_id',
     otherKey: 'restaurant_id',
-    as: 'categories',
+    as: 'restaurants',
   })
 
   City.hasMany(Restaurant, {
