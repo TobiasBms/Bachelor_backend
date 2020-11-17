@@ -8,7 +8,6 @@ const getAll = async (_req, res, next) => {
     res.send(200, productCategories)
     return next()
   } catch (error) {
-    res.send(400, error.message)
     return next(new BadRequestError(error.message))
   }
 }

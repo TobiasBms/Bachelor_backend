@@ -1,5 +1,5 @@
 const { models } = require('../../db')
-
+const { BadRequestError } = require('restify-errors')
 async function getAll(_req, res, next) {
   try {
     const orders = await models.Order.findAll({
@@ -9,11 +9,10 @@ async function getAll(_req, res, next) {
         { model: models.Product },
       ],
     })
-    res.send(200, order)
+    res.send(200, orders)
     return next()
   } catch (error) {
-    res.end(400)
-    return next(error.message)
+    return next(new BadRequestError(error.message))
   }
 }
 
