@@ -1,4 +1,4 @@
-const { Restaurant } = require('../db').models
+const { Restaurant } = require("../db").models
 
 module.exports = { getAll, getById, create, update, remove }
 

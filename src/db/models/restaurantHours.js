@@ -1,26 +1,26 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
-  sequelize.define('RestaurantHours', {
+  sequelize.define("RestaurantHours", {
     restaurant_id: {
       type: DataTypes.NUMBER,
       primaryKey: true,
       references: {
         model: sequelize.models.Restaurant,
-        key: 'id',
+        key: "id",
       },
     },
     day_of_week: {
       type: DataTypes.ENUM({
         values: [
-          'Default',
-          'Monday',
-          'Tuesday',
-          'Wednesday',
-          'Thursday',
-          'Friday',
-          'Saturday',
-          'Sunday',
+          "Default",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday",
         ],
       }),
       primaryKey: true,

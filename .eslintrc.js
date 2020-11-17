@@ -2,13 +2,13 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: ['eslint:recommended', 'prettier'],
-  plugins: ['prettier'],
+  extends: ["eslint:recommended", "prettier"],
+  plugins: ["prettier"],
   parserOptions: {
     ecmaVersion: 2020,
-    sourceType: 'module',
+    sourceType: "module",
   },
   rules: {
-    'prettier/prettier': 'error',
+    "prettier/prettier": "error",
   },
 }

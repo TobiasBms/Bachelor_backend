@@ -1,12 +1,12 @@
-const { models } = require('../../db')
-const { getIdParam } = require('../utils')
+const { models } = require("../../db")
+const { getIdParam } = require("../utils")
 
 async function getAll(_req, res) {
   const role = await models.ManagerRole.findAll({
     include: [
       {
         model: models.Privilege,
-        as: 'privileges',
+        as: "privileges",
         through: { attributes: [] },
       },
     ],
@@ -19,7 +19,7 @@ async function create(req, res) {
     if (req.body.id) {
       res.send(400, {
         message:
-          'ID should not be provided, since it is determined automatically by the database.',
+          "ID should not be provided, since it is determined automatically by the database.",
       })
     } else {
       const role = await models.ManagerRole.create(req.body)

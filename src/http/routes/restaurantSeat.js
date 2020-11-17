@@ -1,5 +1,5 @@
-const { models } = require('../../db')
-const { getIdParam } = require('../utils')
+const { models } = require("../../db")
+const { getIdParam } = require("../utils")
 
 async function getAll(_req, res) {
   const seat = await models.RestaurantSeat.findAll()
@@ -14,7 +14,7 @@ async function getById(req, res) {
       res.send(200, seat)
     } else {
       res.send(404, {
-        message: 'This seat does not exist in our database.',
+        message: "This seat does not exist in our database.",
       })
     }
   } catch (error) {
@@ -27,7 +27,7 @@ async function create(req, res) {
     if (req.body.id) {
       res.send(400, {
         message:
-          'ID should not be provided, since it is determined automatically by the database.',
+          "ID should not be provided, since it is determined automatically by the database.",
       })
     } else {
       const seat = await models.RestaurantSeat.create(req.body)

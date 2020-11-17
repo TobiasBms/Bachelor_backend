@@ -1,4 +1,4 @@
-const { RestaurantCategory } = require('../db').models
+const { RestaurantCategory } = require("../db").models
 
 module.exports = { getAll, getById }
 

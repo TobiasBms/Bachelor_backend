@@ -1,14 +1,14 @@
-const restify = require('restify'),
-  restaurantController = require('./controllers/restaurant'),
-  restaurantCategoryController = require('./controllers/restaurantCategory')
+const restify = require("restify"),
+  restaurantController = require("./controllers/restaurant"),
+  restaurantCategoryController = require("./controllers/restaurantCategory"),
+  productController = require("./controllers/product")
 
 const routes = {
-  restauranthours: require('./routes/restaurantHours'),
-  restaurantseat: require('./routes/restaurantSeat'),
-  privilege: require('./routes/privilege'),
-  manager: require('./routes/manager'),
-  role: require('./routes/managerRole'),
-  product: require('./routes/product'),
+  restauranthours: require("./routes/restaurantHours"),
+  restaurantseat: require("./routes/restaurantSeat"),
+  privilege: require("./routes/privilege"),
+  manager: require("./routes/manager"),
+  role: require("./routes/managerRole"),
 }
 
 const server = restify.createServer()
@@ -16,8 +16,9 @@ server.use(restify.plugins.bodyParser())
 server.use(restify.plugins.queryParser())
 server.pre(restify.pre.sanitizePath())
 
-restaurantController.applyRoutes(server, '/api/restaurant')
-restaurantCategoryController.applyRoutes(server, '/api/restaurantcategory')
+restaurantController.applyRoutes(server, "/api/restaurant")
+restaurantCategoryController.applyRoutes(server, "/api/restaurantcategory")
+productController.applyRoutes(server, "/api/product")
 
 function makeHandlerAwareOfAsyncErrors(handler) {
   return async function (req, res, next) {
