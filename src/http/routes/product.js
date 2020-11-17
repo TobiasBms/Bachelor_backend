@@ -1,6 +1,6 @@
 const { models } = require('../../db')
 const { getIdParam } = require('../utils')
-const { BadRequestError } = require('restify-errors')
+const { BadRequestError, NotFoundError } = require('restify-errors')
 
 async function getAll(_req, res, next) {
   try {
@@ -10,8 +10,7 @@ async function getAll(_req, res, next) {
     res.send(200, products)
     return next()
   } catch (error) {
-    res.end(400)
-    return next(error.message)
+    return next(new BadRequestError(error.message))
   }
 }
 
@@ -30,8 +29,7 @@ async function getById(req, res, next) {
     if (product) {
       res.send(200, product)
     } else {
-      res.send(404)
-      return next(new BadRequestError('Not found'))
+      return next(new NotFoundError())
     }
   } catch (error) {
     res.send(400)

@@ -22,7 +22,6 @@ const getById = async (req, res, next) => {
       return next()
     }
   } catch (error) {
-    res.send(400)
     return next(new BadRequestError(error.message))
   }
 }
@@ -59,14 +58,18 @@ const update = async (req, res, next) => {
 }
 
 async function remove(req, res, next) {
-  const id = getIdParam(req)
-  await models.ProductCategory.destroy({
-    where: {
-      id: id,
-    },
-  })
-  res.send(200)
-  return next()
+  try {
+    const id = getIdParam(req)
+    await models.ProductCategory.destroy({
+      where: {
+        id: id,
+      },
+    })
+    res.send(200)
+    return next()
+  } catch (error) {
+    return next(new BadRequestError(error.message))
+  }
 }
 
 module.exports = {
