@@ -1,4 +1,4 @@
 module.exports = {
-  getScopesQuery: require('./scopes'),
-  getIdParam: require('./id'),
+  getScopesQuery: require("./scopes"),
+  getIdParam: require("./id"),
 }

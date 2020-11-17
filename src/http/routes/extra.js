@@ -1,6 +1,6 @@
-const { models } = require('sequelize')
-const { BadRequestError } = require('restify-errors')
-const { getIdParam } = require('../utils')
+const { models } = require("sequelize")
+const { BadRequestError } = require("restify-errors")
+const { getIdParam } = require("../utils")
 
 const getAll = async (req, res, next) => {
   try {
@@ -46,7 +46,7 @@ const create = async (req, res, next) => {
     if (req.body.id) {
       return next(
         new BadRequestError(
-          'ID should not be provided, since it is determined automatically by the database.'
+          "ID should not be provided, since it is determined automatically by the database."
         )
       )
     }

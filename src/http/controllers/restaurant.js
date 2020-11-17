@@ -1,14 +1,14 @@
-const restaurantService = require('../../services/restaurant'),
-  { getIdParam, getScopesQuery } = require('../middleware'),
-  { NotFoundError, BadRequestError } = require('restify-errors'),
-  { Router } = require('restify-router'),
+const restaurantService = require("../../services/restaurant"),
+  { getIdParam, getScopesQuery } = require("../middleware"),
+  { NotFoundError, BadRequestError } = require("restify-errors"),
+  { Router } = require("restify-router"),
   router = new Router()
 
-router.get('', getScopesQuery, getAll)
-router.get('/:id', getIdParam, getScopesQuery, getById)
-router.post('', create)
-router.put('/:id', getIdParam, update)
-router.del('/:id', getIdParam, remove)
+router.get("", getScopesQuery, getAll)
+router.get("/:id", getIdParam, getScopesQuery, getById)
+router.post("", create)
+router.put("/:id", getIdParam, update)
+router.del("/:id", getIdParam, remove)
 module.exports = router
 
 async function getAll(req, res, next) {
@@ -25,7 +25,7 @@ async function getById(req, res, next) {
   try {
     const restaurant = await restaurantService.getById(req.id, req.scopes)
     if (restaurant === null) {
-      next(new NotFoundError('This restaurant does not exist in our database.'))
+      next(new NotFoundError("This restaurant does not exist in our database."))
     } else {
       res.send(200, restaurant)
       next()
@@ -40,7 +40,7 @@ async function create(req, res, next) {
     if (req.body.id) {
       next(
         new BadRequestError(
-          'ID should not be provided, since it is automatically generated.'
+          "ID should not be provided, since it is automatically generated."
         )
       )
     } else {
@@ -56,7 +56,7 @@ async function create(req, res, next) {
 async function update(req, res, next) {
   try {
     if (req.body.id !== req.id) {
-      next(new BadRequestError('ID parameter does not match body.'))
+      next(new BadRequestError("ID parameter does not match body."))
     } else {
       await restaurantService.update(req.id, req.body)
       res.send(204)

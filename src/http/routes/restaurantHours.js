@@ -1,5 +1,5 @@
-const { models } = require('../../db')
-const { getIdParam } = require('../utils')
+const { models } = require("../../db")
+const { getIdParam } = require("../utils")
 
 async function getAll(_req, res) {
   try {

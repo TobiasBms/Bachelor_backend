@@ -1,16 +1,16 @@
-const { models } = require('../../db')
-const { getIdParam } = require('../utils')
+const { models } = require("../../db")
+const { getIdParam } = require("../utils")
 
 async function getAll(_req, res) {
   const managers = await models.Manager.findAll({
     include: [
       {
         model: models.ManagerRole,
-        as: 'role',
-        attributes: { exclude: ['restaurant_id'] },
+        as: "role",
+        attributes: { exclude: ["restaurant_id"] },
       },
     ],
-    attributes: { exclude: ['role_id'] },
+    attributes: { exclude: ["role_id"] },
   })
   res.send(200, managers)
 }
@@ -23,17 +23,17 @@ async function getById(req, res) {
         { model: models.Privilege },
         {
           model: models.ManagerRole,
-          as: 'role',
-          attributes: { exclude: ['restaurant_id'] },
+          as: "role",
+          attributes: { exclude: ["restaurant_id"] },
         },
       ],
-      attributes: { exclude: ['role_id'] },
+      attributes: { exclude: ["role_id"] },
     })
     if (manager) {
       res.send(200, manager)
     } else {
       res.send(404, {
-        message: 'This manager does not exist in our database.',
+        message: "This manager does not exist in our database.",
       })
     }
   } catch (error) {
@@ -46,7 +46,7 @@ async function create(req, res) {
     if (req.body.id) {
       res.send(400, {
         message:
-          'ID should not be provided, since it is determined automatically by the database.',
+          "ID should not be provided, since it is determined automatically by the database.",
       })
     } else {
       const manager = await models.Manager.create(req.body)
