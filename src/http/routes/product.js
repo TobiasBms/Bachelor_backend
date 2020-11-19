@@ -1,6 +1,6 @@
-const { models } = require('../../db')
-const { getIdParam } = require('../utils')
-const { BadRequestError, NotFoundError } = require('restify-errors')
+const { models } = require("../../db")
+const { getIdParam } = require("../utils")
+const { BadRequestError, NotFoundError } = require("restify-errors")
 
 async function getAll(_req, res, next) {
   try {
@@ -19,10 +19,10 @@ async function getById(req, res, next) {
     const id = getIdParam(req)
     const product = await models.Product.findByPk(id, {
       include: [
-        { model: models.ProductCategory, as: 'productCategory' },
+        { model: models.ProductCategory, as: "productCategory" },
         {
           model: models.Extra,
-          as: 'extra',
+          as: "extra",
         },
       ],
     })
@@ -41,7 +41,7 @@ async function create(req, res, next) {
     if (req.body.id) {
       return next(
         new BadRequestError(
-          'ID should not be provided, since it is determined automatically by the database.'
+          "ID should not be provided, since it is determined automatically by the database."
         )
       )
     }

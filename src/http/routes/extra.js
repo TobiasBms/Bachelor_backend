@@ -1,8 +1,8 @@
-const { models } = require('sequelize')
-const { BadRequestError } = require('restify-errors')
-const { getIdParam } = require('../utils')
+const { models } = require("sequelize")
+const { BadRequestError } = require("restify-errors")
+const { getIdParam } = require("../utils")
 
-const getAll = async (req, res, next) => {
+async function getAll(req, res, next) {
   try {
     const extras = await models.Extra.findAll()
     res.send(200, extras)
@@ -12,7 +12,7 @@ const getAll = async (req, res, next) => {
   }
 }
 
-const getById = async (req, res, next) => {
+async function getById(req, res, next) {
   try {
     const id = getIdParam(req)
     const extra = await models.Extra.findByPk(id)
@@ -23,7 +23,7 @@ const getById = async (req, res, next) => {
   }
 }
 
-const update = async (req, res, next) => {
+async function update(req, res, next) {
   try {
     const id = getIdParam(req)
 
@@ -41,12 +41,12 @@ const update = async (req, res, next) => {
   }
 }
 
-const create = async (req, res, next) => {
+async function create(req, res, next) {
   try {
     if (req.body.id) {
       return next(
         new BadRequestError(
-          'ID should not be provided, since it is determined automatically by the database.'
+          "ID should not be provided, since it is determined automatically by the database."
         )
       )
     }
@@ -58,7 +58,7 @@ const create = async (req, res, next) => {
   }
 }
 
-const remove = async (req, res, next) => {
+async function remove(req, res, next) {
   try {
     const id = getIdParam(req)
     await models.Extra.destroy({

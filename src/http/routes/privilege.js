@@ -1,5 +1,5 @@
-const { models } = require('../../db')
-const { getIdParam } = require('../utils')
+const { models } = require("../../db")
+const { getIdParam } = require("../utils")
 
 async function getAll(req, res) {
   const privilege = await models.Privilege.findAll()

@@ -1,19 +1,19 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
-  sequelize.define('ManagerHasPrivilege', {
+  sequelize.define("ManagerHasPrivilege", {
     manager_id: {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.Manager,
-        key: 'id',
+        key: "id",
       },
     },
     privilege_id: {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.Privilege,
-        key: 'id',
+        key: "id",
       },
     },
   })

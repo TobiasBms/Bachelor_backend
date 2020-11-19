@@ -41,24 +41,32 @@ mysql -h DB_HOST -u DB_USERNAME -p DB_PASSWORD DB_SCHEMA < db.sql
 Here is the project shown in a tree structure with important files highlighted.
 ```
 bachelor_backend
-|   README.md - This file
-|   package.json - Project dependencies and metadata
+|   README.md - This file.
+|   package.json - Project dependencies and metadata.
 |
-\---src - Application source code
-    |   index.js - Initializes database connection and starts node server
+\---src - Application source code.
+    |   index.js - Initializes database connection and starts node server.
     |
-    +---db - Database connection and models
-    |   |   index.js - Exports Sequelize db instance and creates models and associations
+    +---db - Database connection and models.
+    |   |   index.js - Exports Sequelize db instance and creates models and associations.
     |   |
-    |   +---associations - Relationships between models
-    |   |       index.js - Exports function to dynamically apply all associations
+    |   +---associations - Relationships between models.
+    |   |       index.js - Exports function to dynamically apply all associations.
     |   |
-    |   \---models - Sequelize model definitions
-    |           index.js - Exports all model definitions
-    |               
-    \---http - REST API
-        |   index.js - Exports Restify server, registers middleware and routes
-        |   utils.js - Exports utility functions for the API
-        |
-        \---routes - Routes/controllers that expose CRUD operations
+    |   +---models - Sequelize model definitions.
+    |   |       index.js - Exports all model definitions.
+    |   |
+    |   \---scopes - Model scopes for including other models.
+    |           index.js - Exports all model scopes.
+    |
+    |---http - Contains all API functionality.
+    |   |   index.js - Exports Restify server, registers middleware and routes.
+    |   |   utils.js - Exports utility functions for the API.
+    |   |
+    |   +---controllers - Defines all routes in the API.
+    |   |
+    |   \---middleware - Contains middleware functions usable by routes in the API.
+    |           index.js - Exports all middleware functions.
+    |
+    \---services - Core business logic. Encapsulates interactions with Sequelize models.
 ```
