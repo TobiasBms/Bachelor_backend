@@ -18,9 +18,10 @@ async function getAll(req, res, next) {
     const products = await productService.getAll(req.scopes)
     if (products === null) {
       next(new NotFoundError(noEntries))
+    } else {
+      res.send(200, products)
+      next()
     }
-    res.send(200, products)
-    next()
   } catch (error) {
     next(error)
   }
@@ -31,6 +32,9 @@ async function getById(req, res, next) {
     const product = await productService.getById(req.id, req.scopes)
     if (product === null) {
       next(new NotFoundError(notFound))
+    } else {
+      res.send(200, product)
+      next()
     }
   } catch (error) {
     next(error)
@@ -41,10 +45,11 @@ async function create(req, res, next) {
   try {
     if (req.body.id) {
       next(new BadRequestError(noId))
+    } else {
+      await productService.create(req.body)
+      res.send(200)
+      next()
     }
-    await productService.create(req.body)
-    res.send(200)
-    next()
   } catch (error) {
     next(error)
   }
@@ -52,9 +57,13 @@ async function create(req, res, next) {
 
 async function update(req, res, next) {
   try {
-    await productService.update(req.id, req.body)
-    res.send(200)
-    next()
+    if (req.body.id !== req.id) {
+      next(new BadRequestError(noId))
+    } else {
+      await productService.update(req.id, req.body)
+      res.send(200)
+      next()
+    }
   } catch (error) {
     next(error)
   }

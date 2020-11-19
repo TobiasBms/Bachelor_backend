@@ -8,6 +8,6 @@ module.exports = function applyScopes(sequelize) {
   })
 
   Product.addScope("extra", {
-    include: [{ model: Extra, as: "extra" }],
+    include: [{ model: Extra, as: "extra", through: { attributes: [] } }],
   })
 }
