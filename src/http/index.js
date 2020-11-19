@@ -2,7 +2,8 @@ const restify = require("restify"),
   restaurantController = require("./controllers/restaurant"),
   restaurantCategoryController = require("./controllers/restaurantCategory"),
   managerController = require("./controllers/manager"),
-  productController = require("./controllers/product")
+  productController = require("./controllers/product"),
+  orderController = require("./controllers/order")
 
 const routes = {
   restauranthours: require("./routes/restaurantHours"),
@@ -15,6 +16,8 @@ const server = restify.createServer()
 server.use(restify.plugins.bodyParser())
 server.use(restify.plugins.queryParser())
 server.pre(restify.pre.sanitizePath())
+
+orderController.applyRoutes(server, "/api/order")
 
 restaurantController.applyRoutes(server, "/api/restaurant")
 restaurantCategoryController.applyRoutes(server, "/api/restaurantcategory")

@@ -1,19 +1,19 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
-  sequelize.define('Order', {
+  sequelize.define("Order", {
     restaurant_id: {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.Restaurant,
-        key: 'id',
+        key: "id",
       },
     },
     seat_id: {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.RestaurantSeat,
-        key: 'id',
+        key: "id",
       },
     },
     created_at: DataTypes.DATE,
