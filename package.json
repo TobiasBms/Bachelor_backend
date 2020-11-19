@@ -20,6 +20,7 @@
   "homepage": "https://github.com/TobiasBms/skoleintra_backend#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
+    "js-yaml": "^3.14.0",
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.4",
     "restify": "^8.5.1",

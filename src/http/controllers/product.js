@@ -1,4 +1,6 @@
-const restaurantService = require("../../services/restaurant"),
+const { noEntries, noId, notFound } = require("../../../config/errors.json")
+
+const productService = require("../../services/product"),
   { getIdParam, getScopesQuery } = require("../middleware"),
   { NotFoundError, BadRequestError } = require("restify-errors"),
   { Router } = require("restify-router"),
@@ -13,9 +15,13 @@ module.exports = router
 
 async function getAll(req, res, next) {
   try {
-    const restaurants = await restaurantService.getAll(req.scopes)
-    res.send(200, restaurants)
-    next()
+    const products = await productService.getAll(req.scopes)
+    if (products === null) {
+      next(new NotFoundError(noEntries))
+    } else {
+      res.send(200, products)
+      next()
+    }
   } catch (error) {
     next(error)
   }
@@ -23,11 +29,11 @@ async function getAll(req, res, next) {
 
 async function getById(req, res, next) {
   try {
-    const restaurant = await restaurantService.getById(req.id, req.scopes)
-    if (restaurant === null) {
-      next(new NotFoundError("This restaurant does not exist in our database."))
+    const product = await productService.getById(req.id, req.scopes)
+    if (product === null) {
+      next(new NotFoundError(notFound))
     } else {
-      res.send(200, restaurant)
+      res.send(200, product)
       next()
     }
   } catch (error) {
@@ -38,14 +44,10 @@ async function getById(req, res, next) {
 async function create(req, res, next) {
   try {
     if (req.body.id) {
-      next(
-        new BadRequestError(
-          "ID should not be provided, since it is automatically generated."
-        )
-      )
+      next(new BadRequestError(noId))
     } else {
-      const restaurant = await restaurantService.create(req.body)
-      res.send(201, restaurant)
+      await productService.create(req.body)
+      res.send(200)
       next()
     }
   } catch (error) {
@@ -56,10 +58,10 @@ async function create(req, res, next) {
 async function update(req, res, next) {
   try {
     if (req.body.id !== req.id) {
-      next(new BadRequestError("ID parameter does not match body."))
+      next(new BadRequestError(noId))
     } else {
-      await restaurantService.update(req.id, req.body)
-      res.send(204)
+      await productService.update(req.id, req.body)
+      res.send(200)
       next()
     }
   } catch (error) {
@@ -69,7 +71,7 @@ async function update(req, res, next) {
 
 async function remove(req, res, next) {
   try {
-    await restaurantService.remove(req.id)
+    await productService.remove(req.id)
     res.send(204)
     next()
   } catch (error) {

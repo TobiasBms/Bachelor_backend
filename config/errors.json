@@ -1,0 +1,6 @@
+{
+  "notFound": "This does not exist",
+  "noEntries": "There are no entries",
+  "noId": "Id should not be provided",
+  "noIdMatch": "Id does not match the body"
+}
