@@ -32,7 +32,6 @@ async function getById(req, res, next) {
       return next(new NotFoundError())
     }
   } catch (error) {
-    res.send(400)
     return next(new BadRequestError(error.message))
   }
 }

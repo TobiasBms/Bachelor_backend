@@ -2,5 +2,6 @@
   "notFound": "This does not exist",
   "noEntries": "There are no entries",
   "noId": "Id should not be provided",
-  "noIdMatch": "Id does not match the body"
+  "noIdMatch": "Id does not match the body",
+  "noBodyProvided": "There is no body provided for this request - check your body requesdt and your headers"
 }
