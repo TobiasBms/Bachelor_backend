@@ -1,10 +1,18 @@
 const { Manager } = require("../db").models
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 module.exports = { authenticate, getAll, getById, create, update, remove }
 
-// eslint-disable-next-line no-unused-vars
 async function authenticate({ email, password }) {
-  throw new Error("Not implemented")
+  const manager = await Manager.findOne({
+    where: { email, password },
+    raw: true,
+  })
+  if (manager !== null) {
+    const token = jwt.sign({ id: manager.id }, process.env.JWT_SECRET)
+    return { ...manager, token }
+  }
 }
 
 async function getAll(scopes = []) {
