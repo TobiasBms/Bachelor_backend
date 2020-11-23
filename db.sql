@@ -283,19 +283,10 @@ CREATE TABLE IF NOT EXISTS `OrderRating` (
         ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS `ManagerRole` (
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `restaurant_id` INT UNSIGNED NOT NULL,
-    `name` VARCHAR(255),
-    FOREIGN KEY (`restaurant_id`)
-        REFERENCES `Restaurant` (`id`)
-        ON DELETE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS `Manager` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `restaurant_id` INT UNSIGNED NOT NULL,
-    `role_id` INT UNSIGNED NOT NULL,
+	`role` ENUM('Admin', 'Manager', 'Waiter'),
     `first_name` VARCHAR(255),
     `last_name` VARCHAR(255),
     `email` VARCHAR(255),
@@ -305,39 +296,7 @@ CREATE TABLE IF NOT EXISTS `Manager` (
     `last_login` DATETIME,
     FOREIGN KEY (`restaurant_id`)
         REFERENCES `Restaurant` (`id`)
-        ON DELETE CASCADE,
-    FOREIGN KEY (`role_id`)
-        REFERENCES `ManagerRole` (`id`)
-        ON DELETE RESTRICT
-);
-
-CREATE TABLE IF NOT EXISTS `Privilege` (
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `name` VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS `RoleHasPrivilege` (
-    `role_id` INT UNSIGNED,
-    `privilege_id` INT UNSIGNED,
-    PRIMARY KEY (`role_id` , `privilege_id`),
-    FOREIGN KEY (`role_id`)
-        REFERENCES `ManagerRole` (`id`)
-        ON DELETE CASCADE,
-    FOREIGN KEY (`privilege_id`)
-        REFERENCES `Privilege` (`id`)
-        ON DELETE RESTRICT
-);
-
-CREATE TABLE IF NOT EXISTS `ManagerHasPrivilege` (
-    `manager_id` INT UNSIGNED,
-    `privilege_id` INT UNSIGNED,
-    PRIMARY KEY (`manager_id` , `privilege_id`),
-    FOREIGN KEY (`manager_id`)
-        REFERENCES `Manager` (`id`)
-        ON DELETE CASCADE,
-    FOREIGN KEY (`privilege_id`)
-        REFERENCES `Privilege` (`id`)
-        ON DELETE RESTRICT
+        ON DELETE CASCADE
 );
 
 INSERT INTO `City` VALUES
@@ -997,92 +956,54 @@ INSERT INTO `RestaurantHasCategory` VALUES
 (6, 8),
 (6, 13);
 
-INSERT INTO `ManagerRole`
-(`restaurant_id`, `name`)
-VALUES
-(1, 'Admin'),
-(1, 'Manager'),
-(1, 'Server'),
-(2, 'Admin'),
-(2, 'Manager'),
-(2, 'Server'),
-(3, 'Admin'),
-(3, 'Manager'),
-(3, 'Server'),
-(4, 'Admin'),
-(4, 'Manager'),
-(4, 'Server'),
-(5, 'Admin'),
-(5, 'Manager'),
-(5, 'Server'),
-(6, 'Admin'),
-(6, 'Manager'),
-(6, 'Server');
-
-INSERT INTO `Privilege` (`name`) VALUES
-('Redigér restaurant'),
-('Slet restaurant'),
-('Opret manager'),
-('Redigér manager'),
-('Tildel rolle'),
-('Tildel privilegie'),
-('Slet manager'),
-('Opret produkt'),
-('Redigér produkt'),
-('Opret kategori'),
-('Redigér kategori'),
-('Redigér ordre'),
-('Slet ordre'),
-('Svar på anmeldelse');
-
 INSERT INTO `Manager`
-(`restaurant_id`, `role_id`, `first_name`, `last_name`, `email`, `phone`, `password`, `registered_at`, `last_login`)
+(`restaurant_id`, `role`, `first_name`, `last_name`, `email`, `phone`, `password`, `registered_at`, `last_login`)
 VALUES
-(1, 1, 'Homer', 'Simpson', 'homer.simpson@springfield.com', '83746254', 'password', CURRENT_DATE(), NULL),
-(1, 2, 'Marge', 'Simpson', 'marge.simpson@springfield.com', '91756352', 'password', CURRENT_DATE(), NULL),
-(1, 3, 'Bart', 'Simpson', 'bart.simpson@springfield.com', '94756354', 'password', CURRENT_DATE(), NULL),
-(1, 3, 'Lisa', 'Simpson', 'lisa.simpson@springfield.com', '95817465', 'password', CURRENT_DATE(), NULL),
-(1, 3, 'Maggie', 'Simpson', 'maggie.simpson@springfield.com', '26497424', 'password', CURRENT_DATE(), NULL),
-(1, 2, 'Abraham', 'Simpson', 'abe.simpson@springfield.com', '80571060', 'password', CURRENT_DATE(), NULL),
-(2, 4, 'Moe', 'Szyslak', 'moe.szyslak@springfield.com', '94089265', 'password', CURRENT_DATE(), NULL),
-(2, 6, 'Lenny', 'Leonard', 'lenny.leonard@springfield.com', '83659210', 'password', CURRENT_DATE(), NULL),
-(2, 5, 'Carl', 'Carlson', 'carl.carlson@springfield.com', '48571893', 'password', CURRENT_DATE(), NULL),
-(2, 5, 'Apu', 'Nahasapeemapetilon', 'apu.nahasapeemapetilon@springfield.com', '40956310', 'password', CURRENT_DATE(), NULL),
-(2, 6, 'Barney', 'Gumble', 'barney.gumble@springfield.com', '17465824', 'password', CURRENT_DATE(), NULL),
-(2, 4, 'Montgomery', 'Burns', 'montomery.burns@springfield.com', '37285081', 'password', CURRENT_DATE(), NULL),
-(2, 5, 'Waylon', 'Smithers', 'waylon.smithers@springfield.com', '28474645', 'password', CURRENT_DATE(), NULL),
-(3, 8, 'Seymour', 'Skinner', 'seymour.skinner@springfield.com', '48673927', 'password', CURRENT_DATE(), NULL),
-(3, 7, 'Gary', 'Chalmers', 'gary.chalmers@springfield.com', '48916843', 'password', CURRENT_DATE(), NULL),
-(3, 9, 'Edna', 'Krabappel', 'edna.krabappel@springfield.com', '82517594', 'password', CURRENT_DATE(), NULL),
-(3, 9, 'Elizabeth', 'Hoover', 'elizabeth.hoover@springfield.com', '82712643', 'password', CURRENT_DATE(), NULL),
-(3, 8, 'Agnes', 'Skinner', 'agnes.skinner@springfield.com', '84573262', 'password', CURRENT_DATE(), NULL),
-(3, 9, 'Otto', 'Mann', 'otto.mann@springfield.com', '19381441', 'password', CURRENT_DATE(), NULL),
-(3, 8, 'Clancy', 'Wiggum', 'clancy.wiggum@springfield.com', '85731513', 'password', CURRENT_DATE(), NULL),
-(3, 9, 'Ralph', 'Wiggum', 'ralph.wiggum@springfield.com', '17284752', 'password', CURRENT_DATE(), NULL),
-(3, 8, 'Ned', 'Flanders', 'ned.flanders@springfield.com', '20475903', 'password', CURRENT_DATE(), NULL),
-(3, 8, 'Maude', 'Flanders', 'maude.flanders@springfield.com', '20475902', 'password', CURRENT_DATE(), NULL),
-(3, 9, 'Todd', 'Flanders', 'todd.flanders@springfield.com', '20475906', 'password', CURRENT_DATE(), NULL),
-(3, 9, 'Rod', 'Flanders', 'rod.flanders@springfield.com', '20475907', 'password', CURRENT_DATE(), NULL),
-(4, 10, 'Milhouse', 'Van Houten', 'milhouse.van.houten@springfield.com', '83715462', 'password', CURRENT_DATE(), NULL),
-(4, 11, 'Martin', 'Prince', 'martin.prince@springfield.com', '75826194', 'password', CURRENT_DATE(), NULL),
-(4, 11, 'Nelson', 'Muntz', 'nelson.muntz@springfield.com', '84372612', 'password', CURRENT_DATE(), NULL),
-(4, 12, 'Jimbo', 'Jones', 'jimbo.jones@springfield.com', '25143843', 'password', CURRENT_DATE(), NULL),
-(4, 12, 'Kearney', 'Zzyzwicz', 'kearney.zzyzwicz@springfield.com', '27164315', 'password', CURRENT_DATE(), NULL),
-(4, 12, 'Dolph', 'Starbeam', 'dolph.starbeam@springfield.com', '26151324', 'password', CURRENT_DATE(), NULL),
-(4, 12, 'Dewey', 'Largo', 'dewey.largo@springfield.com', '47586012', 'password', CURRENT_DATE(), NULL),
-(4, 11, 'Janey', 'Powell', 'janey.powell@springfield.com', '84716582', 'password', CURRENT_DATE(), NULL),
-(4, 12, 'Jasper', 'Beardly', 'jasper.beardly@springfield.com', '89641290', 'password', CURRENT_DATE(), NULL),
-(5, 14, 'Julius', 'Hibbert', 'dr.hibbert@springfield.com', '78034725', 'password', CURRENT_DATE(), NULL),
-(5, 15, 'Nick', 'Riviera', 'dr.nick@springfield.com', '95857364', 'password', CURRENT_DATE(), NULL),
-(5, 15, 'Jonathan', 'Frink', 'prof.frink@springfield.com', '27268532', 'password', CURRENT_DATE(), NULL),
-(5, 13, 'Joe', 'Quimby', 'mayor.quimby@springfield.com', '94873263', 'password', CURRENT_DATE(), NULL),
-(5, 14, 'Kent', 'Brockman', 'kent.brockman@springfield.com', '74615049', 'password', CURRENT_DATE(), NULL),
-(5, 15, 'Patty', 'Bouvier', 'patty.bouvier@springfield.com', '38458371', 'password', CURRENT_DATE(), NULL),
-(5, 15, 'Selma', 'Bouvier', 'selma.bouvier@springfield.com', '38458372', 'password', CURRENT_DATE(), NULL),
-(5, 15, 'Timothy', 'Lovejoy', 'timothy.lovejoy@springfield.com', '18274563', 'password', CURRENT_DATE(), NULL),
-(5, 15, 'Helen', 'Lovejoy', 'helen.lovejoy@springfield.com', '84722564', 'password', CURRENT_DATE(), NULL),
-(5, 13, 'Lionel', 'Hutz', 'lionel.hutz@springfield.com', '38474462', 'password', CURRENT_DATE(), NULL),
-(5, 13, 'Troy', 'McClure', 'troy.mcclure@springfield.com', '83736456', 'password', CURRENT_DATE(), NULL),
-(5, 14, 'Rainier', 'Wolfcastle', 'rainier.wolfcastle@springfield.com', '48473262', 'password', CURRENT_DATE(), NULL),
-(6, 16, 'Kang', 'Johnson', 'kang.johnson@rigel.vii.com', '93821543', 'password', CURRENT_DATE(), NULL),
-(6, 17, 'Kodos', 'Johnson', 'kodos.johnson@rigel.vii.com', '17363532', 'password', CURRENT_DATE(), NULL);
+(1, 'Admin', 'Homer', 'Simpson', 'homer.simpson@springfield.com', '83746254', 'password', CURRENT_DATE(), NULL),
+(1, 'Manager', 'Marge', 'Simpson', 'marge.simpson@springfield.com', '91756352', 'password', CURRENT_DATE(), NULL),
+(1, 'Manager', 'Bart', 'Simpson', 'bart.simpson@springfield.com', '94756354', 'password', CURRENT_DATE(), NULL),
+(1, 'Waiter', 'Lisa', 'Simpson', 'lisa.simpson@springfield.com', '95817465', 'password', CURRENT_DATE(), NULL),
+(1, 'Waiter', 'Maggie', 'Simpson', 'maggie.simpson@springfield.com', '26497424', 'password', CURRENT_DATE(), NULL),
+(1, 'Waiter', 'Abraham', 'Simpson', 'abe.simpson@springfield.com', '80571060', 'password', CURRENT_DATE(), NULL),
+(2, 'Admin', 'Moe', 'Szyslak', 'moe.szyslak@springfield.com', '94089265', 'password', CURRENT_DATE(), NULL),
+(2, 'Manager', 'Lenny', 'Leonard', 'lenny.leonard@springfield.com', '83659210', 'password', CURRENT_DATE(), NULL),
+(2, 'Manager', 'Carl', 'Carlson', 'carl.carlson@springfield.com', '48571893', 'password', CURRENT_DATE(), NULL),
+(2, 'Manager', 'Apu', 'Nahasapeemapetilon', 'apu.nahasapeemapetilon@springfield.com', '40956310', 'password', CURRENT_DATE(), NULL),
+(2, 'Waiter', 'Barney', 'Gumble', 'barney.gumble@springfield.com', '17465824', 'password', CURRENT_DATE(), NULL),
+(2, 'Waiter', 'Montgomery', 'Burns', 'montomery.burns@springfield.com', '37285081', 'password', CURRENT_DATE(), NULL),
+(2, 'Waiter', 'Waylon', 'Smithers', 'waylon.smithers@springfield.com', '28474645', 'password', CURRENT_DATE(), NULL),
+(3, 'Admin', 'Seymour', 'Skinner', 'seymour.skinner@springfield.com', '48673927', 'password', CURRENT_DATE(), NULL),
+(3, 'Admin', 'Gary', 'Chalmers', 'gary.chalmers@springfield.com', '48916843', 'password', CURRENT_DATE(), NULL),
+(3, 'Manager', 'Edna', 'Krabappel', 'edna.krabappel@springfield.com', '82517594', 'password', CURRENT_DATE(), NULL),
+(3, 'Manager', 'Elizabeth', 'Hoover', 'elizabeth.hoover@springfield.com', '82712643', 'password', CURRENT_DATE(), NULL),
+(3, 'Manager', 'Agnes', 'Skinner', 'agnes.skinner@springfield.com', '84573262', 'password', CURRENT_DATE(), NULL),
+(3, 'Waiter', 'Otto', 'Mann', 'otto.mann@springfield.com', '19381441', 'password', CURRENT_DATE(), NULL),
+(3, 'Waiter', 'Clancy', 'Wiggum', 'clancy.wiggum@springfield.com', '85731513', 'password', CURRENT_DATE(), NULL),
+(3, 'Waiter', 'Ralph', 'Wiggum', 'ralph.wiggum@springfield.com', '17284752', 'password', CURRENT_DATE(), NULL),
+(3, 'Waiter', 'Ned', 'Flanders', 'ned.flanders@springfield.com', '20475903', 'password', CURRENT_DATE(), NULL),
+(3, 'Waiter', 'Maude', 'Flanders', 'maude.flanders@springfield.com', '20475902', 'password', CURRENT_DATE(), NULL),
+(3, 'Waiter', 'Todd', 'Flanders', 'todd.flanders@springfield.com', '20475906', 'password', CURRENT_DATE(), NULL),
+(3, 'Waiter', 'Rod', 'Flanders', 'rod.flanders@springfield.com', '20475907', 'password', CURRENT_DATE(), NULL),
+(4, 'Admin', 'Milhouse', 'Van Houten', 'milhouse.van.houten@springfield.com', '83715462', 'password', CURRENT_DATE(), NULL),
+(4, 'Admin', 'Martin', 'Prince', 'martin.prince@springfield.com', '75826194', 'password', CURRENT_DATE(), NULL),
+(4, 'Manager', 'Nelson', 'Muntz', 'nelson.muntz@springfield.com', '84372612', 'password', CURRENT_DATE(), NULL),
+(4, 'Manager', 'Jimbo', 'Jones', 'jimbo.jones@springfield.com', '25143843', 'password', CURRENT_DATE(), NULL),
+(4, 'Manager', 'Kearney', 'Zzyzwicz', 'kearney.zzyzwicz@springfield.com', '27164315', 'password', CURRENT_DATE(), NULL),
+(4, 'Manager', 'Dolph', 'Starbeam', 'dolph.starbeam@springfield.com', '26151324', 'password', CURRENT_DATE(), NULL),
+(4, 'Waiter', 'Dewey', 'Largo', 'dewey.largo@springfield.com', '47586012', 'password', CURRENT_DATE(), NULL),
+(4, 'Waiter', 'Janey', 'Powell', 'janey.powell@springfield.com', '84716582', 'password', CURRENT_DATE(), NULL),
+(4, 'Waiter', 'Jasper', 'Beardly', 'jasper.beardly@springfield.com', '89641290', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Julius', 'Hibbert', 'dr.hibbert@springfield.com', '78034725', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Nick', 'Riviera', 'dr.nick@springfield.com', '95857364', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Jonathan', 'Frink', 'prof.frink@springfield.com', '27268532', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Joe', 'Quimby', 'mayor.quimby@springfield.com', '94873263', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Kent', 'Brockman', 'kent.brockman@springfield.com', '74615049', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Patty', 'Bouvier', 'patty.bouvier@springfield.com', '38458371', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Selma', 'Bouvier', 'selma.bouvier@springfield.com', '38458372', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Timothy', 'Lovejoy', 'timothy.lovejoy@springfield.com', '18274563', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Helen', 'Lovejoy', 'helen.lovejoy@springfield.com', '84722564', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Lionel', 'Hutz', 'lionel.hutz@springfield.com', '38474462', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Troy', 'McClure', 'troy.mcclure@springfield.com', '83736456', 'password', CURRENT_DATE(), NULL),
+(5, 'Waiter', 'Rainier', 'Wolfcastle', 'rainier.wolfcastle@springfield.com', '48473262', 'password', CURRENT_DATE(), NULL),
+(6, 'Admin', 'Kang', 'Johnson', 'kang.johnson@rigel.vii.com', '93821543', 'password', CURRENT_DATE(), NULL),
+(6, 'Manager', 'Kodos', 'Johnson', 'kodos.johnson@rigel.vii.com', '17363532', 'password', CURRENT_DATE(), NULL);

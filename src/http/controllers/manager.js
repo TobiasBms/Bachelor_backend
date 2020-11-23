@@ -1,11 +1,12 @@
-const managerService = require("../../services/manager"),
-  { getIdParam, getScopesQuery, authenticate } = require("../middleware"),
-  { NotFoundError, BadRequestError } = require("restify-errors"),
-  { Router } = require("restify-router"),
-  router = new Router()
+const managerService = require("../../services/manager")
+const { getIdParam, getScopesQuery, authenticate } = require("../middleware")
+const { NotFoundError, BadRequestError } = require("restify-errors")
+const { Router } = require("restify-router")
+const router = new Router()
+const Privileges = require("../../../config/privileges.json")
 
 router.post("/auth", auth)
-router.get("", getScopesQuery, authenticate("test"), getAll)
+router.get("", getScopesQuery, authenticate(Privileges.EditRestaurant), getAll)
 router.get("/:id", getIdParam, getScopesQuery, getById)
 router.post("", create)
 router.put("/:id", getIdParam, update)
