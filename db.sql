@@ -340,22 +340,6 @@ CREATE TABLE IF NOT EXISTS `ManagerHasPrivilege` (
         ON DELETE RESTRICT
 );
 
-INSERT INTO `Privilege` (`name`) VALUES
-('Redigér restaurant'),
-('Slet restaurant'),
-('Opret manager'),
-('Redigér manager'),
-('Tildel rolle'),
-('Tildel privilegie'),
-('Slet manager'),
-('Opret produkt'),
-('Redigér produkt'),
-('Opret kategori'),
-('Redigér kategori'),
-('Redigér ordre'),
-('Slet ordre'),
-('Svar på anmeldelse');
-
 INSERT INTO `City` VALUES
 (1000, 'København K'),
 (1500, 'København V'),
@@ -956,16 +940,25 @@ INSERT INTO `Restaurant` (`name`, `registered_at`, `zip_code`, `address`, `locat
 ('Kayas Pizzaria', CURRENT_DATE, '5270', 'Næsbyvej 79', Point(55.416744, 10.3689532), '66181490', NULL, 'https://kayasrestaurant-odense.dk/', NULL, NULL, 'Kayas Pizzaria tilbyder et stort udvalg af retter og her kan du bla. få Super og Børnepizza', 793344),
 ('Stenovnen', CURRENT_DATE, '5270', 'Ågade 1A', Point(55.4192068, 10.3558769), '35355000', 'pejman136@yahoo.dk', 'http://stenovnen.com/', NULL, NULL, 'Få en unik madoplevelse fra smagen af den første brændefyret stenovn i Odense.', 934229),
 ('Asia Restaurant Odense', CURRENT_DATE, '5230', 'Tagtækkervej 8', Point(55.3849164, 10.4233489), '55985555', 'odense@asia-restaurant.dk', 'https://www.asia-restaurant.dk/', NULL, NULL, 'Pin Sing Si har gennem sit tidligere arbejde som kok udviklet konceptet bag Asia Restaurant, som i sin enkelthed bygger på gode råvarer, en fusion af nye og gamle kinesiske opskrifter, samt autentiske krydderier.', 512655),
-('Giraffen', CURRENT_DATE, '5000', 'Østre Stationsvej 27', Point(55.4016488, 10.3872447), '66140514', NULL, 'https://www.giraffen-odense.dk/', NULL, NULL, 'Restaurant Giraffen - hyggelig bar og restaurant på Odense Banegårdscenter', 654737);
+('Giraffen', CURRENT_DATE, '5000', 'Østre Stationsvej 27', Point(55.4016488, 10.3872447), '66140514', NULL, 'https://www.giraffen-odense.dk/', NULL, NULL, 'Restaurant Giraffen - hyggelig bar og restaurant på Odense Banegårdscenter', 654737),
+('Burger Shack', CURRENT_DATE, '5000', 'Englandsgade 2', Point(55.4073745, 10.3831007), '20226360', 'burger@burgershack.dk', 'https://burgershack.dk/', NULL, NULL, 'Siger du, at du ikke rigtig er til burgere? Måske er du veganer, spiser ikke kød eller noget helt andet. Det er helt ok – vi har også mad til dig.', 795244),
+('City Sharwarma', CURRENT_DATE, '5000', 'Nørregade 46', Point(55.3997776, 10.3884176), '66111203', NULL, 'https://www.dagensmenu.dk/takeaway/city-shawarma-odense-odense-c?ad-id=3899', NULL, NULL, 'City Shawarma Odense Tilbyder Shawarma m.m kom ned i forretningen og smag vores dejlige mad.', 768069);
 
-INSERT INTO `RestaurantHours` VALUES
+INSERT INTO `RestaurantHours`
+(`restaurant_id`, `day_of_week`, `open_hour`, `close_hour`)
+VALUES
 (1, 'default', '15:00', '22:00'),
 (1, 'sunday', '14:00', '22:00'),
 (2, 'default', '15:00', '21:00'),
 (2, 'friday', '14:00', '21:30'),
 (2, 'saturday', '14:00', '21:30'),
 (3, 'default', '11:30', '22:00'),
-(4, 'default', '10:00', '23:00');
+(4, 'default', '10:00', '23:00'),
+(5, 'default', '11:30', '21:00'),
+(6, 'default', '11:00', '22:00'),
+(6, 'monday', '11:00', '22:30'),
+(6, 'friday', '11:00', '03:00'),
+(6, 'saturday', '11:00', '03:00');
 
 INSERT INTO `RestaurantCategory` (`name`, `description`) VALUES
 ('Amerikansk', NULL),
@@ -998,4 +991,98 @@ INSERT INTO `RestaurantHasCategory` VALUES
 (2, 10),
 (3, 14),
 (3, 18),
-(4, 6);
+(4, 6),
+(5, 4),
+(5, 22),
+(6, 8),
+(6, 13);
+
+INSERT INTO `ManagerRole`
+(`restaurant_id`, `name`)
+VALUES
+(1, 'Admin'),
+(1, 'Manager'),
+(1, 'Server'),
+(2, 'Admin'),
+(2, 'Manager'),
+(2, 'Server'),
+(3, 'Admin'),
+(3, 'Manager'),
+(3, 'Server'),
+(4, 'Admin'),
+(4, 'Manager'),
+(4, 'Server'),
+(5, 'Admin'),
+(5, 'Manager'),
+(5, 'Server'),
+(6, 'Admin'),
+(6, 'Manager'),
+(6, 'Server');
+
+INSERT INTO `Privilege` (`name`) VALUES
+('Redigér restaurant'),
+('Slet restaurant'),
+('Opret manager'),
+('Redigér manager'),
+('Tildel rolle'),
+('Tildel privilegie'),
+('Slet manager'),
+('Opret produkt'),
+('Redigér produkt'),
+('Opret kategori'),
+('Redigér kategori'),
+('Redigér ordre'),
+('Slet ordre'),
+('Svar på anmeldelse');
+
+INSERT INTO `Manager`
+(`restaurant_id`, `role_id`, `first_name`, `last_name`, `email`, `phone`, `password`, `registered_at`, `last_login`)
+VALUES
+(1, 1, 'Homer', 'Simpson', 'homer.simpson@springfield.com', '83746254', 'password', CURRENT_DATE(), NULL),
+(1, 2, 'Marge', 'Simpson', 'marge.simpson@springfield.com', '91756352', 'password', CURRENT_DATE(), NULL),
+(1, 3, 'Bart', 'Simpson', 'bart.simpson@springfield.com', '94756354', 'password', CURRENT_DATE(), NULL),
+(1, 3, 'Lisa', 'Simpson', 'lisa.simpson@springfield.com', '95817465', 'password', CURRENT_DATE(), NULL),
+(1, 3, 'Maggie', 'Simpson', 'maggie.simpson@springfield.com', '26497424', 'password', CURRENT_DATE(), NULL),
+(1, 2, 'Abraham', 'Simpson', 'abe.simpson@springfield.com', '80571060', 'password', CURRENT_DATE(), NULL),
+(2, 4, 'Moe', 'Szyslak', 'moe.szyslak@springfield.com', '94089265', 'password', CURRENT_DATE(), NULL),
+(2, 6, 'Lenny', 'Leonard', 'lenny.leonard@springfield.com', '83659210', 'password', CURRENT_DATE(), NULL),
+(2, 5, 'Carl', 'Carlson', 'carl.carlson@springfield.com', '48571893', 'password', CURRENT_DATE(), NULL),
+(2, 5, 'Apu', 'Nahasapeemapetilon', 'apu.nahasapeemapetilon@springfield.com', '40956310', 'password', CURRENT_DATE(), NULL),
+(2, 6, 'Barney', 'Gumble', 'barney.gumble@springfield.com', '17465824', 'password', CURRENT_DATE(), NULL),
+(2, 4, 'Montgomery', 'Burns', 'montomery.burns@springfield.com', '37285081', 'password', CURRENT_DATE(), NULL),
+(2, 5, 'Waylon', 'Smithers', 'waylon.smithers@springfield.com', '28474645', 'password', CURRENT_DATE(), NULL),
+(3, 8, 'Seymour', 'Skinner', 'seymour.skinner@springfield.com', '48673927', 'password', CURRENT_DATE(), NULL),
+(3, 7, 'Gary', 'Chalmers', 'gary.chalmers@springfield.com', '48916843', 'password', CURRENT_DATE(), NULL),
+(3, 9, 'Edna', 'Krabappel', 'edna.krabappel@springfield.com', '82517594', 'password', CURRENT_DATE(), NULL),
+(3, 9, 'Elizabeth', 'Hoover', 'elizabeth.hoover@springfield.com', '82712643', 'password', CURRENT_DATE(), NULL),
+(3, 8, 'Agnes', 'Skinner', 'agnes.skinner@springfield.com', '84573262', 'password', CURRENT_DATE(), NULL),
+(3, 9, 'Otto', 'Mann', 'otto.mann@springfield.com', '19381441', 'password', CURRENT_DATE(), NULL),
+(3, 8, 'Clancy', 'Wiggum', 'clancy.wiggum@springfield.com', '85731513', 'password', CURRENT_DATE(), NULL),
+(3, 9, 'Ralph', 'Wiggum', 'ralph.wiggum@springfield.com', '17284752', 'password', CURRENT_DATE(), NULL),
+(3, 8, 'Ned', 'Flanders', 'ned.flanders@springfield.com', '20475903', 'password', CURRENT_DATE(), NULL),
+(3, 8, 'Maude', 'Flanders', 'maude.flanders@springfield.com', '20475902', 'password', CURRENT_DATE(), NULL),
+(3, 9, 'Todd', 'Flanders', 'todd.flanders@springfield.com', '20475906', 'password', CURRENT_DATE(), NULL),
+(3, 9, 'Rod', 'Flanders', 'rod.flanders@springfield.com', '20475907', 'password', CURRENT_DATE(), NULL),
+(4, 10, 'Milhouse', 'Van Houten', 'milhouse.van.houten@springfield.com', '83715462', 'password', CURRENT_DATE(), NULL),
+(4, 11, 'Martin', 'Prince', 'martin.prince@springfield.com', '75826194', 'password', CURRENT_DATE(), NULL),
+(4, 11, 'Nelson', 'Muntz', 'nelson.muntz@springfield.com', '84372612', 'password', CURRENT_DATE(), NULL),
+(4, 12, 'Jimbo', 'Jones', 'jimbo.jones@springfield.com', '25143843', 'password', CURRENT_DATE(), NULL),
+(4, 12, 'Kearney', 'Zzyzwicz', 'kearney.zzyzwicz@springfield.com', '27164315', 'password', CURRENT_DATE(), NULL),
+(4, 12, 'Dolph', 'Starbeam', 'dolph.starbeam@springfield.com', '26151324', 'password', CURRENT_DATE(), NULL),
+(4, 12, 'Dewey', 'Largo', 'dewey.largo@springfield.com', '47586012', 'password', CURRENT_DATE(), NULL),
+(4, 11, 'Janey', 'Powell', 'janey.powell@springfield.com', '84716582', 'password', CURRENT_DATE(), NULL),
+(4, 12, 'Jasper', 'Beardly', 'jasper.beardly@springfield.com', '89641290', 'password', CURRENT_DATE(), NULL),
+(5, 14, 'Julius', 'Hibbert', 'dr.hibbert@springfield.com', '78034725', 'password', CURRENT_DATE(), NULL),
+(5, 15, 'Nick', 'Riviera', 'dr.nick@springfield.com', '95857364', 'password', CURRENT_DATE(), NULL),
+(5, 15, 'Jonathan', 'Frink', 'prof.frink@springfield.com', '27268532', 'password', CURRENT_DATE(), NULL),
+(5, 13, 'Joe', 'Quimby', 'mayor.quimby@springfield.com', '94873263', 'password', CURRENT_DATE(), NULL),
+(5, 14, 'Kent', 'Brockman', 'kent.brockman@springfield.com', '74615049', 'password', CURRENT_DATE(), NULL),
+(5, 15, 'Patty', 'Bouvier', 'patty.bouvier@springfield.com', '38458371', 'password', CURRENT_DATE(), NULL),
+(5, 15, 'Selma', 'Bouvier', 'selma.bouvier@springfield.com', '38458372', 'password', CURRENT_DATE(), NULL),
+(5, 15, 'Timothy', 'Lovejoy', 'timothy.lovejoy@springfield.com', '18274563', 'password', CURRENT_DATE(), NULL),
+(5, 15, 'Helen', 'Lovejoy', 'helen.lovejoy@springfield.com', '84722564', 'password', CURRENT_DATE(), NULL),
+(5, 13, 'Lionel', 'Hutz', 'lionel.hutz@springfield.com', '38474462', 'password', CURRENT_DATE(), NULL),
+(5, 13, 'Troy', 'McClure', 'troy.mcclure@springfield.com', '83736456', 'password', CURRENT_DATE(), NULL),
+(5, 14, 'Rainier', 'Wolfcastle', 'rainier.wolfcastle@springfield.com', '48473262', 'password', CURRENT_DATE(), NULL),
+(6, 16, 'Kang', 'Johnson', 'kang.johnson@rigel.vii.com', '93821543', 'password', CURRENT_DATE(), NULL),
+(6, 17, 'Kodos', 'Johnson', 'kodos.johnson@rigel.vii.com', '17363532', 'password', CURRENT_DATE(), NULL);
