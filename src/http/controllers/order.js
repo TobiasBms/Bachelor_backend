@@ -13,9 +13,19 @@ const { authorize } = require("../middleware")
 
 router.get("", getScopesQuery, getAll)
 router.get("/:id", getIdParam, getScopesQuery, getById)
-router.post("", authorize([Roles.Admin, Roles.Manager]), create)
-router.put("/:id", authorize([Roles.Admin, Roles.Manager]), getIdParam, update)
-router.del("/:id", authorize([Roles.Admin, Roles.Manager]), getIdParam, remove)
+router.post("", authorize([Roles.Admin, Roles.Manager, Roles.Waiter]), create)
+router.put(
+  "/:id",
+  authorize([Roles.Admin, Roles.Manager, Roles.Waiter]),
+  getIdParam,
+  update
+)
+router.del(
+  "/:id",
+  authorize([Roles.Admin, Roles.Manager, Roles.Waiter]),
+  getIdParam,
+  remove
+)
 module.exports = router
 
 async function getAll(req, res, next) {
