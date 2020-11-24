@@ -1,27 +1,34 @@
 const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
-  sequelize.define("Manager", {
-    restaurant_id: {
-      type: DataTypes.NUMBER,
-      references: {
-        model: sequelize.models.Restaurant,
-        key: "id",
+  sequelize.define(
+    "Manager",
+    {
+      restaurant_id: {
+        type: DataTypes.NUMBER,
+        references: {
+          model: sequelize.models.Restaurant,
+          key: "id",
+        },
       },
+      role: DataTypes.ENUM({
+        values: ["Admin", "Manager", "Waiter"],
+      }),
+      first_name: DataTypes.STRING,
+      last_name: DataTypes.STRING,
+      email: DataTypes.STRING,
+      phone: DataTypes.CHAR,
+      password: DataTypes.STRING,
+      registered_at: DataTypes.DATEONLY,
+      last_login: DataTypes.DATE,
     },
-    role_id: {
-      type: DataTypes.NUMBER,
-      references: {
-        model: sequelize.models.ManagerRole,
-        key: "id",
+    {
+      defaultScope: {
+        attributes: { exclude: ["password"] },
       },
-    },
-    first_name: DataTypes.STRING,
-    last_name: DataTypes.STRING,
-    email: DataTypes.STRING,
-    phone: DataTypes.CHAR,
-    password: DataTypes.STRING,
-    registered_at: DataTypes.DATEONLY,
-    last_login: DataTypes.DATE,
-  })
+      scopes: {
+        withPassword: { attributes: {} },
+      },
+    }
+  )
 }
