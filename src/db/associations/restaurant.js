@@ -6,6 +6,7 @@ module.exports = function applyAssociations(sequelize) {
     RestaurantHasCategory,
     RestaurantSeat,
     City,
+    Manager,
   } = sequelize.models
 
   Restaurant.belongsToMany(RestaurantCategory, {
@@ -45,6 +46,14 @@ module.exports = function applyAssociations(sequelize) {
   })
 
   RestaurantSeat.belongsTo(Restaurant, {
+    foreignKey: "restaurant_id",
+  })
+
+  Restaurant.hasMany(Manager, {
+    foreignKey: "restaurant_id",
+  })
+
+  Manager.belongsTo(Restaurant, {
     foreignKey: "restaurant_id",
   })
 }

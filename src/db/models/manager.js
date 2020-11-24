@@ -9,13 +9,9 @@ module.exports = sequelize => {
         key: "id",
       },
     },
-    role_id: {
-      type: DataTypes.NUMBER,
-      references: {
-        model: sequelize.models.ManagerRole,
-        key: "id",
-      },
-    },
+    role: DataTypes.ENUM({
+      values: ["Admin", "Manager", "Waiter"],
+    }),
     first_name: DataTypes.STRING,
     last_name: DataTypes.STRING,
     email: DataTypes.STRING,
