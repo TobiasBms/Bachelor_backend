@@ -1,22 +1,19 @@
 require("dotenv").config()
 const jwt = require("restify-jwt-community")
-const { ManagerHasPrivilege } = require("../../db").models
+const { Manager } = require("../../db").models
 const { ForbiddenError } = require("restify-errors")
 const Errors = require("../../../config/errors.json")
 
-module.exports = function authorize(privilege) {
+module.exports = function authorize(role) {
   return [
     jwt({ secret: process.env.JWT_SECRET }),
     async (req, res, next) => {
-      const privileges = await ManagerHasPrivilege.findAll({
+      const manager = await Manager.findOne({
         raw: true,
-        where: {
-          manager_id: req.user.id,
-          privilege_id: privilege,
-        },
+        where: { id: req.user.id },
       })
-      console.log(privileges)
-      if (!privileges.length) {
+      console.log(manager.role)
+      if (manager.role !== role) {
         return next(new ForbiddenError(Errors.noAccess))
       }
       return next()
