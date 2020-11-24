@@ -1,15 +1,16 @@
 const managerService = require("../../services/manager")
 const { getIdParam, authenticate } = require("../middleware")
 const { NotFoundError, BadRequestError } = require("restify-errors")
+const Roles = require("../../utils/roles")
 const { Router } = require("restify-router")
 const router = new Router()
 
 router.post("/auth", auth)
-router.get("", authenticate(["Manager"]), getAll)
-router.get("/:id", getIdParam, authenticate(), getById)
-router.post("", create)
-router.put("/:id", getIdParam, update)
-router.del("/:id", getIdParam, remove)
+router.get("", authenticate([Roles.Admin, Roles.Manager]), getAll)
+router.get("/:id", authenticate(), getIdParam, getById)
+router.post("", authenticate([Roles.Admin]), create)
+router.put("/:id", authenticate(), getIdParam, update)
+router.del("/:id", authenticate([Roles.Admin]), getIdParam, remove)
 module.exports = router
 
 async function auth(req, res, next) {
