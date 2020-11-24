@@ -1,14 +1,14 @@
 const managerService = require("../../services/manager")
-const { getIdParam, getScopesQuery, authenticate } = require("../middleware")
+const { getIdParam, authenticate } = require("../middleware")
 const { NotFoundError, BadRequestError } = require("restify-errors")
 const { Router } = require("restify-router")
 const router = new Router()
 
 router.post("/auth", auth)
-router.get("", getScopesQuery, getAll)
-router.get("/:id", getIdParam, getScopesQuery, getById)
+router.get("", authenticate(["Manager"]), getAll)
+router.get("/:id", getIdParam, authenticate(), getById)
 router.post("", create)
-router.put("/:id", getIdParam, authenticate("Manager"), update)
+router.put("/:id", getIdParam, update)
 router.del("/:id", getIdParam, remove)
 module.exports = router
 
