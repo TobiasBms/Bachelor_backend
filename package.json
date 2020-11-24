@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/TobiasBms/skoleintra_backend#readme",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "js-yaml": "^3.14.0",
     "jsonwebtoken": "^8.5.1",
