@@ -4,7 +4,9 @@ const { Manager } = require("../../db").models
 const { ForbiddenError } = require("restify-errors")
 const Errors = require("../../../config/errors.json")
 
-module.exports = function authorize(role) {
+module.exports = function authorize(roles = []) {
+  if (typeof privileges === "string") roles = [roles]
+
   return [
     jwt({ secret: process.env.JWT_SECRET }),
     async (req, res, next) => {
@@ -12,8 +14,7 @@ module.exports = function authorize(role) {
         raw: true,
         where: { id: req.user.id },
       })
-      console.log(manager.role)
-      if (manager.role !== role) {
+      if (roles.length && !roles.includes(manager.role)) {
         return next(new ForbiddenError(Errors.noAccess))
       }
       return next()
