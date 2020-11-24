@@ -15,12 +15,12 @@ async function authenticate({ email, password }) {
   }
 }
 
-async function getAll(scopes = []) {
-  return await Manager.scope(scopes).findAll()
+async function getAll() {
+  return await Manager.findAll()
 }
 
-async function getById(id, scopes = []) {
-  return await Manager.scope(scopes).findByPk(id)
+async function getById(id) {
+  return await Manager.findByPk(id)
 }
 
 async function create(body) {
