@@ -1,19 +1,19 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
-  sequelize.define('OrderHasProductHasExtra', {
+  sequelize.define("OrderHasProductHasExtra", {
     extra_id: {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.Extra,
-        key: 'id',
+        key: "id",
       },
     },
     orderproduct_id: {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.OrderHasProduct,
-        key: 'id',
+        key: "id",
       },
     },
     amount: DataTypes.TINYINT,
