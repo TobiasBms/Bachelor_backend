@@ -21,8 +21,11 @@ module.exports = function applyScopes(sequelize) {
       {
         model: Product,
         as: "products",
-        /* Exclude attributes from the join table */
-        through: { attributes: [] },
+        attributes: ["id", "name"],
+        through: {
+          attributes: ["amount"],
+          as: "data",
+        },
       },
     ],
   })
