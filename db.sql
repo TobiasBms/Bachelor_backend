@@ -191,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `ProductHasExtra` (
 CREATE TABLE IF NOT EXISTS `Order` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `restaurant_id` INT UNSIGNED NOT NULL,
-    `seat_id` INT UNSIGNED NOT NULL,
+    `seat_id` INT UNSIGNED,
     `created_at` DATETIME NOT NULL DEFAULT NOW(),
     `comment` VARCHAR(255),
     FOREIGN KEY (`restaurant_id`)
@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `Order` (
         ON DELETE CASCADE,
     FOREIGN KEY (`seat_id`)
         REFERENCES `RestaurantSeat` (`id`)
-        ON DELETE CASCADE
+        ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS `OrderStatus` (

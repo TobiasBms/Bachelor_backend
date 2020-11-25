@@ -11,7 +11,6 @@ module.exports = sequelize => {
     seat_id: {
       type: DataTypes.NUMBER,
       references: { model: RestaurantSeat, key: "id" },
-      allowNull: false,
     },
     created_at: {
       type: DataTypes.DATE,
