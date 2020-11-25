@@ -45,12 +45,14 @@ module.exports = function applyAssociations(sequelize) {
     through: OrderHasProduct,
     foreignKey: "order_id",
     otherKey: "product_id",
+    as: "products",
   })
 
   Product.belongsToMany(Order, {
     through: OrderHasProduct,
     foreignKey: "product_id",
     otherKey: "order_id",
+    as: "orders",
   })
 
   OrderHasProduct.belongsToMany(Extra, {
