@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `Order` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `restaurant_id` INT UNSIGNED NOT NULL,
     `seat_id` INT UNSIGNED NOT NULL,
-    `created_at` DATETIME,
+    `created_at` DATETIME NOT NULL DEFAULT NOW(),
     `comment` VARCHAR(255),
     FOREIGN KEY (`restaurant_id`)
         REFERENCES `Restaurant` (`id`)

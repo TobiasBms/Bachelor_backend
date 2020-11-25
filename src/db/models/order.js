@@ -1,4 +1,4 @@
-const { DataTypes } = require("sequelize")
+const { DataTypes, Sequelize } = require("sequelize")
 
 module.exports = sequelize => {
   sequelize.define("Order", {
@@ -16,7 +16,11 @@ module.exports = sequelize => {
         key: "id",
       },
     },
-    created_at: DataTypes.DATE,
+    created_at: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.NOW,
+      allowNull: false,
+    },
     comment: DataTypes.STRING,
   })
 }
