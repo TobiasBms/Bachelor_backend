@@ -41,12 +41,16 @@ async function getById(req, res, next) {
 }
 
 async function create(req, res, next) {
-  if (req.body === undefined) {
-    return next(new BadRequestError(noBodyProvided))
+  try {
+    if (req.body === undefined) {
+      return next(new BadRequestError(noBodyProvided))
+    }
+    const order = await orderService.create(req.body)
+    res.send(201, order)
+    next()
+  } catch (error) {
+    next(error)
   }
-  const order = await orderService.create(req.body)
-  res.send(201, order)
-  next()
 }
 
 async function update(req, res, next) {
