@@ -202,25 +202,6 @@ CREATE TABLE IF NOT EXISTS `Order` (
         ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS `GroupOrder` (
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `uuid` BINARY(16)
-);
-
-CREATE TABLE IF NOT EXISTS `GroupOrderHasOrder` (
-    `order_id` INT UNSIGNED,
-    `grouporder_id` INT UNSIGNED,
-    `name` VARCHAR(255),
-    `ready` BOOL,
-    PRIMARY KEY (`order_id` , `grouporder_id`),
-    FOREIGN KEY (`order_id`)
-        REFERENCES `Order` (`id`)
-        ON DELETE CASCADE,
-    FOREIGN KEY (`grouporder_id`)
-        REFERENCES `GroupOrder` (`id`)
-        ON DELETE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS `OrderStatus` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(255),
