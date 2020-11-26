@@ -1,16 +1,26 @@
 module.exports = function applyScopes(sequelize) {
   const {
+    Order,
     OrderRating,
     OrderStatus,
-    Order,
-    Product,
     OrderHasProduct,
-    Extra,
+    Product,
     OrderHasProductHasExtra,
+    Extra,
   } = sequelize.models
 
+  /* Include the rating */
   Order.addScope("rating", {
-    include: [{ model: OrderRating, as: "rating" }],
+    include: [
+      {
+        model: OrderRating,
+        as: "rating",
+        attributes: {
+          /* Order already includes order and restaurant ID */
+          exclude: ["order_id", "restaurant_id"],
+        },
+      },
+    ],
   })
 
   Order.addScope("status", {

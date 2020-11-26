@@ -90,7 +90,7 @@ module.exports = function applyAssociations(sequelize) {
     as: "order",
   })
 
-  Order.hasMany(OrderRating, {
+  Order.hasOne(OrderRating, {
     foreignKey: "order_id",
     as: "rating",
   })
