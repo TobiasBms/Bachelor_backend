@@ -3,17 +3,18 @@ const {
   noId,
   noBodyProvided,
 } = require("../../../config/errors.json")
-const orderService = require("../../services/order"),
-  { getIdParam, getScopesQuery } = require("../middleware"),
-  { NotFoundError, BadRequestError } = require("restify-errors"),
-  { Router } = require("restify-router"),
-  router = new Router()
+const orderService = require("../../services/order")
+const { getIdParam, getScopesQuery } = require("../middleware")
+const { NotFoundError, BadRequestError } = require("restify-errors")
+const { Router } = require("restify-router")
+const router = new Router()
+const { authorize } = require("../middleware")
 
-router.get("", getScopesQuery, getAll)
-router.get("/:id", getIdParam, getScopesQuery, getById)
-router.post("", create)
-router.put("/:id", getIdParam, update)
-router.del("/:id", getIdParam, remove)
+router.get("", authorize(), getScopesQuery, getAll)
+router.get("/:id", authorize(), getIdParam, getScopesQuery, getById)
+router.post("", authorize(), create)
+router.put("/:id", authorize(), getIdParam, update)
+router.del("/:id", authorize(), getIdParam, remove)
 module.exports = router
 
 async function getAll(req, res, next) {
