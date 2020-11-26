@@ -4,6 +4,7 @@ module.exports = sequelize => {
   sequelize.define("OrderHasProductHasExtra", {
     extra_id: {
       type: DataTypes.NUMBER,
+      primaryKey: true,
       references: {
         model: sequelize.models.Extra,
         key: "id",
@@ -11,6 +12,7 @@ module.exports = sequelize => {
     },
     orderproduct_id: {
       type: DataTypes.NUMBER,
+      primaryKey: true,
       references: {
         model: sequelize.models.OrderHasProduct,
         key: "id",
