@@ -11,5 +11,6 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "func-style": ["error", "declaration"],
+    "multiline-comment-style": ["error", "starred-block"],
   },
 }
