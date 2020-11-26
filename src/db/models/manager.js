@@ -4,7 +4,7 @@ module.exports = sequelize => {
   sequelize.define(
     "Manager",
     {
-      restaurant_id: {
+      restaurantId: {
         type: DataTypes.NUMBER,
         references: {
           model: sequelize.models.Restaurant,
@@ -14,13 +14,13 @@ module.exports = sequelize => {
       role: DataTypes.ENUM({
         values: ["Admin", "Manager", "Waiter"],
       }),
-      first_name: DataTypes.STRING,
-      last_name: DataTypes.STRING,
+      firstName: DataTypes.STRING,
+      lastName: DataTypes.STRING,
       email: DataTypes.STRING,
       phone: DataTypes.CHAR,
       password: DataTypes.STRING,
-      registered_at: DataTypes.DATEONLY,
-      last_login: DataTypes.DATE,
+      registeredAt: DataTypes.DATEONLY,
+      lastLogin: DataTypes.DATE,
     },
     {
       defaultScope: {

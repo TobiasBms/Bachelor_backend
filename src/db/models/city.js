@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
   sequelize.define("City", {
-    zip_code: {
+    zipCode: {
       allowNull: false,
       autoIncrement: false,
       primaryKey: true,

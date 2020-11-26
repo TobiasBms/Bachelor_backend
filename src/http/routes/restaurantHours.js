@@ -26,13 +26,13 @@ async function create(req, res) {
 async function update(req, res) {
   try {
     const id = getIdParam(req)
-    const { day_of_week } = req.body
+    const { dayOfWeek } = req.body
 
     if (req.body.restaurant_id === id) {
       const restaurantHours = await models.RestaurantHours.update(req.body, {
         where: {
-          restaurant_id: id,
-          day_of_week: day_of_week,
+          restaurantId: id,
+          dayOfWeek: dayOfWeek,
         },
       })
 
@@ -48,12 +48,12 @@ async function update(req, res) {
 async function remove(req, res) {
   try {
     const id = getIdParam(req)
-    const { day_of_week } = req.body
+    const { dayOfWeek } = req.body
 
     const restaurantHours = await models.RestaurantHours.destroy({
       where: {
-        restaurant_id: id,
-        day_of_week: day_of_week,
+        restaurantId: id,
+        dayOfWeek: dayOfWeek,
       },
     })
 

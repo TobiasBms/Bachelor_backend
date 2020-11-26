@@ -11,6 +11,11 @@ const router = new Router()
 router.get("", getScopesQuery, getAll)
 router.get("/:id", getIdParam, getScopesQuery, getById)
 router.post("", authorize([Roles.Admin, Roles.Manager]), create)
+router.post(
+  "/:id/category/:categoryId",
+  authorize([Roles.Admin, Roles.Manager]),
+  create
+)
 router.put("/:id", authorize([Roles.Admin, Roles.Manager]), getIdParam, update)
 router.del("/:id", authorize([Roles.Admin, Roles.Manager]), getIdParam, remove)
 module.exports = router
@@ -34,6 +39,17 @@ async function getById(req, res, next) {
       res.send(200, product)
       next()
     }
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function addToCategory(req, res, next) {
+  try {
+    const productCategory = await productService.addToCategory(
+      req.id,
+      req.categoryId
+    )
   } catch (error) {
     next(error)
   }

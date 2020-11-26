@@ -10,7 +10,7 @@ module.exports = function applyScopes(sequelize) {
       {
         model: OrderStatus,
         as: "status",
-        through: { attributes: ["time_changed"] },
+        through: { attributes: ["timeChanged"] },
       },
     ],
   })

@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
   sequelize.define("OrderHasStatus", {
-    order_id: {
+    orderId: {
       primaryKey: true,
       type: DataTypes.NUMBER,
       references: {
@@ -10,7 +10,7 @@ module.exports = sequelize => {
         key: "id",
       },
     },
-    status_id: {
+    statusId: {
       primaryKey: true,
       type: DataTypes.NUMBER,
       references: {
@@ -18,6 +18,6 @@ module.exports = sequelize => {
         key: "id",
       },
     },
-    time_changed: DataTypes.DATE,
+    timeChanged: DataTypes.DATE,
   })
 }

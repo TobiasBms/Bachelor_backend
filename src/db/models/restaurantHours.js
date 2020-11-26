@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
   sequelize.define("RestaurantHours", {
-    restaurant_id: {
+    restaurantId: {
       type: DataTypes.NUMBER,
       primaryKey: true,
       references: {
@@ -10,7 +10,7 @@ module.exports = sequelize => {
         key: "id",
       },
     },
-    day_of_week: {
+    dayOfWeek: {
       type: DataTypes.ENUM({
         values: [
           "Default",
@@ -25,10 +25,10 @@ module.exports = sequelize => {
       }),
       primaryKey: true,
     },
-    open_hour: {
+    openHour: {
       type: DataTypes.TIME,
     },
-    close_hour: {
+    closeHour: {
       type: DataTypes.TIME,
     },
   })

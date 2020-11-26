@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   sequelize.define("Restaurant", {
     name: DataTypes.STRING,
-    zip_code: {
+    zipCode: {
       type: DataTypes.CHAR,
       references: {
         model: sequelize.models.City,
@@ -11,14 +11,14 @@ module.exports = sequelize => {
       },
     },
     address: DataTypes.STRING,
-    registered_at: DataTypes.DATE,
+    registeredAt: DataTypes.DATE,
     location: DataTypes.GEOGRAPHY,
     phone: DataTypes.CHAR,
     email: DataTypes.STRING,
     website: DataTypes.STRING,
-    logo_id: DataTypes.NUMBER,
-    banner_id: DataTypes.NUMBER,
+    logoId: DataTypes.NUMBER,
+    bannerId: DataTypes.NUMBER,
     description: DataTypes.TEXT,
-    smiley_id: DataTypes.NUMBER,
+    smileyId: DataTypes.NUMBER,
   })
 }

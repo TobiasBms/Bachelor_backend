@@ -9,46 +9,46 @@ module.exports = function applyAssociations(sequelize) {
   } = sequelize.models
 
   Restaurant.hasMany(Product, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Product.belongsTo(Restaurant, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Restaurant.hasMany(Extra, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Extra.belongsTo(Restaurant, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Extra.belongsToMany(Product, {
     through: ProductHasExtra,
-    foreignKey: "extra_id",
-    otherKey: "product_id",
+    foreignKey: "extraId",
+    otherKey: "productId",
     as: "extra",
   })
 
   Product.belongsToMany(Extra, {
     through: ProductHasExtra,
-    foreignKey: "product_id",
-    otherKey: "extra_id",
+    foreignKey: "productId",
+    otherKey: "extraId",
     as: "extra",
   })
 
   Product.belongsToMany(ProductCategory, {
     through: ProductHasCategory,
-    foreignKey: "category_id",
-    otherKey: "product_id",
+    foreignKey: "categoryId",
+    otherKey: "productId",
     as: "categories",
   })
 
   ProductCategory.belongsToMany(Product, {
     through: ProductHasCategory,
-    foreignKey: "product_id",
-    otherKey: "category_id",
+    foreignKey: "productId",
+    otherKey: "categoryId",
     as: "product",
   })
 }

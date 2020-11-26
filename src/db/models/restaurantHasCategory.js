@@ -2,14 +2,14 @@ const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
   sequelize.define("RestaurantHasCategory", {
-    restaurant_id: {
+    restaurantId: {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.Restaurant,
         key: "restaurant_id",
       },
     },
-    category_id: {
+    categoryId: {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.RestaurantCategory,

@@ -9,7 +9,7 @@ module.exports = function applyScopes(sequelize) {
   // Include city and exclude zip_code
   Restaurant.addScope("city", {
     include: [{ model: City, as: "city" }],
-    attributes: { exclude: ["zip_code"] },
+    attributes: { exclude: ["zipCode"] },
   })
 
   // Include list of restaurant categories
@@ -31,7 +31,7 @@ module.exports = function applyScopes(sequelize) {
         model: RestaurantHours,
         as: "hours",
         // Exclude restaurant_id from hours objects
-        attributes: { exclude: ["restaurant_id"] },
+        attributes: { exclude: ["restaurantId"] },
       },
     ],
   })

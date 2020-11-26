@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
   sequelize.define("ProductCategory", {
-    restaurant_id: {
+    restaurantId: {
       type: DataTypes.NUMBER,
       references: {
         model: sequelize.models.Restaurant,
@@ -12,7 +12,7 @@ module.exports = sequelize => {
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     hidden: DataTypes.BOOLEAN,
-    available_start: DataTypes.TIME,
-    available_end: DataTypes.TIME,
+    availableStart: DataTypes.TIME,
+    availableEnd: DataTypes.TIME,
   })
 }

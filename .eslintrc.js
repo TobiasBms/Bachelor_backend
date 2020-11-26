@@ -9,6 +9,7 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
+    "camelcase": "error",
     "prettier/prettier": "error",
     "func-style": ["error", "declaration"],
   },

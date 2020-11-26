@@ -14,72 +14,72 @@ module.exports = function applyAssociations(sequelize) {
 
   Order.belongsToMany(OrderStatus, {
     through: OrderHasStatus,
-    otherKey: "status_id",
-    foreignKey: "order_id",
+    otherKey: "statusId",
+    foreignKey: "orderId",
     as: "status",
   })
 
   OrderStatus.belongsToMany(Order, {
     through: OrderHasStatus,
-    otherKey: "order_id",
-    foreignKey: "status_id",
+    otherKey: "orderId",
+    foreignKey: "statusId",
   })
 
   RestaurantSeat.hasMany(Order, {
-    foreignKey: "seat_id",
+    foreignKey: "seatId",
   })
 
   Order.belongsTo(RestaurantSeat, {
-    foreignKey: "seat_id",
+    foreignKey: "seatId",
   })
 
   Restaurant.hasMany(Order, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Order.belongsTo(Restaurant, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Order.belongsToMany(Product, {
     through: OrderHasProduct,
-    foreignKey: "order_id",
-    otherKey: "product_id",
+    foreignKey: "orderId",
+    otherKey: "productId",
   })
 
   Product.belongsToMany(Order, {
     through: OrderHasProduct,
-    foreignKey: "product_id",
-    otherKey: "order_id",
+    foreignKey: "productId",
+    otherKey: "orderId",
   })
 
   OrderHasProduct.belongsToMany(Extra, {
     through: OrderHasProductHasExtra,
-    foreignKey: "orderproduct_id",
-    otherKey: "extra_id",
+    foreignKey: "orderproductId",
+    otherKey: "extraId",
   })
 
   Extra.belongsToMany(OrderHasProduct, {
     through: OrderHasProductHasExtra,
-    foreignKey: "extra_id",
-    otherKey: "orderproduct_id",
+    foreignKey: "extraId",
+    otherKey: "orderproductId",
   })
 
   OrderRating.hasMany(Restaurant, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Restaurant.belongsTo(OrderRating, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   OrderRating.belongsTo(Order, {
-    foreignKey: "order_id",
+    foreignKey: "orderId",
     as: "order",
   })
 
   Order.hasMany(OrderRating, {
-    foreignKey: "order_id",
+    foreignKey: "orderId",
     as: "rating",
   })
 }

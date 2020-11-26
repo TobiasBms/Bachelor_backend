@@ -14,6 +14,8 @@ async function create(body) {
   return await Product.create(body)
 }
 
+async function addToCategory(productId, categoryId) {}
+
 async function update(id, body) {
   await Product.update(body, { where: { id } })
 }
