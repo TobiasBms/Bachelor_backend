@@ -1,5 +1,13 @@
 module.exports = function applyScopes(sequelize) {
-  const { OrderRating, OrderStatus, Order, Product } = sequelize.models
+  const {
+    OrderRating,
+    OrderStatus,
+    Order,
+    Product,
+    OrderHasProduct,
+    Extra,
+    OrderHasProductHasExtra,
+  } = sequelize.models
 
   Order.addScope("rating", {
     include: [{ model: OrderRating, as: "rating" }],
@@ -19,13 +27,28 @@ module.exports = function applyScopes(sequelize) {
   Order.addScope("products", {
     include: [
       {
-        model: Product,
+        model: OrderHasProduct,
         as: "products",
-        attributes: ["id", "name"],
-        through: {
-          attributes: ["amount"],
-          as: "data",
-        },
+        attributes: ["amount"],
+        include: [
+          {
+            model: Product,
+            as: "product",
+            attributes: ["id", "name", "price"],
+          },
+          {
+            model: OrderHasProductHasExtra,
+            as: "extras",
+            attributes: ["amount"],
+            include: [
+              {
+                model: Extra,
+                as: "extra",
+                attributes: ["id", "name", "price"],
+              },
+            ],
+          },
+        ],
       },
     ],
   })
