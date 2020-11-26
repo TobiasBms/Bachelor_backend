@@ -3,12 +3,14 @@ const restaurantService = require("../../services/restaurant"),
   { NotFoundError, BadRequestError } = require("restify-errors"),
   { Router } = require("restify-router"),
   router = new Router()
+const Roles = require("../../utils/roles")
+const { authorize } = require("../middleware")
 
 router.get("", getScopesQuery, getAll)
 router.get("/:id", getIdParam, getScopesQuery, getById)
-router.post("", create)
-router.put("/:id", getIdParam, update)
-router.del("/:id", getIdParam, remove)
+router.post("", authorize([Roles.Admin]), create)
+router.put("/:id", authorize([Roles.Admin]), getIdParam, update)
+router.del("/:id", authorize([Roles.Admin]), getIdParam, remove)
 module.exports = router
 
 async function getAll(req, res, next) {
