@@ -77,11 +77,11 @@ module.exports = function applyAssociations(sequelize) {
     as: "extra",
   })
 
-  OrderRating.hasMany(Restaurant, {
+  OrderRating.belongsTo(Restaurant, {
     foreignKey: "restaurant_id",
   })
 
-  Restaurant.belongsTo(OrderRating, {
+  Restaurant.hasMany(OrderRating, {
     foreignKey: "restaurant_id",
   })
 
