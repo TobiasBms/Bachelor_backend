@@ -1,68 +1,22 @@
-const restify = require("restify"),
-  restaurantController = require("./controllers/restaurant"),
-  restaurantCategoryController = require("./controllers/restaurantCategory"),
-  managerController = require("./controllers/manager"),
-  productController = require("./controllers/product"),
-  orderController = require("./controllers/order")
+const restify = require("restify")
+const restaurantController = require("./controllers/restaurant")
+const restaurantCategoryController = require("./controllers/restaurantCategory")
+const managerController = require("./controllers/manager")
+const productController = require("./controllers/product")
+const orderController = require("./controllers/order")
 
-const routes = {
-  restauranthours: require("./routes/restaurantHours"),
-  restaurantseat: require("./routes/restaurantSeat"),
-  privilege: require("./routes/privilege"),
-  role: require("./routes/managerRole"),
-}
-
+/* Setup Restify server and register plugins */
 const server = restify.createServer()
 server.use(restify.plugins.bodyParser())
 server.use(restify.plugins.queryParser())
 server.pre(restify.pre.sanitizePath())
 
+/* Apply API routes to server (using restify-router) */
 orderController.applyRoutes(server, "/api/order")
-
 restaurantController.applyRoutes(server, "/api/restaurant")
 restaurantCategoryController.applyRoutes(server, "/api/restaurantcategory")
-
 managerController.applyRoutes(server, "/api/manager")
 productController.applyRoutes(server, "/api/product")
 
-function makeHandlerAwareOfAsyncErrors(handler) {
-  return async function (req, res, next) {
-    try {
-      await handler(req, res)
-    } catch (error) {
-      next(error)
-    }
-  }
-}
-
-for (const [routeName, routeController] of Object.entries(routes)) {
-  if (routeController.getAll) {
-    server.get(`/api/${routeName}`, routeController.getAll)
-  }
-  if (routeController.getById) {
-    server.get(
-      `/api/${routeName}/:id`,
-      makeHandlerAwareOfAsyncErrors(routeController.getById)
-    )
-  }
-  if (routeController.create) {
-    server.post(
-      `/api/${routeName}`,
-      makeHandlerAwareOfAsyncErrors(routeController.create)
-    )
-  }
-  if (routeController.update) {
-    server.put(
-      `/api/${routeName}/:id`,
-      makeHandlerAwareOfAsyncErrors(routeController.update)
-    )
-  }
-  if (routeController.remove) {
-    server.del(
-      `/api/${routeName}/:id`,
-      makeHandlerAwareOfAsyncErrors(routeController.remove)
-    )
-  }
-}
-
+/* Exports */
 module.exports = server
