@@ -8,35 +8,13 @@ const { getIdParam, getScopesQuery } = require("../middleware")
 const { NotFoundError, BadRequestError } = require("restify-errors")
 const { Router } = require("restify-router")
 const router = new Router()
-const Roles = require("../../utils/roles")
 const { authorize } = require("../middleware")
 
-router.get(
-  "",
-  authorize([Roles.Admin, Roles.Manager, Roles.Waiter]),
-  getScopesQuery,
-  getAll
-)
-router.get(
-  "/:id",
-  authorize([Roles.Admin, Roles.Manager, Roles.Waiter]),
-  getIdParam,
-  getScopesQuery,
-  getById
-)
-router.post("", authorize([Roles.Admin, Roles.Manager, Roles.Waiter]), create)
-router.put(
-  "/:id",
-  authorize([Roles.Admin, Roles.Manager, Roles.Waiter]),
-  getIdParam,
-  update
-)
-router.del(
-  "/:id",
-  authorize([Roles.Admin, Roles.Manager, Roles.Waiter]),
-  getIdParam,
-  remove
-)
+router.get("", authorize(), getScopesQuery, getAll)
+router.get("/:id", authorize(), getIdParam, getScopesQuery, getById)
+router.post("", authorize(), create)
+router.put("/:id", authorize(), getIdParam, update)
+router.del("/:id", authorize(), getIdParam, remove)
 module.exports = router
 
 async function getAll(req, res, next) {

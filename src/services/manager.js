@@ -46,7 +46,7 @@ async function create(body) {
 
   body.password = await bcrypt.hash(body.password, 10)
 
-  return Manager.create(body)
+  return await Manager.create(body)
 }
 
 async function update(id, body) {

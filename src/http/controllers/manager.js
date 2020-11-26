@@ -7,12 +7,7 @@ const router = new Router()
 
 router.post("/auth", authenticate)
 router.get("", authorize([Roles.Admin, Roles.Manager]), getAll)
-router.get(
-  "/:id",
-  authorize([Roles.Admin, Roles.Manager, Roles.Waiter]),
-  getIdParam,
-  getById
-)
+router.get("/:id", authorize(), getIdParam, getById)
 router.post("", authorize([Roles.Admin]), create)
 router.put("/:id", authorize([Roles.Admin]), getIdParam, update)
 router.del("/:id", authorize([Roles.Admin]), getIdParam, remove)
