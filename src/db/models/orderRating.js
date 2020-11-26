@@ -4,14 +4,18 @@ module.exports = sequelize => {
   const { Order, Restaurant } = sequelize.models
   sequelize.define("OrderRating", {
     order_id: {
-      type: DataTypes.NUMBER,
-      references: { model: Order, key: "id" },
+      type: DataTypes.INTEGER,
+      references: { model: Order },
       unique: true,
+      onDelete: "SET NULL",
+      onUpdate: "RESTRICT",
     },
     restaurant_id: {
-      type: DataTypes.NUMBER,
-      references: { model: Restaurant, key: "id" },
+      type: DataTypes.INTEGER,
+      references: { model: Restaurant },
       allowNull: false,
+      onDelete: "CASCADE",
+      onUpdate: "RESTRICT",
     },
     name: {
       type: DataTypes.STRING,
@@ -24,7 +28,7 @@ module.exports = sequelize => {
       type: DataTypes.TEXT,
     },
     rated_at: {
-      type: DataTypes.TIME,
+      type: DataTypes.DATE,
       defaultValue: Sequelize.NOW,
       allowNull: false,
     },

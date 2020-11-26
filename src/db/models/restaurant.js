@@ -1,24 +1,49 @@
-const { DataTypes } = require("sequelize")
+const { DataTypes, Sequelize } = require("sequelize")
 
 module.exports = sequelize => {
+  const { City } = sequelize.models
   sequelize.define("Restaurant", {
-    name: DataTypes.STRING,
-    zip_code: {
-      type: DataTypes.CHAR,
-      references: {
-        model: sequelize.models.City,
-        key: "zip_code",
-      },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
     },
-    address: DataTypes.STRING,
-    registered_at: DataTypes.DATE,
-    location: DataTypes.GEOGRAPHY,
-    phone: DataTypes.CHAR,
-    email: DataTypes.STRING,
-    website: DataTypes.STRING,
-    logo_id: DataTypes.NUMBER,
-    banner_id: DataTypes.NUMBER,
-    description: DataTypes.TEXT,
-    smiley_id: DataTypes.NUMBER,
+    zip_code: {
+      type: DataTypes.CHAR(4),
+      references: { model: City, key: "zip_code" },
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
+    },
+    address: {
+      type: DataTypes.STRING,
+    },
+    registered_at: {
+      type: DataTypes.DATEONLY,
+      defaultValue: Sequelize.NOW,
+      allowNull: false,
+    },
+    location: {
+      type: DataTypes.GEOMETRY("POINT"),
+    },
+    phone: {
+      type: DataTypes.CHAR(8),
+    },
+    email: {
+      type: DataTypes.STRING,
+    },
+    website: {
+      type: DataTypes.STRING,
+    },
+    logo_id: {
+      type: DataTypes.INTEGER,
+    },
+    banner_id: {
+      type: DataTypes.INTEGER,
+    },
+    description: {
+      type: DataTypes.TEXT,
+    },
+    smiley_id: {
+      type: DataTypes.INTEGER,
+    },
   })
 }

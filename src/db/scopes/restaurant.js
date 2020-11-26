@@ -4,6 +4,7 @@ module.exports = function applyScopes(sequelize) {
     City,
     RestaurantCategory,
     RestaurantHours,
+    File,
   } = sequelize.models
 
   // Include city and exclude zip_code
@@ -18,6 +19,18 @@ module.exports = function applyScopes(sequelize) {
       {
         model: RestaurantCategory,
         as: "categories",
+        // Exclude attributes from the join table
+        through: { attributes: [] },
+      },
+    ],
+  })
+
+  // Include list of restaurant categories
+  Restaurant.addScope("files", {
+    include: [
+      {
+        model: File,
+        as: "files",
         // Exclude attributes from the join table
         through: { attributes: [] },
       },

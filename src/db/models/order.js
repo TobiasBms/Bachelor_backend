@@ -4,13 +4,17 @@ module.exports = sequelize => {
   const { Restaurant, RestaurantSeat } = sequelize.models
   sequelize.define("Order", {
     restaurant_id: {
-      type: DataTypes.NUMBER,
-      references: { model: Restaurant, key: "id" },
+      type: DataTypes.INTEGER,
+      references: { model: Restaurant },
       allowNull: false,
+      onDelete: "CASCADE",
+      onUpdate: "RESTRICT",
     },
     seat_id: {
-      type: DataTypes.NUMBER,
-      references: { model: RestaurantSeat, key: "id" },
+      type: DataTypes.INTEGER,
+      references: { model: RestaurantSeat },
+      onDelete: "SET NULL",
+      onUpdate: "RESTRICT",
     },
     created_at: {
       type: DataTypes.DATE,

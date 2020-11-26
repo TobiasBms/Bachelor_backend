@@ -3,11 +3,13 @@ const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   sequelize.define("City", {
     zip_code: {
-      allowNull: false,
       autoIncrement: false,
       primaryKey: true,
-      type: DataTypes.CHAR,
+      type: DataTypes.CHAR(4),
     },
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   })
 }
