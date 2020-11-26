@@ -4,7 +4,6 @@ module.exports = sequelize => {
   sequelize.define("Extra", {
     restaurant_id: {
       type: DataTypes.NUMBER,
-      primaryKey: true,
       references: {
         model: sequelize.models.Restaurant,
         foreignKey: "id",

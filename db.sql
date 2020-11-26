@@ -191,61 +191,41 @@ CREATE TABLE IF NOT EXISTS `ProductHasExtra` (
 CREATE TABLE IF NOT EXISTS `Order` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `restaurant_id` INT UNSIGNED NOT NULL,
-    `seat_id` INT UNSIGNED NOT NULL,
-    `created_at` DATETIME,
+    `seat_id` INT UNSIGNED,
+    `created_at` DATETIME NOT NULL DEFAULT NOW(),
     `comment` VARCHAR(255),
     FOREIGN KEY (`restaurant_id`)
         REFERENCES `Restaurant` (`id`)
         ON DELETE CASCADE,
     FOREIGN KEY (`seat_id`)
         REFERENCES `RestaurantSeat` (`id`)
-        ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS `GroupOrder` (
-    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `uuid` BINARY(16)
-);
-
-CREATE TABLE IF NOT EXISTS `GroupOrderHasOrder` (
-    `order_id` INT UNSIGNED,
-    `grouporder_id` INT UNSIGNED,
-    `name` VARCHAR(255),
-    `ready` BOOL,
-    PRIMARY KEY (`order_id` , `grouporder_id`),
-    FOREIGN KEY (`order_id`)
-        REFERENCES `Order` (`id`)
-        ON DELETE CASCADE,
-    FOREIGN KEY (`grouporder_id`)
-        REFERENCES `GroupOrder` (`id`)
-        ON DELETE CASCADE
+        ON DELETE SET NULL
 );
 
 CREATE TABLE IF NOT EXISTS `OrderStatus` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `name` VARCHAR(255),
-    `color` CHAR(6),
-    `completed` BOOL
+    `name` VARCHAR(255) NOT NULL,
+    `color` CHAR(6) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `OrderHasStatus` (
     `order_id` INT UNSIGNED,
     `status_id` INT UNSIGNED,
-    `time_changed` DATETIME,
+    `time_changed` DATETIME NOT NULL DEFAULT NOW(),
     PRIMARY KEY (`order_id` , `status_id`),
     FOREIGN KEY (`order_id`)
         REFERENCES `Order` (`id`)
         ON DELETE CASCADE,
     FOREIGN KEY (`status_id`)
         REFERENCES `OrderStatus` (`id`)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS `OrderHasProduct` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `order_id` INT UNSIGNED NOT NULL,
     `product_id` INT UNSIGNED NOT NULL,
-    `amount` TINYINT,
+    `amount` TINYINT UNSIGNED NOT NULL DEFAULT 1,
     FOREIGN KEY (`order_id`)
         REFERENCES `Order` (`id`)
         ON DELETE CASCADE,
@@ -257,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `OrderHasProduct` (
 CREATE TABLE IF NOT EXISTS `OrderHasProductHasExtra` (
     `orderproduct_id` INT UNSIGNED,
     `extra_id` INT UNSIGNED,
-    `amount` TINYINT,
+    `amount` TINYINT UNSIGNED NOT NULL DEFAULT 1,
     PRIMARY KEY (`orderproduct_id` , `extra_id`),
     FOREIGN KEY (`orderproduct_id`)
         REFERENCES `OrderHasProduct` (`id`)
@@ -268,16 +248,16 @@ CREATE TABLE IF NOT EXISTS `OrderHasProductHasExtra` (
 );
 
 CREATE TABLE IF NOT EXISTS `OrderRating` (
-    `order_id` INT UNSIGNED,
-    `restaurant_id` INT UNSIGNED,
+    `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+    `order_id` INT UNSIGNED UNIQUE,
+    `restaurant_id` INT UNSIGNED NOT NULL,
     `name` VARCHAR(255),
-    `rating` TINYINT,
+    `rating` TINYINT UNSIGNED NOT NULL,
     `review` TEXT,
-    `rated_at` DATETIME,
-    PRIMARY KEY (`order_id` , `restaurant_id`),
+    `rated_at` DATETIME NOT NULL DEFAULT NOW(),
     FOREIGN KEY (`order_id`)
         REFERENCES `Order` (`id`)
-        ON DELETE CASCADE,
+        ON DELETE SET NULL,
     FOREIGN KEY (`restaurant_id`)
         REFERENCES `Restaurant` (`id`)
         ON DELETE CASCADE

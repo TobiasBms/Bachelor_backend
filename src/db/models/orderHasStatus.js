@@ -1,23 +1,22 @@
-const { DataTypes } = require("sequelize")
+const { DataTypes, Sequelize } = require("sequelize")
 
 module.exports = sequelize => {
+  const { Order, OrderStatus } = sequelize.models
   sequelize.define("OrderHasStatus", {
     order_id: {
       primaryKey: true,
       type: DataTypes.NUMBER,
-      references: {
-        model: sequelize.models.Order,
-        key: "id",
-      },
+      references: { model: Order, key: "id" },
     },
     status_id: {
       primaryKey: true,
       type: DataTypes.NUMBER,
-      references: {
-        model: sequelize.models.OrderStatus,
-        key: "id",
-      },
+      references: { model: OrderStatus, key: "id" },
     },
-    time_changed: DataTypes.DATE,
+    time_changed: {
+      type: DataTypes.DATE,
+      defaultValue: Sequelize.NOW,
+      allowNull: false,
+    },
   })
 }
