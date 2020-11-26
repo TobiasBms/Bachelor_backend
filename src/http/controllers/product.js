@@ -1,27 +1,25 @@
-const { noEntries, noId, notFound } = require("../../../config/errors.json")
+const { noId, notFound } = require("../../../config/errors.json")
 
-const productService = require("../../services/product"),
-  { getIdParam, getScopesQuery } = require("../middleware"),
-  { NotFoundError, BadRequestError } = require("restify-errors"),
-  { Router } = require("restify-router"),
-  router = new Router()
+const productService = require("../../services/product")
+const Roles = require("../../utils/roles")
+const { authorize } = require("../middleware")
+const { getIdParam, getScopesQuery } = require("../middleware")
+const { NotFoundError, BadRequestError } = require("restify-errors")
+const { Router } = require("restify-router")
+const router = new Router()
 
 router.get("", getScopesQuery, getAll)
 router.get("/:id", getIdParam, getScopesQuery, getById)
-router.post("", create)
-router.put("/:id", getIdParam, update)
-router.del("/:id", getIdParam, remove)
+router.post("", authorize([Roles.Admin, Roles.Manager]), create)
+router.put("/:id", authorize([Roles.Admin, Roles.Manager]), getIdParam, update)
+router.del("/:id", authorize([Roles.Admin, Roles.Manager]), getIdParam, remove)
 module.exports = router
 
 async function getAll(req, res, next) {
   try {
     const products = await productService.getAll(req.scopes)
-    if (products === null) {
-      next(new NotFoundError(noEntries))
-    } else {
-      res.send(200, products)
-      next()
-    }
+    res.send(200, products)
+    next()
   } catch (error) {
     next(error)
   }
@@ -57,13 +55,9 @@ async function create(req, res, next) {
 
 async function update(req, res, next) {
   try {
-    if (req.body.id !== req.id) {
-      next(new BadRequestError(noId))
-    } else {
-      await productService.update(req.id, req.body)
-      res.send(200)
-      next()
-    }
+    await productService.update(req.id, req.body)
+    res.send(200)
+    next()
   } catch (error) {
     next(error)
   }
