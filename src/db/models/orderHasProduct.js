@@ -16,5 +16,6 @@ module.exports = sequelize => {
         key: "id",
       },
     },
+    amount: DataTypes.TINYINT,
   })
 }
