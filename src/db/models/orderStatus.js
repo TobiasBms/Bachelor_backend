@@ -4,12 +4,11 @@ module.exports = sequelize => {
   sequelize.define("OrderStatus", {
     name: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     color: {
       type: DataTypes.CHAR(6),
-    },
-    completed: {
-      type: DataTypes.BOOLEAN,
+      allowNull: false,
     },
   })
 }

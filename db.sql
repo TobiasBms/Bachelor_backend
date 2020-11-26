@@ -204,22 +204,21 @@ CREATE TABLE IF NOT EXISTS `Order` (
 
 CREATE TABLE IF NOT EXISTS `OrderStatus` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-    `name` VARCHAR(255),
-    `color` CHAR(6),
-    `completed` BOOL
+    `name` VARCHAR(255) NOT NULL,
+    `color` CHAR(6) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS `OrderHasStatus` (
     `order_id` INT UNSIGNED,
     `status_id` INT UNSIGNED,
-    `time_changed` DATETIME,
+    `time_changed` DATETIME NOT NULL DEFAULT NOW(),
     PRIMARY KEY (`order_id` , `status_id`),
     FOREIGN KEY (`order_id`)
         REFERENCES `Order` (`id`)
         ON DELETE CASCADE,
     FOREIGN KEY (`status_id`)
         REFERENCES `OrderStatus` (`id`)
-        ON DELETE CASCADE
+        ON DELETE RESTRICT
 );
 
 CREATE TABLE IF NOT EXISTS `OrderHasProduct` (

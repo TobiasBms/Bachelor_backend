@@ -1,4 +1,4 @@
-const { DataTypes } = require("sequelize")
+const { DataTypes, Sequelize } = require("sequelize")
 
 module.exports = sequelize => {
   const { Order, OrderStatus } = sequelize.models
@@ -15,6 +15,8 @@ module.exports = sequelize => {
     },
     time_changed: {
       type: DataTypes.DATE,
+      defaultValue: Sequelize.NOW,
+      allowNull: false,
     },
   })
 }
