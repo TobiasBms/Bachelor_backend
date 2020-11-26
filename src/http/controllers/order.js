@@ -11,8 +11,19 @@ const router = new Router()
 const Roles = require("../../utils/roles")
 const { authorize } = require("../middleware")
 
-router.get("", getScopesQuery, getAll)
-router.get("/:id", getIdParam, getScopesQuery, getById)
+router.get(
+  "",
+  authorize([Roles.Admin, Roles.Manager, Roles.Waiter]),
+  getScopesQuery,
+  getAll
+)
+router.get(
+  "/:id",
+  authorize([Roles.Admin, Roles.Manager, Roles.Waiter]),
+  getIdParam,
+  getScopesQuery,
+  getById
+)
 router.post("", authorize([Roles.Admin, Roles.Manager, Roles.Waiter]), create)
 router.put(
   "/:id",

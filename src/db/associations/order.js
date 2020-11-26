@@ -61,7 +61,7 @@ module.exports = function applyAssociations(sequelize) {
 
   Extra.belongsToMany(OrderHasProduct, {
     through: OrderHasProductHasExtra,
-    foreignKey: " extra_id",
+    foreignKey: "extra_id",
     otherKey: "orderproduct_id",
   })
 
