@@ -33,10 +33,16 @@ module.exports = function applyScopes(sequelize) {
     ],
   })
 
-  /* Include list of products */
+  /*
+   * Include list of products and extras
+   * To be able to include OrderHasProductHasExtra through OrderHasProduct,
+   * these relations are treated by Sequelize as one-to-one, instead of
+   * many-to-many as would be normal.
+   */
   Order.addScope("products", {
     include: [
       {
+        /* Include join table explicitly to gain access to extras */
         model: OrderHasProduct,
         as: "products",
         attributes: ["amount"],
@@ -47,6 +53,10 @@ module.exports = function applyScopes(sequelize) {
             attributes: ["id", "name", "price"],
           },
           {
+            /*
+             * Join table on extras is also included explicitly for a
+             * more consistent data structure
+             */
             model: OrderHasProductHasExtra,
             as: "extras",
             attributes: ["amount"],
