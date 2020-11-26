@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `OrderHasProduct` (
     `id` INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     `order_id` INT UNSIGNED NOT NULL,
     `product_id` INT UNSIGNED NOT NULL,
-    `amount` TINYINT,
+    `amount` TINYINT UNSIGNED NOT NULL DEFAULT 1,
     FOREIGN KEY (`order_id`)
         REFERENCES `Order` (`id`)
         ON DELETE CASCADE,
@@ -237,7 +237,7 @@ CREATE TABLE IF NOT EXISTS `OrderHasProduct` (
 CREATE TABLE IF NOT EXISTS `OrderHasProductHasExtra` (
     `orderproduct_id` INT UNSIGNED,
     `extra_id` INT UNSIGNED,
-    `amount` TINYINT,
+    `amount` TINYINT UNSIGNED NOT NULL DEFAULT 1,
     PRIMARY KEY (`orderproduct_id` , `extra_id`),
     FOREIGN KEY (`orderproduct_id`)
         REFERENCES `OrderHasProduct` (`id`)

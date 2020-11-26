@@ -15,6 +15,8 @@ module.exports = sequelize => {
     },
     amount: {
       type: DataTypes.TINYINT,
+      defaultValue: 1,
+      allowNull: false,
     },
   })
 }

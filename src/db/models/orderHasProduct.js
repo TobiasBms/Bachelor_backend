@@ -6,13 +6,17 @@ module.exports = sequelize => {
     order_id: {
       type: DataTypes.NUMBER,
       references: { model: Order, key: "id" },
+      allowNull: false,
     },
     product_id: {
       type: DataTypes.NUMBER,
       references: { model: Product, key: "id" },
+      allowNull: false,
     },
     amount: {
       type: DataTypes.TINYINT,
+      defaultValue: 1,
+      allowNull: false,
     },
   })
 }
