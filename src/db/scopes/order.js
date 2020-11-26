@@ -1,3 +1,5 @@
+const Config = require("../config")
+
 module.exports = function applyScopes(sequelize) {
   const {
     Order,
@@ -23,12 +25,17 @@ module.exports = function applyScopes(sequelize) {
     ],
   })
 
+  /* Include list of status changes */
   Order.addScope("status", {
     include: [
       {
         model: OrderStatus,
         as: "status",
-        through: { attributes: ["time_changed"] },
+        through: {
+          /* Join table contains time for status change */
+          as: Config.JoinData,
+          attributes: ["time_changed"],
+        },
       },
     ],
   })
