@@ -7,6 +7,8 @@ module.exports = function applyAssociations(sequelize) {
     RestaurantSeat,
     City,
     Manager,
+    File,
+    RestaurantHasFile,
   } = sequelize.models
 
   Restaurant.belongsToMany(RestaurantCategory, {
@@ -55,5 +57,19 @@ module.exports = function applyAssociations(sequelize) {
 
   Manager.belongsTo(Restaurant, {
     foreignKey: "restaurant_id",
+  })
+
+  Restaurant.belongsToMany(File, {
+    through: RestaurantHasFile,
+    foreignKey: "restaurant_id",
+    otherKey: "file_id",
+    as: "files",
+  })
+
+  File.belongsToMany(Restaurant, {
+    through: RestaurantHasFile,
+    foreignKey: "file_id",
+    otherKey: "restaurant_id",
+    as: "restaurants",
   })
 }
