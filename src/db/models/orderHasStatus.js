@@ -3,17 +3,21 @@ const { DataTypes, Sequelize } = require("sequelize")
 module.exports = sequelize => {
   const { Order, OrderStatus } = sequelize.models
   sequelize.define("OrderHasStatus", {
-    order_id: {
+    orderId: {
+      type: DataTypes.INTEGER,
       primaryKey: true,
-      type: DataTypes.NUMBER,
-      references: { model: Order, key: "id" },
+      references: { model: Order },
+      onDelete: "CASCADE",
+      onUpdate: "RESTRICT",
     },
-    status_id: {
+    statusId: {
+      type: DataTypes.INTEGER,
       primaryKey: true,
-      type: DataTypes.NUMBER,
-      references: { model: OrderStatus, key: "id" },
+      references: { model: OrderStatus },
+      onDelete: "RESTRICT",
+      onUpdate: "RESTRICT",
     },
-    time_changed: {
+    timeChanged: {
       type: DataTypes.DATE,
       defaultValue: Sequelize.NOW,
       allowNull: false,

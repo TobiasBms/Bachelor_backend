@@ -3,15 +3,19 @@ const { DataTypes, Sequelize } = require("sequelize")
 module.exports = sequelize => {
   const { Order, Restaurant } = sequelize.models
   sequelize.define("OrderRating", {
-    order_id: {
-      type: DataTypes.NUMBER,
-      references: { model: Order, key: "id" },
+    orderId: {
+      type: DataTypes.INTEGER,
+      references: { model: Order },
       unique: true,
+      onDelete: "SET NULL",
+      onUpdate: "RESTRICT",
     },
-    restaurant_id: {
-      type: DataTypes.NUMBER,
-      references: { model: Restaurant, key: "id" },
+    restaurantId: {
+      type: DataTypes.INTEGER,
+      references: { model: Restaurant },
       allowNull: false,
+      onDelete: "CASCADE",
+      onUpdate: "RESTRICT",
     },
     name: {
       type: DataTypes.STRING,
@@ -23,8 +27,8 @@ module.exports = sequelize => {
     review: {
       type: DataTypes.TEXT,
     },
-    rated_at: {
-      type: DataTypes.TIME,
+    ratedAt: {
+      type: DataTypes.DATE,
       defaultValue: Sequelize.NOW,
       allowNull: false,
     },
