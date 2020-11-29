@@ -21,7 +21,10 @@ async function authenticate({ email, password }) {
   if (!manager || !(await bcrypt.compare(password, manager.password))) {
     throw new Error("Login failed")
   }
-  const token = jwt.sign({ id: manager.id }, process.env.JWT_SECRET)
+  const token = jwt.sign(
+    { id: manager.id, restaurantId: manager.restaurantId },
+    process.env.JWT_SECRET
+  )
   return { ...omitPassword(manager), token }
 }
 
