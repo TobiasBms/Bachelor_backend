@@ -6,14 +6,13 @@ const { BadRequestError } = require("restify-errors")
 const { Router } = require("restify-router")
 const router = new Router()
 
-router.get("", getAll)
+router.get("", authorize([Roles.Admin, Roles.Manager]), getAll)
 router.post("", authorize([Roles.Admin, Roles.Manager]), create)
 module.exports = router
 
 async function getAll(req, res, next) {
   try {
-    const restaurantId = req.query.restaurantId
-    const products = await fileService.getAll(restaurantId)
+    const products = await fileService.getAll(req.user.restaurantId)
     res.send(200, products)
     next()
   } catch (error) {
