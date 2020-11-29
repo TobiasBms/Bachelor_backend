@@ -5,7 +5,7 @@ require("dotenv").config()
 
 const allowedFiles = ["image/jpeg", "image/png", "image/gif"]
 
-module.exports = { getAll, create }
+module.exports = { getAll, getById, create }
 
 async function getAll(restaurantId) {
   return await File.findAll({
@@ -14,6 +14,17 @@ async function getAll(restaurantId) {
         model: RestaurantHasFile,
         attributes: [],
         where: { restaurantId },
+      },
+    ],
+  })
+}
+
+async function getById(id) {
+  return await File.findByPk(id, {
+    include: [
+      {
+        model: RestaurantHasFile,
+        where: { fileId: id },
       },
     ],
   })
