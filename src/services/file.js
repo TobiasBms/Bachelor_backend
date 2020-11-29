@@ -20,7 +20,8 @@ async function create(restaurantId, multipartBody) {
   /* Hash filename and store in filesystem */
   const hash = getHash(fileData.name)
   const destination = await getFileLocation(hash)
-  await fs.rename(fileData.path, `${destination}.jpg`)
+  const extension = fileData.name.split(".").pop()
+  await fs.rename(fileData.path, `${destination}.${extension}`)
 
   /* Save file info to database */
   const file = await File.create({ name: fileData.name, hash })
