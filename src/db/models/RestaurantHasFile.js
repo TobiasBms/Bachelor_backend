@@ -3,14 +3,14 @@ const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   const { Restaurant, File } = sequelize.models
   sequelize.define("RestaurantHasFile", {
-    restaurant_id: {
+    restaurantId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       references: { model: Restaurant },
       onDelete: "CASCADE",
       onUpdate: "RESTRICT",
     },
-    file_id: {
+    fileId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       references: { model: File },

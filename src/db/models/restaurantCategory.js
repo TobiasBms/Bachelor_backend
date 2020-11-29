@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
   sequelize.define("RestaurantCategory", {
-    image_id: {
+    imageId: {
       type: DataTypes.INTEGER,
     },
     name: {

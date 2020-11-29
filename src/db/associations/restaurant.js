@@ -13,63 +13,63 @@ module.exports = function applyAssociations(sequelize) {
 
   Restaurant.belongsToMany(RestaurantCategory, {
     through: RestaurantHasCategory,
-    foreignKey: "restaurant_id",
-    otherKey: "category_id",
+    foreignKey: "restaurantId",
+    otherKey: "categoryId",
     as: "categories",
   })
 
   RestaurantCategory.belongsToMany(Restaurant, {
     through: RestaurantHasCategory,
-    foreignKey: "category_id",
-    otherKey: "restaurant_id",
+    foreignKey: "categoryId",
+    otherKey: "restaurantId",
     as: "restaurants",
   })
 
   City.hasMany(Restaurant, {
-    foreignKey: "zip_code",
+    foreignKey: "cityId",
   })
 
   Restaurant.belongsTo(City, {
-    foreignKey: "zip_code",
+    foreignKey: "cityId",
     as: "city",
   })
 
   Restaurant.hasMany(RestaurantHours, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
     as: "hours",
   })
 
   RestaurantHours.belongsTo(Restaurant, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Restaurant.hasMany(RestaurantSeat, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   RestaurantSeat.belongsTo(Restaurant, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Restaurant.hasMany(Manager, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Manager.belongsTo(Restaurant, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Restaurant.belongsToMany(File, {
     through: RestaurantHasFile,
-    foreignKey: "restaurant_id",
-    otherKey: "file_id",
+    foreignKey: "restaurantId",
+    otherKey: "fileId",
     as: "files",
   })
 
   File.belongsToMany(Restaurant, {
     through: RestaurantHasFile,
-    foreignKey: "file_id",
-    otherKey: "restaurant_id",
+    foreignKey: "fileId",
+    otherKey: "restaurantId",
     as: "restaurants",
   })
 }

@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   const { Restaurant } = sequelize.models
   sequelize.define("ProductCategory", {
-    restaurant_id: {
+    restaurantId: {
       type: DataTypes.INTEGER,
       references: { model: Restaurant },
       allowNull: false,
@@ -21,11 +21,11 @@ module.exports = sequelize => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    available_start: {
+    availableStart: {
       type: DataTypes.TIME,
       defaultValue: null,
     },
-    available_end: {
+    availableEnd: {
       type: DataTypes.TIME,
       defaultValue: null,
     },

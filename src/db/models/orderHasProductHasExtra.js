@@ -3,14 +3,14 @@ const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   const { Extra, OrderHasProduct } = sequelize.models
   sequelize.define("OrderHasProductHasExtra", {
-    extra_id: {
+    extraId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       references: { model: Extra },
       onDelete: "CASCADE",
       onUpdate: "RESTRICT",
     },
-    orderproduct_id: {
+    orderproductId: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       references: { model: OrderHasProduct },

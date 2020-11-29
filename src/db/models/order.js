@@ -3,20 +3,20 @@ const { DataTypes, Sequelize } = require("sequelize")
 module.exports = sequelize => {
   const { Restaurant, RestaurantSeat } = sequelize.models
   sequelize.define("Order", {
-    restaurant_id: {
+    restaurantId: {
       type: DataTypes.INTEGER,
       references: { model: Restaurant },
       allowNull: false,
       onDelete: "CASCADE",
       onUpdate: "RESTRICT",
     },
-    seat_id: {
+    seatId: {
       type: DataTypes.INTEGER,
       references: { model: RestaurantSeat },
       onDelete: "SET NULL",
       onUpdate: "RESTRICT",
     },
-    created_at: {
+    createdAt: {
       type: DataTypes.DATE,
       defaultValue: Sequelize.NOW,
       allowNull: false,

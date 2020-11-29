@@ -7,16 +7,17 @@ module.exports = sequelize => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    zip_code: {
-      type: DataTypes.CHAR(4),
-      references: { model: City, key: "zip_code" },
+    cityId: {
+      type: DataTypes.INTEGER,
+      references: { model: City },
       onDelete: "RESTRICT",
       onUpdate: "RESTRICT",
+      allowNull: false,
     },
     address: {
       type: DataTypes.STRING,
     },
-    registered_at: {
+    registeredAt: {
       type: DataTypes.DATEONLY,
       defaultValue: Sequelize.NOW,
       allowNull: false,
@@ -33,16 +34,16 @@ module.exports = sequelize => {
     website: {
       type: DataTypes.STRING,
     },
-    logo_id: {
+    logoId: {
       type: DataTypes.INTEGER,
     },
-    banner_id: {
+    bannerId: {
       type: DataTypes.INTEGER,
     },
     description: {
       type: DataTypes.TEXT,
     },
-    smiley_id: {
+    smileyId: {
       type: DataTypes.INTEGER,
     },
   })

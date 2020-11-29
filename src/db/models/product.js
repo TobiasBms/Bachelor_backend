@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize")
 module.exports = sequelize => {
   const { Restaurant } = sequelize.models
   sequelize.define("Product", {
-    restaurant_id: {
+    restaurantId: {
       type: DataTypes.INTEGER,
       references: { model: Restaurant },
       allowNull: false,
@@ -17,14 +17,14 @@ module.exports = sequelize => {
     description: {
       type: DataTypes.STRING,
     },
-    image_id: {
+    imageId: {
       type: DataTypes.INTEGER,
     },
     price: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
-    sold_out: {
+    soldOut: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },

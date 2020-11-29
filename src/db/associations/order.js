@@ -14,84 +14,84 @@ module.exports = function applyAssociations(sequelize) {
 
   Order.belongsToMany(OrderStatus, {
     through: OrderHasStatus,
-    otherKey: "status_id",
-    foreignKey: "order_id",
+    otherKey: "statusId",
+    foreignKey: "orderId",
     as: "status",
   })
 
   OrderStatus.belongsToMany(Order, {
     through: OrderHasStatus,
-    otherKey: "order_id",
-    foreignKey: "status_id",
+    otherKey: "orderId",
+    foreignKey: "statusId",
   })
 
   RestaurantSeat.hasMany(Order, {
-    foreignKey: "seat_id",
+    foreignKey: "seatId",
   })
 
   Order.belongsTo(RestaurantSeat, {
-    foreignKey: "seat_id",
+    foreignKey: "seatId",
   })
 
   Restaurant.hasMany(Order, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Order.belongsTo(Restaurant, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Order.hasMany(OrderHasProduct, {
-    foreignKey: "order_id",
+    foreignKey: "orderId",
     as: "products",
   })
 
   OrderHasProduct.belongsTo(Order, {
-    foreignKey: "order_id",
+    foreignKey: "orderId",
   })
 
   Product.hasMany(OrderHasProduct, {
-    foreignKey: "product_id",
+    foreignKey: "productId",
   })
 
   OrderHasProduct.belongsTo(Product, {
-    foreignKey: "product_id",
+    foreignKey: "productId",
     as: "product",
   })
 
   OrderHasProduct.hasMany(OrderHasProductHasExtra, {
-    foreignKey: "orderproduct_id",
+    foreignKey: "orderproductId",
     as: "extras",
   })
 
   OrderHasProductHasExtra.belongsTo(OrderHasProduct, {
-    foreignKey: "orderproduct_id",
+    foreignKey: "orderproductId",
   })
 
   Extra.hasMany(OrderHasProductHasExtra, {
-    foreignKey: "extra_id",
+    foreignKey: "extraId",
   })
 
   OrderHasProductHasExtra.belongsTo(Extra, {
-    foreignKey: "extra_id",
+    foreignKey: "extraId",
     as: "extra",
   })
 
   OrderRating.belongsTo(Restaurant, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   Restaurant.hasMany(OrderRating, {
-    foreignKey: "restaurant_id",
+    foreignKey: "restaurantId",
   })
 
   OrderRating.belongsTo(Order, {
-    foreignKey: "order_id",
+    foreignKey: "orderId",
     as: "order",
   })
 
   Order.hasOne(OrderRating, {
-    foreignKey: "order_id",
+    foreignKey: "orderId",
     as: "rating",
   })
 }

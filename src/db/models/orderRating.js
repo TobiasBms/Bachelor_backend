@@ -3,14 +3,14 @@ const { DataTypes, Sequelize } = require("sequelize")
 module.exports = sequelize => {
   const { Order, Restaurant } = sequelize.models
   sequelize.define("OrderRating", {
-    order_id: {
+    orderId: {
       type: DataTypes.INTEGER,
       references: { model: Order },
       unique: true,
       onDelete: "SET NULL",
       onUpdate: "RESTRICT",
     },
-    restaurant_id: {
+    restaurantId: {
       type: DataTypes.INTEGER,
       references: { model: Restaurant },
       allowNull: false,
@@ -27,7 +27,7 @@ module.exports = sequelize => {
     review: {
       type: DataTypes.TEXT,
     },
-    rated_at: {
+    ratedAt: {
       type: DataTypes.DATE,
       defaultValue: Sequelize.NOW,
       allowNull: false,

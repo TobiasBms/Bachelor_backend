@@ -5,7 +5,7 @@ module.exports = sequelize => {
   sequelize.define(
     "Manager",
     {
-      restaurant_id: {
+      restaurantId: {
         type: DataTypes.INTEGER,
         references: { model: Restaurant },
         allowNull: false,
@@ -18,11 +18,11 @@ module.exports = sequelize => {
         }),
         allowNull: false,
       },
-      first_name: {
+      firstName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      last_name: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -39,12 +39,12 @@ module.exports = sequelize => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      registered_at: {
+      registeredAt: {
         type: DataTypes.DATEONLY,
         defaultValue: Sequelize.NOW,
         allowNull: false,
       },
-      last_login: {
+      lastLogin: {
         type: DataTypes.DATE,
       },
     },
