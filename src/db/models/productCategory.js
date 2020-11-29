@@ -1,18 +1,33 @@
 const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
+  const { Restaurant } = sequelize.models
   sequelize.define("ProductCategory", {
     restaurantId: {
-      type: DataTypes.NUMBER,
-      references: {
-        model: sequelize.models.Restaurant,
-        key: "id",
-      },
+      type: DataTypes.INTEGER,
+      references: { model: Restaurant },
+      allowNull: false,
+      onDelete: "CASCADE",
+      onUpdate: "RESTRICT",
     },
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    hidden: DataTypes.BOOLEAN,
-    availableStart: DataTypes.TIME,
-    availableEnd: DataTypes.TIME,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
+    },
+    hidden: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    availableStart: {
+      type: DataTypes.TIME,
+      defaultValue: null,
+    },
+    availableEnd: {
+      type: DataTypes.TIME,
+      defaultValue: null,
+    },
   })
 }

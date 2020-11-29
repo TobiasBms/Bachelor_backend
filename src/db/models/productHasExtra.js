@@ -1,20 +1,21 @@
 const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
+  const { Product, Extra } = sequelize.models
   sequelize.define("ProductHasExtra", {
     productId: {
-      type: DataTypes.NUMBER,
-      references: {
-        model: sequelize.models.Product,
-        key: "id",
-      },
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      references: { model: Product },
+      onDelete: "CASCADE",
+      onUpdate: "RESTRICT",
     },
     extraId: {
-      type: DataTypes.NUMBER,
-      references: {
-        model: sequelize.models.Extra,
-        key: "id",
-      },
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      references: { model: Extra },
+      onDelete: "CASCADE",
+      onUpdate: "RESTRICT",
     },
   })
 }

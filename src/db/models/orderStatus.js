@@ -2,8 +2,13 @@ const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
   sequelize.define("OrderStatus", {
-    name: DataTypes.STRING,
-    color: DataTypes.CHAR(6),
-    completed: DataTypes.BOOLEAN,
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    color: {
+      type: DataTypes.CHAR(6),
+      allowNull: false,
+    },
   })
 }

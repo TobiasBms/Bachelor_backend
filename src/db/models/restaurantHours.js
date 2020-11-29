@@ -1,14 +1,14 @@
 const { DataTypes } = require("sequelize")
 
 module.exports = sequelize => {
+  const { Restaurant } = sequelize.models
   sequelize.define("RestaurantHours", {
     restaurantId: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
-      references: {
-        model: sequelize.models.Restaurant,
-        key: "id",
-      },
+      references: { model: Restaurant },
+      onDelete: "CASCADE",
+      onUpdate: "RESTRICT",
     },
     dayOfWeek: {
       type: DataTypes.ENUM({
@@ -27,9 +27,13 @@ module.exports = sequelize => {
     },
     openHour: {
       type: DataTypes.TIME,
+      defaultValue: "10:00",
+      allowNull: false,
     },
     closeHour: {
       type: DataTypes.TIME,
+      defaultValue: "22:00",
+      allowNull: false,
     },
   })
 }

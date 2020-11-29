@@ -24,6 +24,14 @@ module.exports = function applyAssociations(sequelize) {
     foreignKey: "restaurantId",
   })
 
+  Restaurant.hasMany(ProductCategory, {
+    foreignKey: "restaurantId",
+  })
+
+  ProductCategory.belongsTo(Restaurant, {
+    foreignKey: "restaurantId",
+  })
+
   Extra.belongsToMany(Product, {
     through: ProductHasExtra,
     foreignKey: "extraId",

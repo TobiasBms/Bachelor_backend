@@ -41,35 +41,47 @@ module.exports = function applyAssociations(sequelize) {
     foreignKey: "restaurantId",
   })
 
-  Order.belongsToMany(Product, {
-    through: OrderHasProduct,
+  Order.hasMany(OrderHasProduct, {
     foreignKey: "orderId",
-    otherKey: "productId",
+    as: "products",
   })
 
-  Product.belongsToMany(Order, {
-    through: OrderHasProduct,
+  OrderHasProduct.belongsTo(Order, {
+    foreignKey: "orderId",
+  })
+
+  Product.hasMany(OrderHasProduct, {
     foreignKey: "productId",
-    otherKey: "orderId",
   })
 
-  OrderHasProduct.belongsToMany(Extra, {
-    through: OrderHasProductHasExtra,
+  OrderHasProduct.belongsTo(Product, {
+    foreignKey: "productId",
+    as: "product",
+  })
+
+  OrderHasProduct.hasMany(OrderHasProductHasExtra, {
     foreignKey: "orderproductId",
-    otherKey: "extraId",
+    as: "extras",
   })
 
-  Extra.belongsToMany(OrderHasProduct, {
-    through: OrderHasProductHasExtra,
+  OrderHasProductHasExtra.belongsTo(OrderHasProduct, {
+    foreignKey: "orderproductId",
+  })
+
+  Extra.hasMany(OrderHasProductHasExtra, {
     foreignKey: "extraId",
-    otherKey: "orderproductId",
   })
 
-  OrderRating.hasMany(Restaurant, {
+  OrderHasProductHasExtra.belongsTo(Extra, {
+    foreignKey: "extraId",
+    as: "extra",
+  })
+
+  OrderRating.belongsTo(Restaurant, {
     foreignKey: "restaurantId",
   })
 
-  Restaurant.belongsTo(OrderRating, {
+  Restaurant.hasMany(OrderRating, {
     foreignKey: "restaurantId",
   })
 
@@ -78,7 +90,7 @@ module.exports = function applyAssociations(sequelize) {
     as: "order",
   })
 
-  Order.hasMany(OrderRating, {
+  Order.hasOne(OrderRating, {
     foreignKey: "orderId",
     as: "rating",
   })
