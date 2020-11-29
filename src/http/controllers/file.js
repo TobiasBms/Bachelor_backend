@@ -9,6 +9,7 @@ const router = new Router()
 router.get("", authorize([Roles.Admin, Roles.Manager]), getAll)
 router.get("/:id", getIdParam, getById)
 router.post("", authorize([Roles.Admin, Roles.Manager]), create)
+router.del("/:id", authorize([Roles.Admin, Roles.Manager]), getIdParam, remove)
 module.exports = router
 
 async function getAll(req, res, next) {
@@ -36,6 +37,16 @@ async function create(req, res, next) {
     if (req.body.id) return next(new BadRequestError(noId))
     const file = await fileService.create(req.user.restaurantId, req.files)
     res.send(201, file)
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function remove(req, res, next) {
+  try {
+    await fileService.remove(req.id)
+    res.send(204)
     next()
   } catch (error) {
     next(error)

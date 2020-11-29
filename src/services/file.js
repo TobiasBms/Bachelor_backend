@@ -5,7 +5,7 @@ require("dotenv").config()
 
 const allowedFiles = ["image/jpeg", "image/png", "image/gif"]
 
-module.exports = { getAll, getById, create }
+module.exports = { getAll, getById, create, remove }
 
 async function getAll(restaurantId) {
   return await File.findAll({
@@ -46,6 +46,14 @@ async function create(restaurantId, multipartBody) {
   const file = await File.create({ name: fileData.name, hash })
   await RestaurantHasFile.create({ restaurantId, fileId: file.id })
   return file
+}
+
+async function remove(id) {
+  const file = await File.findByPk(id)
+  const location = await getFileLocation(file.hash)
+  const extension = file.name.split(".").pop()
+  await fs.unlink(`${location}.${extension}`)
+  await File.destroy({ where: { id } })
 }
 
 /**
