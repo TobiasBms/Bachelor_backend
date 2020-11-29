@@ -12,8 +12,8 @@ module.exports = router
 
 async function getAll(req, res, next) {
   try {
-    const products = await fileService.getAll(req.user.restaurantId)
-    res.send(200, products)
+    const files = await fileService.getAll(req.user.restaurantId)
+    res.send(200, files)
     next()
   } catch (error) {
     next(error)

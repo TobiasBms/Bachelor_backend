@@ -14,7 +14,6 @@ async function getAll(restaurantId) {
         model: RestaurantHasFile,
         attributes: [],
         where: { restaurantId },
-        // through: { attributes: [] },
       },
     ],
   })
