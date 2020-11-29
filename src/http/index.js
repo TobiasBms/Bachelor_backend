@@ -20,5 +20,8 @@ managerController.applyRoutes(server, "/api/manager")
 productController.applyRoutes(server, "/api/product")
 fileController.applyRoutes(server, "/api/file")
 
+/* Serve user submitted files */
+server.get("/public/*", restify.plugins.serveStaticFiles("./uploads"))
+
 /* Exports */
 module.exports = server
