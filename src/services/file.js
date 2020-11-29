@@ -8,7 +8,16 @@ const allowedFiles = ["image/jpeg", "image/png", "image/gif"]
 module.exports = { getAll, create }
 
 async function getAll(restaurantId) {
-  return await RestaurantHasFile.findAll({ where: { restaurantId } })
+  return await File.findAll({
+    include: [
+      {
+        model: RestaurantHasFile,
+        attributes: [],
+        where: { restaurantId },
+        // through: { attributes: [] },
+      },
+    ],
+  })
 }
 
 async function create(restaurantId, multipartBody) {
