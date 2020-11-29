@@ -19,7 +19,7 @@ module.exports = function applyScopes(sequelize) {
         as: "rating",
         attributes: {
           /* Order already includes order and restaurant ID */
-          exclude: ["order_id", "restaurant_id"],
+          exclude: ["orderId", "restaurantId"],
         },
       },
     ],
@@ -34,7 +34,7 @@ module.exports = function applyScopes(sequelize) {
         through: {
           /* Join table contains time for status change */
           as: Config.JoinData,
-          attributes: ["time_changed"],
+          attributes: ["timeChanged"],
         },
       },
     ],
