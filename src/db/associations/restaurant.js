@@ -72,4 +72,13 @@ module.exports = function applyAssociations(sequelize) {
     otherKey: "restaurantId",
     as: "restaurants",
   })
+
+  File.hasOne(RestaurantHasFile, {
+    foreignKey: "fileId",
+    as: "data",
+  })
+
+  RestaurantHasFile.belongsTo(File, {
+    foreignKey: "fileId",
+  })
 }
