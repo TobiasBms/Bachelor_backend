@@ -1,6 +1,6 @@
 const { Product } = require("../db").models
 
-module.exports = { getAll, getById, create, update, remove }
+module.exports = { getAll, getById, create, update, remove, addToCategory }
 
 async function getAll(scopes = []) {
   return await Product.scope(scopes).findAll()
@@ -12,6 +12,10 @@ async function getById(id, scopes = []) {
 
 async function create(body) {
   return await Product.create(body)
+}
+
+async function addToCategory(productId, categoryId) {
+  await Product.create({ productId, categoryId })
 }
 
 async function update(id, body) {

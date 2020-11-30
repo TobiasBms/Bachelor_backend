@@ -26,6 +26,7 @@
     "mysql2": "^2.2.5",
     "nodemon": "^2.0.4",
     "restify": "^8.5.1",
+    "restify-errors": "^8.0.2",
     "restify-jwt-community": "^1.1.6",
     "restify-router": "^0.6.2",
     "sequelize": "^6.3.5"

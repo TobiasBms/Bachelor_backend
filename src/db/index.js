@@ -33,6 +33,6 @@ for (const defineModel of modelDefinitions) {
 applyAssociations(sequelize)
 applyScopes(sequelize)
 
-sequelize.sync({ alter: true })
+//sequelize.sync({ force: true })
 
 module.exports = sequelize
