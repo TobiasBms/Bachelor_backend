@@ -12,6 +12,7 @@ async function getAll(restaurantId) {
     include: [
       {
         model: RestaurantHasFile,
+        as: "data",
         attributes: [],
         where: { restaurantId },
       },
@@ -24,6 +25,8 @@ async function getById(id) {
     include: [
       {
         model: RestaurantHasFile,
+        as: "data",
+        attributes: { exclude: ["fileId"] },
         where: { fileId: id },
       },
     ],
