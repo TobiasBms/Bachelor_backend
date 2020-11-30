@@ -4,6 +4,7 @@ const restaurantCategoryController = require("./controllers/restaurantCategory")
 const managerController = require("./controllers/manager")
 const productController = require("./controllers/product")
 const orderController = require("./controllers/order")
+const productCategoryController = require("./controllers/productCategory")
 
 /* Setup Restify server and register plugins */
 const server = restify.createServer()
@@ -13,6 +14,7 @@ server.pre(restify.pre.sanitizePath())
 
 /* Apply API routes to server (using restify-router) */
 orderController.applyRoutes(server, "/api/order")
+productCategoryController.applyRoutes(server, "/api/productcategory")
 restaurantController.applyRoutes(server, "/api/restaurant")
 restaurantCategoryController.applyRoutes(server, "/api/restaurantcategory")
 managerController.applyRoutes(server, "/api/manager")
