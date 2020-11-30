@@ -3,7 +3,7 @@ const Roles = require("../../utils/roles")
 const { getIdParam, authorize } = require("../middleware")
 const { allowedFiles } = require("../../utils/file")
 const { Router } = require("restify-router")
-const { BadRequestError } = require("restify-errors")
+const { BadRequestError, NotFoundError } = require("restify-errors")
 const router = new Router()
 
 router.get("", authorize([Roles.Admin, Roles.Manager]), getAll)
@@ -25,8 +25,12 @@ async function getAll(req, res, next) {
 async function getById(req, res, next) {
   try {
     const file = await fileService.getById(req.id)
-    res.send(200, file)
-    next()
+    if (!file) {
+      next(new NotFoundError("Resource doesn't exist"))
+    } else {
+      res.send(200, file)
+      next()
+    }
   } catch (error) {
     next(error)
   }
