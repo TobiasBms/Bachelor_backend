@@ -5,7 +5,7 @@ const managerController = require("./controllers/manager")
 const productController = require("./controllers/product")
 const orderController = require("./controllers/order")
 const productCategoryController = require("./controllers/productCategory")
-
+const extraController = require("./controllers/extra")
 /* Setup Restify server and register plugins */
 const server = restify.createServer()
 server.use(restify.plugins.bodyParser())
@@ -19,6 +19,7 @@ restaurantController.applyRoutes(server, "/api/restaurant")
 restaurantCategoryController.applyRoutes(server, "/api/restaurantcategory")
 managerController.applyRoutes(server, "/api/manager")
 productController.applyRoutes(server, "/api/product")
+extraController.applyRoutes(server, "/api/extra")
 
 /* Exports */
 module.exports = server
