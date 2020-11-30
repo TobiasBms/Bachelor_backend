@@ -5,30 +5,18 @@ require("dotenv").config()
 
 module.exports = { getAll, getById, create, remove }
 
+/**
+ * Fetch all files for a given restaurant
+ */
 async function getAll(restaurantId) {
-  return await File.findAll({
-    include: [
-      {
-        model: RestaurantHasFile,
-        as: "data",
-        attributes: [],
-        where: { restaurantId },
-      },
-    ],
-  })
+  return await File.scope({ method: ["forRestaurant", restaurantId] }).findAll()
 }
 
+/**
+ * Fetch a single file
+ */
 async function getById(id) {
-  return await File.findByPk(id, {
-    include: [
-      {
-        model: RestaurantHasFile,
-        as: "data",
-        attributes: { exclude: ["fileId"] },
-        where: { fileId: id },
-      },
-    ],
-  })
+  return await File.findByPk(id)
 }
 
 /**
