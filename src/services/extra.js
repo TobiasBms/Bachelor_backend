@@ -1,22 +1,26 @@
-const {} = require("../db").models
+const { Extra, ProductHasExtra } = require("../db").models
 
-module.exports = { getAll, getById, create, update, remove }
+module.exports = { getAll, getById, create, update, remove, addToProduct }
 
 async function getAll(scopes = []) {
-  return await ProductCategory.scope(scopes).findAll()
+  return await Extra.scope(scopes).findAll()
 }
 
 async function getById(id, scopes = []) {
-  return await ProductCategory.scope(scopes).findByPk(id)
+  return await Extra.scope(scopes).findByPk(id)
 }
 
 async function create(body) {
-  await ProductCategory.create(body)
+  await Extra.create(body)
 }
 async function update(id, body) {
-  return await ProductCategory.update(body, { where: { id } })
+  return await Extra.update(body, { where: { id } })
+}
+
+async function addToProduct(extraId, productId) {
+  return await ProductHasExtra.create({ extraId, productId })
 }
 
 async function remove(id) {
-  return await ProductCategory.destroy({ where: { id } })
+  return await Extra.destroy({ where: { id } })
 }
