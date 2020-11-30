@@ -9,6 +9,16 @@ const { authorize } = require("../middleware")
 router.get("", getScopesQuery, getAll)
 router.get("/:id", getIdParam, getScopesQuery, getById)
 router.post("", authorize([Roles.Admin]), create)
+router.post(
+  "/:id/category/:categoryId",
+  authorize([Roles.Admin]),
+  addToCategory
+)
+router.del(
+  "/:id/category/:categoryId",
+  authorize([Roles.Admin]),
+  removeFromCategory
+)
 router.put("/:id", authorize([Roles.Admin]), getIdParam, update)
 router.del("/:id", authorize([Roles.Admin]), getIdParam, remove)
 module.exports = router
@@ -50,6 +60,30 @@ async function create(req, res, next) {
       res.send(201, restaurant)
       next()
     }
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function addToCategory(req, res, next) {
+  try {
+    const id = Number.parseInt(req.params.id, 10)
+    const categoryId = Number.parseInt(req.params.categoryId, 10)
+    const result = await restaurantService.addToCategory(id, categoryId)
+    res.send(201, result)
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
+
+async function removeFromCategory(req, res, next) {
+  try {
+    const id = Number.parseInt(req.params.id, 10)
+    const categoryId = Number.parseInt(req.params.categoryId, 10)
+    await restaurantService.removeFromCategory(id, categoryId)
+    res.send(204)
+    next()
   } catch (error) {
     next(error)
   }
