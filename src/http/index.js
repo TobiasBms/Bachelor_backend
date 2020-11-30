@@ -6,6 +6,7 @@ const productController = require("./controllers/product")
 const orderController = require("./controllers/order")
 const fileController = require("./controllers/file")
 const productCategoryController = require("./controllers/productCategory")
+const extraController = require("./controllers/extra")
 
 /* Setup Restify server and register plugins */
 const server = restify.createServer()
@@ -21,6 +22,7 @@ restaurantCategoryController.applyRoutes(server, "/api/restaurantcategory")
 managerController.applyRoutes(server, "/api/manager")
 productController.applyRoutes(server, "/api/product")
 fileController.applyRoutes(server, "/api/file")
+extraController.applyRoutes(server, "/api/extra")
 
 /* Serve user submitted files */
 server.get("/public/*", restify.plugins.serveStaticFiles("./uploads"))

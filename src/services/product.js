@@ -1,4 +1,4 @@
-const { Product } = require("../db").models
+const { Product, ProductHasCategory } = require("../db").models
 
 module.exports = { getAll, getById, create, update, remove, addToCategory }
 
@@ -15,7 +15,7 @@ async function create(body) {
 }
 
 async function addToCategory(productId, categoryId) {
-  await Product.create({ productId, categoryId })
+  await ProductHasCategory.create({ productId, categoryId })
 }
 
 async function update(id, body) {
