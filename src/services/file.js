@@ -51,11 +51,22 @@ async function create(restaurantId, multipartBody) {
   return file
 }
 
-async function remove(id) {
-  const file = await File.findByPk(id)
+/**
+ * Removes an uploaded file from the system, if it belongs to given restaurant.
+ */
+async function remove(restaurantId, id) {
+  /* Check if file belongs to current restaurant */
+  const file = await getById(id)
+  if (file.data.restaurantId !== restaurantId) {
+    throw new Error("Unauthorized access")
+  }
+
+  /* Get file location and remove from file system */
   const location = await getFileLocation(file.hash)
   const extension = file.name.split(".").pop()
   await fs.unlink(`${location}.${extension}`)
+
+  /* Remove file from database */
   await File.destroy({ where: { id } })
 }
 

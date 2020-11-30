@@ -45,7 +45,7 @@ async function create(req, res, next) {
 
 async function remove(req, res, next) {
   try {
-    await fileService.remove(req.id)
+    await fileService.remove(req.user.restaurantId, req.id)
     res.send(204)
     next()
   } catch (error) {
