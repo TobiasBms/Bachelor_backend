@@ -56,6 +56,10 @@ async function create(req, res, next) {
 
 async function remove(req, res, next) {
   try {
+    const fileExists = await fileService.getById(req.id)
+    if (!fileExists) {
+      next(new NotFoundError("Resource doesn't exist"))
+    }
     await fileService.remove(req.user.restaurantId, req.id)
     res.send(204)
     next()
