@@ -1,6 +1,6 @@
 const { File, RestaurantHasFile } = require("../db").models
 const fs = require("fs").promises
-const { getFileLocation, allowedFiles } = require("../utils/file")
+const { getFileLocation } = require("../utils/file")
 require("dotenv").config()
 
 module.exports = { getAll, getById, create, remove }
@@ -31,12 +31,10 @@ async function getById(id) {
   })
 }
 
-async function create(restaurantId, multipartBody) {
-  const fileData = multipartBody.file
-  if (!allowedFiles.includes(fileData.type)) {
-    throw new Error("Filetype is not allowed")
-  }
-
+/**
+ * Uploads a file to the server, storing it in the file system and database.
+ */
+async function create(restaurantId, fileData) {
   /* Hash filename and store in filesystem */
   const location = await getFileLocation(fileData.name, { create: true })
   await fs.rename(fileData.path, location)
