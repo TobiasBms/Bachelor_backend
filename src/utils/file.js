@@ -28,9 +28,11 @@ function getHash(filename) {
  * @param {object} options Optional parameters
  * @param {boolean} options.create Folder will be created
  */
-async function getFileLocation(hash, { create = false } = {}) {
+async function getFileLocation(filename, { create = false } = {}) {
+  const hash = getHash(filename)
+  const extension = filename.split(".").pop()
   let destination = process.env.UPLOAD_DIR
   destination += hash.split("", 4).join("/") + "/"
   if (create) await fs.mkdir(destination, { recursive: true })
-  return destination + hash.slice(4)
+  return destination + hash.slice(4) + "." + extension
 }

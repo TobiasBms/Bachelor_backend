@@ -6,7 +6,7 @@ module.exports = sequelize => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    hash: {
+    location: {
       type: DataTypes.STRING,
       allowNull: false,
     },
