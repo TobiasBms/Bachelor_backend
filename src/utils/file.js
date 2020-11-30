@@ -25,11 +25,12 @@ function getHash(filename) {
  * resulting in a hierarchy with a max of 16 (hexadecimal) sub-folders in
  * each folder. This minimizes the amount of files in each folder.
  * @param {string} hash A hashed filename
+ * @param {object} options Optional parameters
+ * @param {boolean} options.create Folder will be created
  */
-async function getFileLocation(hash) {
+async function getFileLocation(hash, { create = false } = {}) {
   let destination = process.env.UPLOAD_DIR
-  destination += `${hash.split("", 4).join("/")}/`
-  await fs.mkdir(destination, { recursive: true })
-  destination += `${hash.slice(4)}`
-  return destination
+  destination += hash.split("", 4).join("/") + "/"
+  if (create) await fs.mkdir(destination, { recursive: true })
+  return destination + hash.slice(4)
 }

@@ -39,7 +39,7 @@ async function create(restaurantId, multipartBody) {
 
   /* Hash filename and store in filesystem */
   const hash = getHash(fileData.name)
-  const destination = await getFileLocation(hash)
+  const destination = await getFileLocation(hash, { create: true })
   const extension = fileData.name.split(".").pop()
   await fs.rename(fileData.path, `${destination}.${extension}`)
 
