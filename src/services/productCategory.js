@@ -3,7 +3,7 @@ const { ProductCategory } = require("../db").models
 module.exports = { getAll, getById, create, update, remove }
 
 async function getAll(scopes = []) {
-  await ProductCategory.scope(scopes).findAll()
+  return await ProductCategory.scope(scopes).findAll()
 }
 
 async function getById(id, scopes = []) {
@@ -14,9 +14,9 @@ async function create(body) {
   await ProductCategory.create(body)
 }
 async function update(id, body) {
-  await ProductCategory.update(body, { where: { id } })
+  return await ProductCategory.update(body, { where: { id } })
 }
 
 async function remove(id) {
-  await ProductCategory.destroy({ where: { id } })
+  return await ProductCategory.destroy({ where: { id } })
 }
