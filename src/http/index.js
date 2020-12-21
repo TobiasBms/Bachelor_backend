@@ -1,4 +1,5 @@
 const restify = require("restify")
+const cors = require("cors")
 const restaurantController = require("./controllers/restaurant")
 const restaurantCategoryController = require("./controllers/restaurantCategory")
 const managerController = require("./controllers/manager")
@@ -10,6 +11,7 @@ const extraController = require("./controllers/extra")
 
 /* Setup Restify server and register plugins */
 const server = restify.createServer()
+server.use(cors())
 server.use(restify.plugins.bodyParser())
 server.use(restify.plugins.queryParser())
 server.pre(restify.pre.sanitizePath())
