@@ -6,8 +6,8 @@ const getScopesQuery = require("../middleware/scopes")
 const router = new Router()
 const { BadRequestError, NotFoundError } = require("restify-errors")
 router.post("", authorize(), create)
-router.get("", authorize(), getScopesQuery, getAll)
-router.get("/:id", authorize(), getIdParam, getById)
+router.get("", getScopesQuery, getAll)
+router.get("/:id", getScopesQuery, getIdParam, getById)
 router.del("/:id", authorize(), getIdParam, remove)
 router.put("/:id", authorize(), getIdParam, update)
 
@@ -15,13 +15,18 @@ module.exports = router
 
 async function getAll(req, res, next) {
   try {
-    const productCategories = await categoryService.getAll(req.scopes)
+    const { restaurantid } = req.query
+    const productCategories = await categoryService.getAll(
+      req.scopes,
+      restaurantid
+    )
     res.send(200, productCategories)
     next()
   } catch (error) {
     next(error)
   }
 }
+
 async function getById(req, res, next) {
   try {
     const productCategory = await categoryService.getById(req.id, req.scopes)

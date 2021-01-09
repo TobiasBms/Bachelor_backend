@@ -2,8 +2,12 @@ const { ProductCategory } = require("../db").models
 
 module.exports = { getAll, getById, create, update, remove }
 
-async function getAll(scopes = []) {
-  return await ProductCategory.scope(scopes).findAll()
+async function getAll(scopes = [], restaurantid) {
+  return await ProductCategory.scope(scopes).findAll({
+    where: {
+      restaurantId: restaurantid,
+    },
+  })
 }
 
 async function getById(id, scopes = []) {
